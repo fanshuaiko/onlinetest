@@ -1,0 +1,18 @@
+server:
+  port: 8888
+
+  #eureka注册中心
+eureka:
+  client:
+    eureka-server-u-r-l-context: http://localhost:8761/eureka/
+
+#git仓库地址
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/fanshuaiko/springcloud-config
+
+  application:
+    name: config
