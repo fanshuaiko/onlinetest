@@ -1,0 +1,12 @@
+server:
+  port: 8081
+
+  #eureka注册中心
+eureka:
+  client:
+    eureka-server-u-r-l-context: http://localhost:8761/eureka/
+
+  #本应用的名称
+spring:
+  application:
+    name: front
