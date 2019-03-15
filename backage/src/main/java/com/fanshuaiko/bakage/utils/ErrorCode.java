@@ -1,6 +1,12 @@
 package com.fanshuaiko.bakage.utils;
 
-
+/**
+ * @ClassName Teacher
+ * @Description 常见异常代码实体类
+ * @Author fanshuaiko
+ * @Date 19-3-15 上午10:57
+ * @Version 1.0
+ **/
 public interface ErrorCode {
     String SUCCESS = "0";
     String SUCCESS_MSG = "SUCCESS";

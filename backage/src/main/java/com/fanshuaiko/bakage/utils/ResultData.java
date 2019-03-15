@@ -2,7 +2,13 @@ package com.fanshuaiko.bakage.utils;
 
 
 import java.io.Serializable;
-
+/**
+ * @ClassName Teacher
+ * @Description 返回数据实体类
+ * @Author fanshuaiko
+ * @Date 19-3-15 上午10:57
+ * @Version 1.0
+ **/
 public class ResultData<T> implements Serializable {
     public static final String SUCCESS = "0";
     private static final long serialVersionUID = 0L;
