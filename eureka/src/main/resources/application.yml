@@ -1,0 +1,13 @@
+#端口
+server:
+  port: 8761
+  #地址
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    #下面两行说明当前服务是Eureka Server
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    #访问地址
+    eureka-server-u-r-l-context: http://${eureka.instance.hostname}:${server.port}/eureka/
