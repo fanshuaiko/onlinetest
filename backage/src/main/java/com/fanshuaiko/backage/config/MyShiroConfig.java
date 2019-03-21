@@ -113,7 +113,7 @@ public class MyShiroConfig {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(host);
         redisManager.setPort(port);
-        redisManager.setPassword(password);
+//        redisManager.setPassword(password);
         return redisManager;
     }
 
