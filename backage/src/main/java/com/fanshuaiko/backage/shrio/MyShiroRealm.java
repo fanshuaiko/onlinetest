@@ -1,13 +1,12 @@
 package com.fanshuaiko.backage.shrio;
 
+import com.fanshuaiko.backage.entity.Auth;
 import com.fanshuaiko.backage.service.AuthService;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +43,15 @@ public class MyShiroRealm extends AuthorizingRealm {
         String no = (String) authenticationToken.getPrincipal();
         Object password = authenticationToken.getCredentials();
         log.info("------------用户登陆编号:"+no);
-        log.info("------------用户输入的登陆密码:"+password);
-        String passwordDataSource = authService.getPassByNo(no);
+        log.info("------------用户输入的登陆密码:"+password.toString());
+        Auth auth = authService.getAuthByNo(no);
+        if(auth==null){
+            throw new UnknownAccountException("用户不存在！");
+        }
+        String passwordDataSource = auth.getPassword();
         log.info("------------数据库用户密码:"+passwordDataSource);
-        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(no, passwordDataSource, getName());
+        SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
+                auth, auth.getPassword(),ByteSource.Util.bytes(auth.getSalt()),getName());
         return simpleAuthenticationInfo;
     }
 }
