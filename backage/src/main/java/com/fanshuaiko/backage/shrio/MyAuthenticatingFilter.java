@@ -1,6 +1,7 @@
 package com.fanshuaiko.backage.shrio;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fanshuaiko.backage.utils.ErrorCode;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -79,11 +80,13 @@ public class MyAuthenticatingFilter extends AuthenticatingFilter {
         JSONObject json = new JSONObject();
         String exc = e.getClass().getName();
         if(exc.equals(UnknownAccountException.class.getName())){
-            json.put("fail", "账户不存在");
+            json.put("code", ErrorCode.QUERY_FAILOR);
+            json.put("message", "账户不存在");
         }
         if(exc.equals(IncorrectCredentialsException.class.getName())){
             System.out.println("=========");
-            json.put("fail", "密码不正确");
+            json.put("code", ErrorCode.QUERY_FAILOR);
+            json.put("message", "密码不正确");
         }
         out.println(json);
         out.flush();
