@@ -20,12 +20,12 @@ public class AuthServiceImpl implements AuthService {
     private AuthDao authDao;
 
     @Override
-    public String getPassByNo(String no) {
-        return authDao.getPassByNo(no);
+    public String getPassByNo(String username) {
+        return authDao.getPassByNo(username);
     }
 
     @Override
-    public Auth getAuthByNo(String no) {
-        return authDao.getAuthByNo(no);
+    public Auth getAuthByNo(String username) {
+        return authDao.getAuthByNo(username);
     }
 }

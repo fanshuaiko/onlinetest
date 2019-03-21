@@ -1,7 +1,6 @@
 package com.fanshuaiko.backage.service;
 
 import com.fanshuaiko.backage.entity.Auth;
-import org.springframework.stereotype.Service;
 
 /**
  * @ClassName AuthService
@@ -11,8 +10,17 @@ import org.springframework.stereotype.Service;
  * @Version 1.0
  **/
 public interface AuthService {
+    /**
+     * 根据用户名查询密码
+     * @param username
+     * @return
+     */
+    String getPassByNo(String username);
 
-    String getPassByNo(String no);
-
-    Auth getAuthByNo(String no);
+    /**
+     * 根据用户名查询认证信息
+     * @param username
+     * @return
+     */
+    Auth getAuthByNo(String username);
 }

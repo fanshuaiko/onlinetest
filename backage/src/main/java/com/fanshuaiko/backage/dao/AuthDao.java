@@ -16,9 +16,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuthDao {
 
-    @Select("select password from auth where no = #{no}")
-    String getPassByNo(String no);
+    @Select("select password from auth where username = #{username}")
+    String getPassByNo(String username);
 
-    @Select("select * from auth where no = #{no}")
-    Auth getAuthByNo(String no);
+    @Select("select * from auth where username = #{username}")
+    Auth getAuthByNo(String username);
 }
