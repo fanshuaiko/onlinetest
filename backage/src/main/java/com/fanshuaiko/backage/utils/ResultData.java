@@ -52,7 +52,7 @@ public class ResultData<T> implements Serializable {
         return new ResultData(code, message);
     }
 
-    public static <T> ResultData<T> newResultData(T data) {
+    public static <T> ResultData<T> newSuccessResultData(T data) {
         return new ResultData("0", "SUCCESS", data);
     }
 
