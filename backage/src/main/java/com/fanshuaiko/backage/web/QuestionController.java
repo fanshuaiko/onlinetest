@@ -91,7 +91,7 @@ public class QuestionController {
         }catch (Exception e){
             log.info("--------choicePageQuery:--------");
             e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.DEL_FAILOR, ErrorCode.DEL_FAILOR_MSG);
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }
     }
 }
