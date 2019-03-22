@@ -21,7 +21,7 @@ import redis.clients.jedis.JedisShardInfo;
  **/
 @RestController
 @RequestMapping("/auth")
-public class Auth {
+public class AuthController {
 
     @Value("${spring.redis.host}")
     private String host;
@@ -30,8 +30,12 @@ public class Auth {
     @Value("${spring.redis.password}")
     private String password;
 
-    Logger logger = LoggerFactory.getLogger(Auth.class);
+    Logger logger = LoggerFactory.getLogger(AuthController.class);
 
+    /**
+     * 登录
+     * @return
+     */
     @PostMapping("/login")
     public ResultData login() {
         Subject subject = SecurityUtils.getSubject();
@@ -40,6 +44,10 @@ public class Auth {
         return ResultData.newSuccessResultData(sessionId);
     }
 
+    /**
+     * 注销
+     * @return
+     */
     @PostMapping("/logout")
     public ResultData logout() {
         try {
