@@ -23,6 +23,8 @@ public class Choice {
 
     private String answer; //正确答案
 
+    private String courseName; //所属课程
+
     private String type; //1.单项选择题，2.判断题，3.多选题
 
     private Date createTime; //创建时间
@@ -109,6 +111,14 @@ public class Choice {
         this.updateTime = updateTime;
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
     @Override
     public String toString() {
         return "Choice{" +
@@ -119,6 +129,7 @@ public class Choice {
                 ", choiceC='" + choiceC + '\'' +
                 ", choiceD='" + choiceD + '\'' +
                 ", answer='" + answer + '\'' +
+                ", courseName='" + courseName + '\'' +
                 ", type='" + type + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
