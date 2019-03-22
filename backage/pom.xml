@@ -58,6 +58,12 @@
             <artifactId>mybatis-generator-core</artifactId>
             <version>${mybatis.generator.version}</version>
         </dependency>
+        <!--mybatis分页插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.10</version>
+        </dependency>
     </dependencies>
 
     <build>
