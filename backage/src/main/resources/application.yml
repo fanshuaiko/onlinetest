@@ -28,3 +28,10 @@ spring:
 mybatis:
   mapper-locations: classpath:com/fanshuaiko/backage/dao/mapper/*.xml
   type-aliases-package: com.fanshuaiko.backage.entity
+
+#mybatis分页插件
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
