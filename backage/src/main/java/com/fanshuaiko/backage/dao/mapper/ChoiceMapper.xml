@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fanshuaiko.backage.dao.ChoiceDao">
+  <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.Choice">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="question" jdbcType="VARCHAR" property="question" />
+    <result column="choice_a" jdbcType="VARCHAR" property="choiceA" />
+    <result column="choice_b" jdbcType="VARCHAR" property="choiceB" />
+    <result column="choice_c" jdbcType="VARCHAR" property="choiceC" />
+    <result column="choice_d" jdbcType="VARCHAR" property="choiceD" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, question, choice_a, choice_b, choice_c, choice_d, answer, type, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from choice
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from choice
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fanshuaiko.backage.entity.Choice">
+    insert into choice (id, question, choice_a, 
+      choice_b, choice_c, choice_d, 
+      answer, type, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{question,jdbcType=VARCHAR}, #{choiceA,jdbcType=VARCHAR}, 
+      #{choiceB,jdbcType=VARCHAR}, #{choiceC,jdbcType=VARCHAR}, #{choiceD,jdbcType=VARCHAR}, 
+      #{answer,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.Choice">
+    insert into choice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="question != null">
+        question,
+      </if>
+      <if test="choiceA != null">
+        choice_a,
+      </if>
+      <if test="choiceB != null">
+        choice_b,
+      </if>
+      <if test="choiceC != null">
+        choice_c,
+      </if>
+      <if test="choiceD != null">
+        choice_d,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="question != null">
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceA != null">
+        #{choiceA,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceB != null">
+        #{choiceB,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceC != null">
+        #{choiceC,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceD != null">
+        #{choiceD,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fanshuaiko.backage.entity.Choice">
+    update choice
+    <set>
+      <if test="question != null">
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceA != null">
+        choice_a = #{choiceA,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceB != null">
+        choice_b = #{choiceB,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceC != null">
+        choice_c = #{choiceC,jdbcType=VARCHAR},
+      </if>
+      <if test="choiceD != null">
+        choice_d = #{choiceD,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.Choice">
+    update choice
+    set question = #{question,jdbcType=VARCHAR},
+      choice_a = #{choiceA,jdbcType=VARCHAR},
+      choice_b = #{choiceB,jdbcType=VARCHAR},
+      choice_c = #{choiceC,jdbcType=VARCHAR},
+      choice_d = #{choiceD,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      type = #{type,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
