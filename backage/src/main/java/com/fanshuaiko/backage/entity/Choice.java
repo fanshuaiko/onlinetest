@@ -1,16 +1,15 @@
 package com.fanshuaiko.backage.entity;
 
 import java.util.Date;
-
 /**
  * @ClassName Choice
- * @Description 选择题
+ * @Description 选择题实体类
  * @Author fanshuaiko
- * @Date 19-3-21 下午1:48
+ * @Date 19-3-20 下午2:20
  * @Version 1.0
  **/
 public class Choice {
-    private Long id; //主键
+    private Long id; //snowflake算法生成主键
 
     private String question; //题目
 
@@ -22,7 +21,7 @@ public class Choice {
 
     private String choiceD; //选项D
 
-    private String answer; //正确选项
+    private String answer; //正确答案
 
     private String type; //1.单项选择题，2.判断题，3.多选题
 
