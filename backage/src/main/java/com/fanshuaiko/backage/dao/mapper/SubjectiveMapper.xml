@@ -4,14 +4,14 @@
   <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.Subjective">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="question" jdbcType="VARCHAR" property="question" />
-    <result column="anwser" jdbcType="VARCHAR" property="anwser" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
     <result column="course_name" jdbcType="VARCHAR" property="courseName" />
     <result column="type" jdbcType="CHAR" property="type" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, question, anwser, course_name, type, create_time, update_time
+    id, question, answer, course_name, type, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -24,10 +24,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.fanshuaiko.backage.entity.Subjective">
-    insert into subjective (id, question, anwser, 
+    insert into subjective (id, question, answer,
       course_name, type, create_time, 
       update_time)
-    values (#{id,jdbcType=BIGINT}, #{question,jdbcType=VARCHAR}, #{anwser,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR},
       #{courseName,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, now(),
       now())
 </insert>
@@ -40,8 +40,8 @@
       <if test="question != null">
         question,
       </if>
-      <if test="anwser != null">
-        anwser,
+      <if test="answer != null">
+        answer,
       </if>
       <if test="courseName != null">
         course_name,
@@ -63,8 +63,8 @@
       <if test="question != null">
         #{question,jdbcType=VARCHAR},
       </if>
-      <if test="anwser != null">
-        #{anwser,jdbcType=VARCHAR},
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
       </if>
       <if test="courseName != null">
         #{courseName,jdbcType=VARCHAR},
@@ -86,8 +86,8 @@
       <if test="question != null">
         question = #{question,jdbcType=VARCHAR},
       </if>
-      <if test="anwser != null">
-        anwser = #{anwser,jdbcType=VARCHAR},
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
       </if>
       <if test="courseName != null">
         course_name = #{courseName,jdbcType=VARCHAR},
@@ -107,7 +107,7 @@
   <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.Subjective">
     update subjective
     set question = #{question,jdbcType=VARCHAR},
-      anwser = #{anwser,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
       course_name = #{courseName,jdbcType=VARCHAR},
       type = #{type,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -133,12 +133,12 @@
   </select>
 
   <insert id="batchAdd" parameterType="com.fanshuaiko.backage.entity.Subjective">
-    insert into subjective (id, question, anwser,
+    insert into subjective (id, question, answer,
     course_name, type, create_time,
     update_time)
     values
     <foreach collection="choiceList" item="item" index="index" separator=",">
-    (#{item.id,jdbcType=BIGINT}, #{item.question,jdbcType=VARCHAR}, #{item.anwser,jdbcType=VARCHAR},
+    (#{item.id,jdbcType=BIGINT}, #{item.question,jdbcType=VARCHAR}, #{item.answer,jdbcType=VARCHAR},
     #{item.courseName,jdbcType=VARCHAR}, #{item.type,jdbcType=CHAR}, now(),
     now())
     </foreach>
