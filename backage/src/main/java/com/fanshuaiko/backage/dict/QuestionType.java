@@ -8,7 +8,7 @@ package com.fanshuaiko.backage.dict;
  * @Version 1.0
  **/
 public enum QuestionType {
-    SingleChoice("1", "单选题"), JudgeChoice("2", "【判断题"), MultipleChoice("3", "多选题");
+    SingleChoice("1", "单选题"), JudgeChoice("2", "【判断题"), MultipleChoice("3", "多选题"), Subjective("4","主观题");
 
     private String CODE;
     private String NAME;
