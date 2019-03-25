@@ -2,10 +2,13 @@ package com.fanshuaiko.backage.dao;
 
 import com.fanshuaiko.backage.entity.QuestionQueryTerm;
 import com.fanshuaiko.backage.entity.Subjective;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Mapper
+@Repository
 public interface SubjectiveDao {
     int deleteByPrimaryKey(Long id);
 
