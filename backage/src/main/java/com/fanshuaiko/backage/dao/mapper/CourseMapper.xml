@@ -63,4 +63,10 @@
     where
     name = #{name}
   </select>
+
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="com.fanshuaiko.backage.entity.Course">
+    select
+    <include refid="Base_Column_List" />
+    from course
+  </select>
 </mapper>

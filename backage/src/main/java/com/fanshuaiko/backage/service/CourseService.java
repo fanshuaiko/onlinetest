@@ -1,5 +1,7 @@
 package com.fanshuaiko.backage.service;
 
+import com.fanshuaiko.backage.utils.ResultData;
+
 /**
  * @ClassName CourseService
  * @Description
@@ -8,4 +10,5 @@ package com.fanshuaiko.backage.service;
  * @Version 1.0
  **/
 public interface CourseService {
+    ResultData queryAll();
 }
