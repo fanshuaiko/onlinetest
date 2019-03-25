@@ -2,6 +2,7 @@ package com.fanshuaiko.backage.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 
+import java.util.Date;
 /**
  * @ClassName Subjective
  * @Description 主观题
@@ -10,7 +11,7 @@ import cn.afterturn.easypoi.excel.annotation.Excel;
  * @Version 1.0
  **/
 public class Subjective {
-    private Long id; //题目id
+    private Long id; //snowflake算法生成主键
 
     @Excel(name = "题目")
     private String question; //题目
@@ -22,6 +23,10 @@ public class Subjective {
     private String courseName; //所属课程
 
     private String type; //题目类型
+
+    private Date createTime; //创建时间
+
+    private Date updateTime; //修改时间
 
     public Long getId() {
         return id;
@@ -63,6 +68,22 @@ public class Subjective {
         this.type = type == null ? null : type.trim();
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "Subjective{" +
@@ -71,6 +92,8 @@ public class Subjective {
                 ", anwser='" + anwser + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", type='" + type + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }
