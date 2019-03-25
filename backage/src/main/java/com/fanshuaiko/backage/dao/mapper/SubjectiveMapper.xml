@@ -137,7 +137,7 @@
     course_name, type, create_time,
     update_time)
     values
-    <foreach collection="choiceList" item="item" index="index" separator=",">
+    <foreach collection="subjectiveList" item="item" index="index" separator=",">
     (#{item.id,jdbcType=BIGINT}, #{item.question,jdbcType=VARCHAR}, #{item.answer,jdbcType=VARCHAR},
     #{item.courseName,jdbcType=VARCHAR}, #{item.type,jdbcType=CHAR}, now(),
     now())
