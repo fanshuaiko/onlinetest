@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fanshuaiko.backage.dao.SubjectiveDao">
+  <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.Subjective">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="question" jdbcType="VARCHAR" property="question" />
+    <result column="anwser" jdbcType="VARCHAR" property="anwser" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, question, anwser, course_name, type, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from subjective
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from subjective
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fanshuaiko.backage.entity.Subjective">
+    insert into subjective (id, question, anwser, 
+      course_name, type, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{question,jdbcType=VARCHAR}, #{anwser,jdbcType=VARCHAR}, 
+      #{courseName,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, now(),
+      now())
+</insert>
+  <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.Subjective">
+    insert into subjective
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="question != null">
+        question,
+      </if>
+      <if test="anwser != null">
+        anwser,
+      </if>
+      <if test="courseName != null">
+        course_name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="question != null">
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="anwser != null">
+        #{anwser,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null">
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        now(),
+      </if>
+      <if test="updateTime != null">
+        now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fanshuaiko.backage.entity.Subjective">
+    update subjective
+    <set>
+      <if test="question != null">
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="anwser != null">
+        anwser = #{anwser,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null">
+        course_name = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = now(),
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.Subjective">
+    update subjective
+    set question = #{question,jdbcType=VARCHAR},
+      anwser = #{anwser,jdbcType=VARCHAR},
+      course_name = #{courseName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="queryByConditions" parameterType="com.fanshuaiko.backage.entity.QuestionQueryTerm"
+          resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from subjective
+    where
+    1=1
+    <if test="question != null and question != ''">
+      and question like concat('%',#{question},'%')
+    </if>
+    <if test="courseName != null and courseName !=''">
+      and course_name = #{courseName}
+    </if>
+    <if test="type != null and type != ''">
+      and type = #{type}
+    </if>
+  </select>
+
+  <insert id="batchAdd" parameterType="com.fanshuaiko.backage.entity.Subjective">
+    insert into subjective (id, question, anwser,
+    course_name, type, create_time,
+    update_time)
+    values
+    <foreach collection="choiceList" item="item" index="index" separator=",">
+    (#{item.id,jdbcType=BIGINT}, #{item.question,jdbcType=VARCHAR}, #{item.anwser,jdbcType=VARCHAR},
+    #{item.courseName,jdbcType=VARCHAR}, #{item.type,jdbcType=CHAR}, now(),
+    now())
+    </foreach>
+  </insert>
+</mapper>
