@@ -17,7 +17,7 @@ public class Subjective {
     private String question; //题目
 
     @Excel(name = "答案")
-    private String anwser; //答案
+    private String answer; //答案
 
     @Excel(name = "所属课程")
     private String courseName; //所属课程
@@ -44,12 +44,12 @@ public class Subjective {
         this.question = question == null ? null : question.trim();
     }
 
-    public String getAnwser() {
-        return anwser;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setAnwser(String anwser) {
-        this.anwser = anwser == null ? null : anwser.trim();
+    public void setAnswer(String answer) {
+        this.answer = answer == null ? null : answer.trim();
     }
 
     public String getCourseName() {
@@ -89,7 +89,7 @@ public class Subjective {
         return "Subjective{" +
                 "id=" + id +
                 ", question='" + question + '\'' +
-                ", anwser='" + anwser + '\'' +
+                ", anwser='" + answer + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", type='" + type + '\'' +
                 ", createTime=" + createTime +
