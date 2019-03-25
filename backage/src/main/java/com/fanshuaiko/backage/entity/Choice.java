@@ -1,5 +1,7 @@
 package com.fanshuaiko.backage.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+
 import java.util.Date;
 /**
  * @ClassName Choice
@@ -9,22 +11,31 @@ import java.util.Date;
  * @Version 1.0
  **/
 public class Choice {
+
     private Long id; //snowflake算法生成主键
 
+    @Excel(name = "题目")
     private String question; //题目
 
+    @Excel(name = "选项A")
     private String choiceA; //选项A
 
+    @Excel(name = "选项B")
     private String choiceB; //选项B
 
+    @Excel(name = "选项C")
     private String choiceC; //选项C
 
+    @Excel(name = "选项D")
     private String choiceD; //选项D
 
+    @Excel(name = "正确答案")
     private String answer; //正确答案
 
+    @Excel(name = "所属课程")
     private String courseName; //所属课程
 
+    @Excel(name = "题型")
     private String type; //1.单项选择题，2.判断题，3.多选题
 
     private Date createTime; //创建时间
