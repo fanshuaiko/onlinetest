@@ -179,4 +179,19 @@
             and type = #{type}
         </if>
     </select>
+
+    <insert id="batchAdd" parameterType="com.fanshuaiko.backage.entity.Choice">
+        insert into choice
+        (id, question, choice_a,
+        choice_b, choice_c, choice_d,
+        answer, course_name,type, create_time,
+        update_time)
+        values
+        <foreach collection="choiceList" item="item" index="index" separator=",">
+            (#{item.id}, #{item.question,}, #{item.choiceA},
+            #{item.choiceB,}, #{item.choiceC}, #{item.choiceD},
+            #{item.answer},#{item.courseName}, #{item.type}, now(),
+            now())
+        </foreach>
+    </insert>
 </mapper>
