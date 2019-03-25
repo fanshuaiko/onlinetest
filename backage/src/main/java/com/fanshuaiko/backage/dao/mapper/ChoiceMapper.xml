@@ -104,10 +104,10 @@
                 #{type,jdbcType=CHAR},
             </if>
             <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
+                now(),
             </if>
             <if test="updateTime != null">
-                #{updateTime,jdbcType=TIMESTAMP},
+                now(),
             </if>
         </trim>
     </insert>
@@ -142,7 +142,7 @@
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
+                now(),
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
