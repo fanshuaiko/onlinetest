@@ -50,7 +50,7 @@ public class ChoiceServiceImpl implements ChoiceService {
     }
 
     public ResultData updateByPrimaryKey(Choice choice) {
-        int count = choiceDao.updateByPrimaryKey(choice);
+        int count = choiceDao.updateByPrimaryKeySelective(choice);
         return ResultData.newSuccessResultData(count);
     }
 
