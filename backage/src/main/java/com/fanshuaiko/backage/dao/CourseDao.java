@@ -1,8 +1,12 @@
 package com.fanshuaiko.backage.dao;
 
 import com.fanshuaiko.backage.entity.Course;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
-public interface CourseMapper {
+@Mapper
+@Repository
+public interface CourseDao {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Course record);
