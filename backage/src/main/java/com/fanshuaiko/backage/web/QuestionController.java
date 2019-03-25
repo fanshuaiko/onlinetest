@@ -1,5 +1,6 @@
 package com.fanshuaiko.backage.web;
 
+import com.fanshuaiko.backage.dao.CourseDao;
 import com.fanshuaiko.backage.entity.Choice;
 import com.fanshuaiko.backage.entity.QuestionQueryTerm;
 import com.fanshuaiko.backage.service.ChoiceService;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -26,6 +28,8 @@ public class QuestionController {
     private static Logger log = LoggerFactory.getLogger(QuestionController.class);
     @Autowired
     ChoiceService choiceService;
+
+
 
     /**
      * 插入一道题目
@@ -94,4 +98,23 @@ public class QuestionController {
             return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }
     }
+
+    /**
+     * 选择题导入
+     * @param file
+     * @return
+     */
+    @PostMapping("/choice/file")
+    public ResultData importChoice(MultipartFile file,String type){
+        try{
+        ResultData resultData = choiceService.importChoice(file,type);
+        return resultData;
+        }catch (Exception e){
+            log.info("--------importChoice:--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
+        }
+    }
+
+
 }

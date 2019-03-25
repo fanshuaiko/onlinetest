@@ -4,6 +4,7 @@ import com.fanshuaiko.backage.entity.Choice;
 import com.fanshuaiko.backage.entity.QuestionQueryTerm;
 import com.fanshuaiko.backage.utils.ResultData;
 import com.github.pagehelper.PageInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @ClassName ChoiceServiceImpl
@@ -40,4 +41,11 @@ public interface ChoiceService {
      * @return
      */
     ResultData<PageInfo<Choice>> choicePageQuery(QuestionQueryTerm queryTerm);
+
+    /**
+     * 选择题导入
+     * @param file
+     * @return
+     */
+    ResultData importChoice(MultipartFile file,String type);
 }
