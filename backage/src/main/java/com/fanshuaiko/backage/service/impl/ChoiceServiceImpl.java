@@ -3,7 +3,7 @@ package com.fanshuaiko.backage.service.impl;
 import com.fanshuaiko.backage.dao.ChoiceDao;
 import com.fanshuaiko.backage.dao.CourseDao;
 import com.fanshuaiko.backage.entity.Choice;
-import com.fanshuaiko.backage.entity.QuestionQueryTerm;
+import com.fanshuaiko.backage.entity.VO.QuestionQueryTerm;
 import com.fanshuaiko.backage.service.ChoiceService;
 import com.fanshuaiko.backage.utils.ErrorCode;
 import com.fanshuaiko.backage.utils.ImportUtil;

@@ -1,7 +1,6 @@
 package com.fanshuaiko.backage.service;
 
-import com.fanshuaiko.backage.entity.Choice;
-import com.fanshuaiko.backage.entity.QuestionQueryTerm;
+import com.fanshuaiko.backage.entity.VO.QuestionQueryTerm;
 import com.fanshuaiko.backage.entity.Subjective;
 import com.fanshuaiko.backage.utils.ResultData;
 import com.github.pagehelper.PageInfo;

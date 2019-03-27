@@ -162,7 +162,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="queryByConditions" parameterType="com.fanshuaiko.backage.entity.QuestionQueryTerm"
+    <select id="queryByConditions" parameterType="com.fanshuaiko.backage.entity.VO.QuestionQueryTerm"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

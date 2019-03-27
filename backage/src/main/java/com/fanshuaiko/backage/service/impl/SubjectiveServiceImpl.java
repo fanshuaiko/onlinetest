@@ -1,12 +1,8 @@
 package com.fanshuaiko.backage.service.impl;
 
-import cn.afterturn.easypoi.excel.ExcelImportUtil;
-import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.fanshuaiko.backage.dao.CourseDao;
 import com.fanshuaiko.backage.dao.SubjectiveDao;
-import com.fanshuaiko.backage.dict.QuestionType;
-import com.fanshuaiko.backage.entity.Choice;
-import com.fanshuaiko.backage.entity.QuestionQueryTerm;
+import com.fanshuaiko.backage.entity.VO.QuestionQueryTerm;
 import com.fanshuaiko.backage.entity.Subjective;
 import com.fanshuaiko.backage.service.SubjectiveService;
 import com.fanshuaiko.backage.utils.ErrorCode;
@@ -17,10 +13,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
 import java.util.List;
 
 /**

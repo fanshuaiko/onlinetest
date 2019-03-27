@@ -1,6 +1,6 @@
 package com.fanshuaiko.backage.dao;
 
-import com.fanshuaiko.backage.entity.QuestionQueryTerm;
+import com.fanshuaiko.backage.entity.VO.QuestionQueryTerm;
 import com.fanshuaiko.backage.entity.Subjective;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
