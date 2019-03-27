@@ -63,9 +63,23 @@ public class SubjectiveServiceImpl implements SubjectiveService {
         PageInfo<Subjective> pageInfo = new PageInfo<>(subjectiveList);
         return ResultData.newSuccessResultData(pageInfo);
     }
-
     @Override
-    public ResultData importChoice(MultipartFile file, String type) {
+
+    public ResultData importChoice(MultipartFile file, String type){
+        try {
+            ResultData resultData = checkImportSubjective(file, type);
+            if (resultData.getData() == null) {
+                return resultData;
+            }
+            int count = subjectiveDao.batchAdd((List<Subjective>) resultData.getData());
+            return ResultData.newSuccessResultData(count);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
+        }
+    }
+
+    public ResultData checkImportSubjective(MultipartFile file, String type) {
         ImportParams importParams = new ImportParams();
         importParams.setTitleRows(1);
         importParams.setHeadRows(1);
@@ -85,11 +99,10 @@ public class SubjectiveServiceImpl implements SubjectiveService {
                 subjective.setId(SnowflakeIdWorker.nextId());
                 subjective.setType(type);
             }
-            int count = subjectiveDao.batchAdd(subjectiveList);
-            return ResultData.newSuccessResultData(count);
+            return ResultData.newSuccessResultData(subjectiveList);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, "上传失败！");
         }
 
     }
