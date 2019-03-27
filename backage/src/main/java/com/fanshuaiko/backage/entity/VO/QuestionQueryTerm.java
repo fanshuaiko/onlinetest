@@ -1,4 +1,4 @@
-package com.fanshuaiko.backage.entity;
+package com.fanshuaiko.backage.entity.VO;
 
 
 /**
