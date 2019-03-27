@@ -61,8 +61,22 @@ public class ChoiceServiceImpl implements ChoiceService {
         return ResultData.newSuccessResultData(pageInfo);
     }
 
-    @Override
     public ResultData importChoice(MultipartFile file, String type) {
+        try {
+            ResultData resultData = checkImportChoice(file, type);
+            if (resultData.getData() == null) {
+                return resultData;
+            }
+            int count = choiceDao.batchAdd((List<Choice>) resultData.getData());
+            return ResultData.newSuccessResultData(count);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
+        }
+
+    }
+
+    public ResultData checkImportChoice(MultipartFile file, String type) {
         ImportParams importParams = new ImportParams();
         importParams.setTitleRows(1);
         importParams.setHeadRows(1);
@@ -74,12 +88,12 @@ public class ChoiceServiceImpl implements ChoiceService {
             if (choiceList.isEmpty()) {
                 return ResultData.newResultData(ErrorCode.FAILOR, "导入数据失败，数据不能为空，请检查后重新导入");
             }
-           //校验
+            //校验
             List<String> answerCheck = Arrays.asList("A", "B", "C", "D");
             for (Choice choice : choiceList) {
                 //判断表格没列的值是否为空
                 ResultData<String> data = checkNull(choice, type);
-                if(data!=null){
+                if (data != null) {
                     return data;
                 }
                 //对答案的合法性进行校验
@@ -112,8 +126,7 @@ public class ChoiceServiceImpl implements ChoiceService {
                 choice.setId(SnowflakeIdWorker.nextId());
                 choice.setType(type);
             }
-            int count = choiceDao.batchAdd(choiceList);
-            return ResultData.newSuccessResultData(count);
+            return ResultData.newSuccessResultData(choiceList);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
