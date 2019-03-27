@@ -129,7 +129,7 @@ public class ChoiceServiceImpl implements ChoiceService {
             return ResultData.newSuccessResultData(choiceList);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, "上传失败");
 
         }
     }
