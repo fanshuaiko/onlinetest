@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName TestServiceImpl
@@ -140,14 +141,17 @@ public class TestServiceImpl implements TestService {
             if (type.equals(QuestionType.SingleChoice.getCODE())) {
                 long singleRedisId = SnowflakeIdWorker.nextId();
                 redisTemplate.opsForValue().set(singleRedisId, choiceList);
+                redisTemplate.expire(singleRedisId,1, TimeUnit.HOURS);
                 map.put(singleRedisId, choiceList.size());
             } else if (type.equals(QuestionType.JudgeChoice.getCODE())) {
                 long judgeRedisId = SnowflakeIdWorker.nextId();
                 redisTemplate.opsForValue().set(judgeRedisId, choiceList);
+                redisTemplate.expire(judgeRedisId,1, TimeUnit.HOURS);
                 map.put(judgeRedisId, choiceList.size());
             } else if (type.equals(QuestionType.MultipleChoice.getCODE())) {
                 long multipleRedisId = SnowflakeIdWorker.nextId();
                 redisTemplate.opsForValue().set(multipleRedisId, choiceList);
+                redisTemplate.expire(multipleRedisId,1, TimeUnit.HOURS);
                 map.put(multipleRedisId, choiceList.size());
             }
             return ResultData.newSuccessResultData(map);
@@ -166,6 +170,7 @@ public class TestServiceImpl implements TestService {
             }
             List<Subjective> subjectiveList = (List<Subjective>) resultData.getData();
             redisTemplate.opsForValue().set(subjectiveRedisId, subjectiveList);
+            redisTemplate.expire(subjectiveRedisId,1, TimeUnit.HOURS);
             HashMap<Long, Integer> map = new HashMap<>();
             map.put(subjectiveRedisId, subjectiveList.size());
             return ResultData.newSuccessResultData(map);
