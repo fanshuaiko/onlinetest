@@ -132,7 +132,8 @@
       start_time, end_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER},
       #{teacherNo,jdbcType=VARCHAR}, #{totalScore,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
-      now(), now())
+       start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP})
   </insert>
 
     <insert id="insertTestClass" parameterType="com.fanshuaiko.backage.entity.VO.TestVO">
