@@ -121,8 +121,8 @@
       teacher_no = #{teacherNo,jdbcType=VARCHAR},
       total_score = #{totalScore,jdbcType=VARCHAR},
       status = #{status,jdbcType=CHAR},
-      start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP}
+      start_time = #{startTime},
+      end_time = #{endTime}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
@@ -132,8 +132,8 @@
       start_time, end_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER},
       #{teacherNo,jdbcType=VARCHAR}, #{totalScore,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
-       start_time = #{startTime,jdbcType=TIMESTAMP},
-      end_time = #{endTime,jdbcType=TIMESTAMP})
+       #{startTime},
+      #{endTime})
   </insert>
 
     <insert id="insertTestClass" parameterType="com.fanshuaiko.backage.entity.VO.TestVO">
