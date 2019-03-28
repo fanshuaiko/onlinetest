@@ -44,7 +44,7 @@ public class TestVO {
 
     private int subjectiveScore; //主观题分值
 
-    private List<Integer> classNoList; //参与考试的班级
+    private List<String> classNoList; //参与考试的班级
 
     private List<Long> singleIdList; //选择题id
 
@@ -182,11 +182,11 @@ public class TestVO {
         this.subjectiveScore = subjectiveScore;
     }
 
-    public List<Integer> getClassNoList() {
+    public List<String> getClassNoList() {
         return classNoList;
     }
 
-    public void setClassNoList(List<Integer> classNoList) {
+    public void setClassNoList(List<String> classNoList) {
         this.classNoList = classNoList;
     }
 
