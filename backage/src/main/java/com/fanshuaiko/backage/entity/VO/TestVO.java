@@ -1,7 +1,5 @@
 package com.fanshuaiko.backage.entity.VO;
 
-import com.fanshuaiko.backage.entity.Choice;
-import com.fanshuaiko.backage.entity.Subjective;
 
 import java.util.Date;
 import java.util.List;
@@ -42,15 +40,19 @@ public class TestVO {
 
     private int judgeScore; //判断题分值
 
-    private int mutipleScore; //多选题分值
+    private int multipleScore; //多选题分值
 
     private int subjectiveScore; //主观题分值
 
-    private List<String> classNoList; //参与考试的班级
+    private List<Integer> classNoList; //参与考试的班级
 
-    private List<Choice> choiceList; //选择题
+    private List<Long> singleIdList; //选择题id
 
-    private List<Subjective> subjectiveList; //主观题
+    private List<Long> judgeIdList; //判断题id
+
+    private List<Long> multipleIdList; //多选题id
+
+    private List<Long> subjectiveIdList; //主观题
 
     public Long getId() {
         return id;
@@ -164,12 +166,12 @@ public class TestVO {
         this.judgeScore = judgeScore;
     }
 
-    public int getMutipleScore() {
-        return mutipleScore;
+    public int getMultipleScore() {
+        return multipleScore;
     }
 
-    public void setMutipleScore(int mutipleScore) {
-        this.mutipleScore = mutipleScore;
+    public void setMultipleScore(int multipleScore) {
+        this.multipleScore = multipleScore;
     }
 
     public int getSubjectiveScore() {
@@ -180,28 +182,44 @@ public class TestVO {
         this.subjectiveScore = subjectiveScore;
     }
 
-    public List<String> getClassNoList() {
+    public List<Integer> getClassNoList() {
         return classNoList;
     }
 
-    public void setClassNoList(List<String> classNoList) {
+    public void setClassNoList(List<Integer> classNoList) {
         this.classNoList = classNoList;
     }
 
-    public List<Choice> getChoiceList() {
-        return choiceList;
+    public List<Long> getSingleIdList() {
+        return singleIdList;
     }
 
-    public void setChoiceList(List<Choice> choiceList) {
-        this.choiceList = choiceList;
+    public void setSingleIdList(List<Long> singleIdList) {
+        this.singleIdList = singleIdList;
     }
 
-    public List<Subjective> getSubjectiveList() {
-        return subjectiveList;
+    public List<Long> getJudgeIdList() {
+        return judgeIdList;
     }
 
-    public void setSubjectiveList(List<Subjective> subjectiveList) {
-        this.subjectiveList = subjectiveList;
+    public void setJudgeIdList(List<Long> judgeIdList) {
+        this.judgeIdList = judgeIdList;
+    }
+
+    public List<Long> getMultipleIdList() {
+        return multipleIdList;
+    }
+
+    public void setMultipleIdList(List<Long> multipleIdList) {
+        this.multipleIdList = multipleIdList;
+    }
+
+    public List<Long> getSubjectiveIdList() {
+        return subjectiveIdList;
+    }
+
+    public void setSubjectiveIdList(List<Long> subjectiveIdList) {
+        this.subjectiveIdList = subjectiveIdList;
     }
 
     @Override
@@ -221,11 +239,13 @@ public class TestVO {
                 ", subjectiveRedisId=" + subjectiveRedisId +
                 ", singleScore=" + singleScore +
                 ", judgeScore=" + judgeScore +
-                ", mutipleScore=" + mutipleScore +
+                ", multipleScore=" + multipleScore +
                 ", subjectiveScore=" + subjectiveScore +
                 ", classNoList=" + classNoList +
-                ", choiceList=" + choiceList +
-                ", subjectiveList=" + subjectiveList +
+                ", singleIdList=" + singleIdList +
+                ", judgeIdList=" + judgeIdList +
+                ", multipleIdList=" + multipleIdList +
+                ", subjectiveIdList=" + subjectiveIdList +
                 '}';
     }
 }
