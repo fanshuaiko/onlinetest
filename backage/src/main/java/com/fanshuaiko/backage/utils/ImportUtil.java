@@ -7,6 +7,7 @@ import com.fanshuaiko.backage.dict.QuestionType;
 import com.fanshuaiko.backage.entity.Choice;
 import com.fanshuaiko.backage.entity.Subjective;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,14 +21,21 @@ import java.util.List;
  * @Author fanshuaiko
  * @Date 19-3-27 下午4:05
  * @Version 1.0
+ *
+ * * 为什么这样写：
+ *  *      因为在ImportUtil中注入了CourseDao并使用其方法来对上传文件中的所属课程与数据对比看是否正确
+ *  *      所以在使用ImportUtil的时候就不能使用new方法或者使用将方法static提供给其他类使用
+ *  *      不然会导致CourseDao注入失败
+ *  所以目前我的解决办法是继承interface，在需要用的地方注入ImportUtilService来调用相关的方法
  **/
-public class ImportUtil {
+@Service
+public class ImportUtil implements ImportUtilService{
 
     @Autowired
-    private static CourseDao courseDao;
+    private CourseDao courseDao;
 
     //选择题上传文件解析
-    public static ResultData checkImportChoice(MultipartFile file, String type) {
+    public  ResultData checkImportChoice(MultipartFile file, String type) {
         ImportParams importParams = new ImportParams();
         importParams.setTitleRows(1);
         importParams.setHeadRows(1);
@@ -86,7 +94,7 @@ public class ImportUtil {
     }
 
     //判断上传的选择题表格的每一列是否为空
-    public static ResultData<String> checkChoiceNull(Choice choice, String type) {
+    public  ResultData<String> checkChoiceNull(Choice choice, String type) {
         if (StringUtils.isEmpty(choice.getQuestion())) {
             return ResultData.newResultData(ErrorCode.FAILOR, "题目不能为空！");
         } else if (StringUtils.isEmpty(choice.getChoiceA())) {
@@ -108,7 +116,7 @@ public class ImportUtil {
     }
 
     //主观题上传文件解析
-    public static ResultData checkImportSubjective(MultipartFile file, String type) {
+    public  ResultData checkImportSubjective(MultipartFile file, String type) {
         ImportParams importParams = new ImportParams();
         importParams.setTitleRows(1);
         importParams.setHeadRows(1);
@@ -137,7 +145,7 @@ public class ImportUtil {
     }
 
     //判断上传的选择题表格的每一列是否为空
-    public static ResultData<String> checkSubjectiveNull(Subjective subjective, String type) {
+    public  ResultData<String> checkSubjectiveNull(Subjective subjective, String type) {
         if (StringUtils.isEmpty(subjective.getQuestion())) {
             return ResultData.newResultData(ErrorCode.FAILOR, "题目不能为空！");
         } else if (StringUtils.isEmpty(subjective.getAnswer())) {
