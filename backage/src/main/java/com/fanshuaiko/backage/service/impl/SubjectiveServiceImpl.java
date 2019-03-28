@@ -5,10 +5,7 @@ import com.fanshuaiko.backage.dao.SubjectiveDao;
 import com.fanshuaiko.backage.entity.VO.QuestionQueryTerm;
 import com.fanshuaiko.backage.entity.Subjective;
 import com.fanshuaiko.backage.service.SubjectiveService;
-import com.fanshuaiko.backage.utils.ErrorCode;
-import com.fanshuaiko.backage.utils.ImportUtil;
-import com.fanshuaiko.backage.utils.ResultData;
-import com.fanshuaiko.backage.utils.SnowflakeIdWorker;
+import com.fanshuaiko.backage.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +28,9 @@ public class SubjectiveServiceImpl implements SubjectiveService {
 
     @Autowired
     CourseDao courseDao;
+
+    @Autowired
+    private ImportUtilService importUtil;
 
     @Override
     public ResultData insert(Subjective subjective) {
@@ -62,7 +62,7 @@ public class SubjectiveServiceImpl implements SubjectiveService {
 
     public ResultData importChoice(MultipartFile file, String type){
         try {
-            ResultData resultData = ImportUtil.checkImportSubjective(file, type);
+            ResultData resultData = importUtil.checkImportSubjective(file, type);
             if (resultData.getData() == null) {
                 return resultData;
             }
