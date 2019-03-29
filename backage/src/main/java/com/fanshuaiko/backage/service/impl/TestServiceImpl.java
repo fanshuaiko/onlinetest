@@ -7,20 +7,17 @@ import com.fanshuaiko.backage.dict.QuestionType;
 import com.fanshuaiko.backage.dict.TestStatus;
 import com.fanshuaiko.backage.entity.Choice;
 import com.fanshuaiko.backage.entity.Subjective;
-import com.fanshuaiko.backage.entity.Test;
 import com.fanshuaiko.backage.entity.VO.TestVO;
 import com.fanshuaiko.backage.service.TestService;
-import com.fanshuaiko.backage.utils.ErrorCode;
-import com.fanshuaiko.backage.utils.ImportUtil;
-import com.fanshuaiko.backage.utils.ResultData;
-import com.fanshuaiko.backage.utils.SnowflakeIdWorker;
-import org.apache.poi.ss.formula.functions.T;
+import com.fanshuaiko.backage.utils.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -36,8 +33,10 @@ import java.util.concurrent.TimeUnit;
  * @Version 1.0
  **/
 @Service
+@Transactional
 public class TestServiceImpl implements TestService {
 
+    private static Logger log = LoggerFactory.getLogger(TestServiceImpl.class);
     @Autowired
     private TestDao testDao;
 
@@ -50,21 +49,25 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private SubjectiveDao subjectiveDao;
 
+    @Autowired
+    private ImportUtilService importUtil;
+
     @Override
-    @Transactional
     public ResultData createTest(TestVO testVO) {
-        try{
+        try {
             testVO.setId(SnowflakeIdWorker.nextId());
             testVO.setStatus(TestStatus.NotBegin.getCODE());
             //保存test相关信息到test表
-            testDao.insertTest(testVO);
+            int i = testDao.insertTest(testVO);
+            log.info("插入test成功，记录" + i + "条");
             //保存class信息到test_class表
-            testDao.insertTestClass(testVO);
+            int i1 = testDao.insertTestClass(testVO);
+            log.info("插入test_class成功，记录" + i1 + "条");
             //保存上传的题目保存到题目表
-            if (!StringUtils.isEmpty(testVO.getSingleRedisId())) {
+            if (testVO.getSingleRedisId() != 0) {
                 List<Choice> singleList = (List<Choice>) redisTemplate.opsForValue().get(testVO.getSingleRedisId());
                 if (CollectionUtils.isEmpty(singleList)) {
-                    return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, "保存单选题失败，请重新上传！");
+                    return ResultData.newResultData(ErrorCode.ADD_FAILOR, "保存单选题失败，请重新上传！");
                 } else {
                     //保存题目到提目表
                     choiceDao.batchAdd(singleList);
@@ -73,30 +76,30 @@ public class TestServiceImpl implements TestService {
                     testDao.insertTestQuestion(testVO.getId(), singleIdList, testVO.getSingleScore(), QuestionType.SingleChoice.getCODE());
                 }
             }
-            if (!StringUtils.isEmpty(testVO.getJudgeRedisId())) {
+            if (testVO.getJudgeRedisId() != 0) {
                 List<Choice> judgeList = (List<Choice>) redisTemplate.opsForValue().get(testVO.getJudgeRedisId());
                 if (CollectionUtils.isEmpty(judgeList)) {
-                    return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, "保存判断题失败，请重新上传！");
+                    return ResultData.newResultData(ErrorCode.ADD_FAILOR, "保存判断题失败，请重新上传！");
                 } else {
                     choiceDao.batchAdd(judgeList);
                     List<Long> judgeIdList = returnIdFromObj(judgeList);
                     testDao.insertTestQuestion(testVO.getId(), judgeIdList, testVO.getJudgeScore(), QuestionType.JudgeChoice.getCODE());
                 }
             }
-            if (!StringUtils.isEmpty(testVO.getMultipleRedisId())) {
+            if (testVO.getMultipleRedisId() != 0) {
                 List<Choice> multipleList = (List<Choice>) redisTemplate.opsForValue().get(testVO.getMultipleRedisId());
                 if (CollectionUtils.isEmpty(multipleList)) {
-                    return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, "保存多选题失败，请重新上传！");
+                    return ResultData.newResultData(ErrorCode.ADD_FAILOR, "保存多选题失败，请重新上传！");
                 } else {
                     choiceDao.batchAdd(multipleList);
                     List<Long> multipleIdList = returnIdFromObj(multipleList);
                     testDao.insertTestQuestion(testVO.getId(), multipleIdList, testVO.getMultipleScore(), QuestionType.MultipleChoice.getCODE());
                 }
             }
-            if (!StringUtils.isEmpty(testVO.getSubjectiveRedisId())) {
+            if (testVO.getSubjectiveRedisId() != 0) {
                 List<Subjective> subjectiveList = (List<Subjective>) redisTemplate.opsForValue().get(testVO.getSubjectiveRedisId());
                 if (CollectionUtils.isEmpty(subjectiveList)) {
-                    return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, "保存主观题失败，请重新上传！");
+                    return ResultData.newResultData(ErrorCode.ADD_FAILOR, "保存主观题失败，请重新上传！");
                 } else {
                     subjectiveDao.batchAdd(subjectiveList);
                     LinkedList<Long> subjectiveIdList = new LinkedList<>();
@@ -108,19 +111,35 @@ public class TestServiceImpl implements TestService {
             }
 
             //保存题目到test_question表
-            if (StringUtils.isEmpty(testVO.getSingleRedisId())) {
-                testDao.insertTestQuestion(testVO.getId(), testVO.getSingleIdList(), testVO.getSingleScore(), QuestionType.SingleChoice.getCODE());
-            } else if (StringUtils.isEmpty(testVO.getJudgeRedisId())) {
-                testDao.insertTestQuestion(testVO.getId(), testVO.getJudgeIdList(), testVO.getJudgeScore(), QuestionType.JudgeChoice.getCODE());
-            } else if (StringUtils.isEmpty(testVO.getMultipleRedisId())) {
-                testDao.insertTestQuestion(testVO.getId(), testVO.getMultipleIdList(), testVO.getMultipleScore(), QuestionType.MultipleChoice.getCODE());
-            } else if (StringUtils.isEmpty(testVO.getSubjectiveRedisId())) {
-                testDao.insertTestQuestion(testVO.getId(), testVO.getSubjectiveIdList(), testVO.getSubjectiveScore(), QuestionType.Subjective.getCODE());
+            if (testVO.getSingleRedisId() == 0 && !CollectionUtils.isEmpty(testVO.getJudgeIdList())) {
+                if (!CollectionUtils.isEmpty(testVO.getSingleIdList())) {
+
+                    testDao.insertTestQuestion(testVO.getId(), testVO.getSingleIdList(), testVO.getSingleScore(), QuestionType.SingleChoice.getCODE());
+                }
+            }
+            if (testVO.getJudgeRedisId() == 0 && !CollectionUtils.isEmpty(testVO.getJudgeIdList())) {
+                if (!CollectionUtils.isEmpty(testVO.getJudgeIdList())) {
+
+                    testDao.insertTestQuestion(testVO.getId(), testVO.getJudgeIdList(), testVO.getJudgeScore(), QuestionType.JudgeChoice.getCODE());
+                }
+            }
+            if (testVO.getMultipleRedisId() == 0 && !CollectionUtils.isEmpty(testVO.getMultipleIdList())) {
+                if (!CollectionUtils.isEmpty(testVO.getMultipleIdList())) {
+
+                    testDao.insertTestQuestion(testVO.getId(), testVO.getMultipleIdList(), testVO.getMultipleScore(), QuestionType.MultipleChoice.getCODE());
+                }
+            }
+            if (testVO.getSubjectiveRedisId() == 0 && !CollectionUtils.isEmpty(testVO.getSubjectiveIdList())) {
+                if (!CollectionUtils.isEmpty(testVO.getSubjectiveIdList())) {
+
+                    testDao.insertTestQuestion(testVO.getId(), testVO.getSubjectiveIdList(), testVO.getSubjectiveScore(), QuestionType.Subjective.getCODE());
+                }
             }
 
-            return null;
-        }catch (Exception e){
-            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG,"新建考试失败！");
+            return ResultData.newSuccessResultData();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR, "新建考试失败！");
         }
 
     }
@@ -128,7 +147,7 @@ public class TestServiceImpl implements TestService {
     @Override
     public ResultData uploadChoice(MultipartFile file, String type) {
         try {
-            ResultData resultData = ImportUtil.checkImportChoice(file, type);
+            ResultData resultData = importUtil.checkImportChoice(file, type);
             if (resultData.getData() == null) {
                 return resultData;
             }
@@ -141,21 +160,22 @@ public class TestServiceImpl implements TestService {
             if (type.equals(QuestionType.SingleChoice.getCODE())) {
                 long singleRedisId = SnowflakeIdWorker.nextId();
                 redisTemplate.opsForValue().set(singleRedisId, choiceList);
-                redisTemplate.expire(singleRedisId,1, TimeUnit.HOURS);
+                redisTemplate.expire(singleRedisId, 1, TimeUnit.HOURS);
                 map.put(singleRedisId, choiceList.size());
             } else if (type.equals(QuestionType.JudgeChoice.getCODE())) {
                 long judgeRedisId = SnowflakeIdWorker.nextId();
                 redisTemplate.opsForValue().set(judgeRedisId, choiceList);
-                redisTemplate.expire(judgeRedisId,1, TimeUnit.HOURS);
+                redisTemplate.expire(judgeRedisId, 1, TimeUnit.HOURS);
                 map.put(judgeRedisId, choiceList.size());
             } else if (type.equals(QuestionType.MultipleChoice.getCODE())) {
                 long multipleRedisId = SnowflakeIdWorker.nextId();
                 redisTemplate.opsForValue().set(multipleRedisId, choiceList);
-                redisTemplate.expire(multipleRedisId,1, TimeUnit.HOURS);
+                redisTemplate.expire(multipleRedisId, 1, TimeUnit.HOURS);
                 map.put(multipleRedisId, choiceList.size());
             }
             return ResultData.newSuccessResultData(map);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResultData.newResultData(ErrorCode.FAILOR, "上传失败！");
         }
     }
@@ -164,17 +184,18 @@ public class TestServiceImpl implements TestService {
     public ResultData uploadSubjective(MultipartFile file, String type) {
         try {
             long subjectiveRedisId = SnowflakeIdWorker.nextId();
-            ResultData resultData = ImportUtil.checkImportSubjective(file, type);
+            ResultData resultData = importUtil.checkImportSubjective(file, type);
             if (resultData.getData() == null) {
                 return resultData;
             }
             List<Subjective> subjectiveList = (List<Subjective>) resultData.getData();
             redisTemplate.opsForValue().set(subjectiveRedisId, subjectiveList);
-            redisTemplate.expire(subjectiveRedisId,1, TimeUnit.HOURS);
+            redisTemplate.expire(subjectiveRedisId, 1, TimeUnit.HOURS);
             HashMap<Long, Integer> map = new HashMap<>();
             map.put(subjectiveRedisId, subjectiveList.size());
             return ResultData.newSuccessResultData(map);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResultData.newResultData(ErrorCode.FAILOR, "上传失败！");
         }
     }
