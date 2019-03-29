@@ -161,6 +161,7 @@
         <result column="status" property="status" jdbcType="CHAR"/>
         <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="test_time" property="testTime" jdbcType="INTEGER"/>
         <collection property="questionNo" ofType="java.lang.Long" javaType="java.util.List">
             <result column="question_no"/>
         </collection>
