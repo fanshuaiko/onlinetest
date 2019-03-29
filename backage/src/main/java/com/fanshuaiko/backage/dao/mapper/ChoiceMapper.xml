@@ -188,10 +188,40 @@
         update_time)
         values
         <foreach collection="choiceList" item="item" index="index" separator=",">
-            (#{item.id}, #{item.question,}, #{item.choiceA},
-            #{item.choiceB,}, #{item.choiceC}, #{item.choiceD},
-            #{item.answer},#{item.courseName}, #{item.type}, now(),
-            now())
+
+            <if test="id != null">
+                id = #{item.id,jdbcType=BIGINT},
+            </if>
+            <if test="question != null">
+                question = #{item.question,jdbcType=VARCHAR},
+            </if>
+            <if test="choiceA != null">
+                choice_a = #{item.choiceA,jdbcType=VARCHAR},
+            </if>
+            <if test="choiceB != null">
+                choice_b = #{item.choiceB,jdbcType=VARCHAR},
+            </if>
+            <if test="choiceC != null">
+                choice_c = #{item.choiceC,jdbcType=VARCHAR},
+            </if>
+            <if test="choiceD != null">
+                choice_d = #{item.choiceD,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                answer = #{item.answer,jdbcType=VARCHAR},
+            </if>
+            <if test="courseName != null">
+                courseName = #{item.courseName,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{item.type,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = now(),
+            </if>
+            <if test="updateTime != null">
+                updateTime = now(),
+            </if>
         </foreach>
     </insert>
 </mapper>
