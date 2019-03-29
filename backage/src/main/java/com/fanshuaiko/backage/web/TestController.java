@@ -45,6 +45,22 @@ public class TestController {
     }
 
     /**
+     * 删除考试
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/test/{id}")
+    public ResultData deleteTest(@PathVariable("id") Long id){
+        try {
+            ResultData resultData = testService.deleteTest(id);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------test/deleteTest:--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR, ErrorCode.ADD_FAILOR_MSG);
+        }
+    }
+    /**
      * 上传选择题，缓存到redis
      * @param file
      * @param type
