@@ -1,6 +1,7 @@
 package com.fanshuaiko.backage.dao;
 
 import com.fanshuaiko.backage.entity.Test;
+import com.fanshuaiko.backage.entity.VO.TestReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,4 +30,6 @@ public interface TestDao {
 
     int insertTestQuestion(@Param("testNo") long testNo, @Param("questionNoList") List<Long> questionNoList,
                            @Param("score") int score, @Param("questionType") String questionType); //保存考试题目信息到test_question 表
+
+    List<TestReturnVo> queryByTeacherNo(String teacherNo); //根据教师编号查询考试信息
 }
