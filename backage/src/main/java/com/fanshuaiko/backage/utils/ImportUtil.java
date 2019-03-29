@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -21,28 +23,28 @@ import java.util.List;
  * @Author fanshuaiko
  * @Date 19-3-27 下午4:05
  * @Version 1.0
- *
+ * <p>
  * * 为什么这样写：
- *  *      因为在ImportUtil中注入了CourseDao并使用其方法来对上传文件中的所属课程与数据对比看是否正确
- *  *      所以在使用ImportUtil的时候就不能使用new方法或者使用将方法static提供给其他类使用
- *  *      不然会导致CourseDao注入失败
- *  所以目前我的解决办法是继承interface，在需要用的地方注入ImportUtilService来调用相关的方法
+ * *      因为在ImportUtil中注入了CourseDao并使用其方法来对上传文件中的所属课程与数据对比看是否正确
+ * *      所以在使用ImportUtil的时候就不能使用new方法或者使用将方法static提供给其他类使用
+ * *      不然会导致CourseDao注入失败
+ * 所以目前我的解决办法是继承interface，在需要用的地方注入ImportUtilService来调用相关的方法
  **/
 @Service
-public class ImportUtil implements ImportUtilService{
+public class ImportUtil implements ImportUtilService {
 
     @Autowired
     private CourseDao courseDao;
 
     //选择题上传文件解析
-    public  ResultData checkImportChoice(MultipartFile file, String type) {
+    public ResultData checkImportChoice(MultipartFile file, String type) {
         ImportParams importParams = new ImportParams();
         importParams.setTitleRows(1);
         importParams.setHeadRows(1);
         try {
             List<Choice> choiceList = ExcelImportUtil.importExcel(file.getInputStream(), Choice.class, importParams);
             //去除空元素
-            choiceList.removeAll(Collections.singleton(null));
+            removeNullObj(choiceList);
             //判断上传文件是否为空
             if (choiceList.isEmpty()) {
                 return ResultData.newResultData(ErrorCode.FAILOR, "导入数据失败，数据不能为空，请检查后重新导入");
@@ -94,7 +96,7 @@ public class ImportUtil implements ImportUtilService{
     }
 
     //判断上传的选择题表格的每一列是否为空
-    public  ResultData<String> checkChoiceNull(Choice choice, String type) {
+    public ResultData<String> checkChoiceNull(Choice choice, String type) {
         if (StringUtils.isEmpty(choice.getQuestion())) {
             return ResultData.newResultData(ErrorCode.FAILOR, "题目不能为空！");
         } else if (StringUtils.isEmpty(choice.getChoiceA())) {
@@ -116,14 +118,14 @@ public class ImportUtil implements ImportUtilService{
     }
 
     //主观题上传文件解析
-    public  ResultData checkImportSubjective(MultipartFile file, String type) {
+    public ResultData checkImportSubjective(MultipartFile file, String type) {
         ImportParams importParams = new ImportParams();
         importParams.setTitleRows(1);
         importParams.setHeadRows(1);
         try {
             List<Subjective> subjectiveList = ExcelImportUtil.importExcel(file.getInputStream(), Subjective.class, importParams);
             //去除空元素
-            subjectiveList.removeAll(Collections.singleton(null));
+            removeNullObj(subjectiveList);
             //判断上传文件是否为空
             if (subjectiveList.isEmpty()) {
                 return ResultData.newResultData(ErrorCode.FAILOR, "导入数据失败，数据不能为空，请检查后重新导入");
@@ -145,7 +147,7 @@ public class ImportUtil implements ImportUtilService{
     }
 
     //判断上传的选择题表格的每一列是否为空
-    public  ResultData<String> checkSubjectiveNull(Subjective subjective, String type) {
+    public ResultData<String> checkSubjectiveNull(Subjective subjective, String type) {
         if (StringUtils.isEmpty(subjective.getQuestion())) {
             return ResultData.newResultData(ErrorCode.FAILOR, "题目不能为空！");
         } else if (StringUtils.isEmpty(subjective.getAnswer())) {
@@ -157,4 +159,30 @@ public class ImportUtil implements ImportUtilService{
         }
         return null;
     }
+
+    //去除集合中的空对象
+    public static void removeNullObj(List list) {
+        try {
+            LinkedList<Object> objects = new LinkedList<>();
+            for (Object obj : list) {
+                int count =0;
+                Field[] declaredFields = obj.getClass().getDeclaredFields();
+                int length = declaredFields.length;
+                for (Field field : declaredFields) {
+                    field.setAccessible(true);
+                    if (field.get(obj) == null) {
+                        count+=1;
+                    }
+                }
+                if(count==length){
+                    objects.add(obj);
+                }
+            }
+            list.removeAll(objects);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
