@@ -2,6 +2,7 @@ package com.fanshuaiko.backage.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 
+import java.io.Serializable;
 import java.util.Date;
 /**
  * @ClassName Choice
@@ -10,7 +11,7 @@ import java.util.Date;
  * @Date 19-3-20 下午2:20
  * @Version 1.0
  **/
-public class Choice {
+public class Choice implements Serializable {
 
     private Long id; //snowflake算法生成主键
 
