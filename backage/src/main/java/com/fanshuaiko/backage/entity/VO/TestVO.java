@@ -1,7 +1,6 @@
 package com.fanshuaiko.backage.entity.VO;
 
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,13 +19,13 @@ public class TestVO {
 
     private String teacherNo; //任课教师id，也是创建考试的教师
 
-    private String totalScore; //考试总分
+    private int totalScore; //考试总分
 
     private String status; //考试状态,0.未开始，1.进行中，3.已结束
 
-    private Date startTime; //开考时间
+    private String startTime; //开考时间
 
-    private Date endTime; //结束时间
+    private String endTime; //结束时间
 
     private long singleRedisId; //保存在redis中的单选题id
 
@@ -86,11 +85,11 @@ public class TestVO {
         this.teacherNo = teacherNo;
     }
 
-    public String getTotalScore() {
+    public int getTotalScore() {
         return totalScore;
     }
 
-    public void setTotalScore(String totalScore) {
+    public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
     }
 
@@ -102,19 +101,19 @@ public class TestVO {
         this.status = status;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
