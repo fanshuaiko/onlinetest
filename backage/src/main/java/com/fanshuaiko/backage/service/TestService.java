@@ -28,7 +28,7 @@ public interface TestService {
      * @param type
      * @return
      */
-    ResultData uploadChoice(MultipartFile file,String type);
+    ResultData uploadChoice(MultipartFile file, String type);
 
     /**
      * 上传主观题，缓存到redis
@@ -37,5 +37,13 @@ public interface TestService {
      * @param type
      * @return
      */
-    ResultData uploadSubjective(MultipartFile file,String type);
+    ResultData uploadSubjective(MultipartFile file, String type);
+
+    /**
+     * 删除考试
+     *
+     * @param id
+     * @return
+     */
+    ResultData deleteTest(Long id);
 }

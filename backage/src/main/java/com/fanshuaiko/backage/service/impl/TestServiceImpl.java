@@ -200,6 +200,12 @@ public class TestServiceImpl implements TestService {
         }
     }
 
+    @Override
+    public ResultData deleteTest(Long id) {
+        int i = testDao.deleteByPrimaryKey(id);
+        return ResultData.newSuccessResultData(i);
+    }
+
     public List<Long> returnIdFromObj(List<Choice> list) {
         LinkedList<Long> ids = new LinkedList<>();
         for (Choice choice : list) {
