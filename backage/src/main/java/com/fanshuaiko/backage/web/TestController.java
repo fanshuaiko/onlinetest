@@ -7,10 +7,9 @@ import com.fanshuaiko.backage.utils.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 
 /**
  * @ClassName TestController
@@ -34,7 +33,7 @@ public class TestController {
      * @return
      */
     @PostMapping("/test")
-    public ResultData createTest(TestVO testVo) {
+    public ResultData createTest(@RequestBody TestVO testVo) {
         try {
             ResultData resultData = testService.createTest(testVo);
             return resultData;
