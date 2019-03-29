@@ -29,6 +29,7 @@ public class TestController {
 
     /**
      * 新建考试
+     *
      * @param testVo
      * @return
      */
@@ -46,11 +47,12 @@ public class TestController {
 
     /**
      * 删除考试
+     *
      * @param id
      * @return
      */
     @DeleteMapping("/test/{id}")
-    public ResultData deleteTest(@PathVariable("id") Long id){
+    public ResultData deleteTest(@PathVariable("id") Long id) {
         try {
             ResultData resultData = testService.deleteTest(id);
             return resultData;
@@ -60,14 +62,37 @@ public class TestController {
             return ResultData.newResultData(ErrorCode.ADD_FAILOR, ErrorCode.ADD_FAILOR_MSG);
         }
     }
+
+    /**
+     * 根据教师编号分页查询考试
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param teacherNo
+     * @return
+     */
+    @GetMapping("/test/{pageNum}/{pageSize}/{teacherNo}")
+    public ResultData pageQueryTest(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize,
+                                    @PathVariable("teacherNo") String teacherNo) {
+        try {
+            ResultData resultData = testService.pageQueryTest(pageNum, pageSize, teacherNo);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------test/pageQueryTest:--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
+        }
+    }
+
     /**
      * 上传选择题，缓存到redis
+     *
      * @param file
      * @param type
      * @return
      */
     @PostMapping("/choice")
-    public ResultData uploadChoice(MultipartFile file,String type){
+    public ResultData uploadChoice(MultipartFile file, String type) {
         try {
             ResultData resultData = testService.uploadChoice(file, type);
             return resultData;
@@ -80,12 +105,13 @@ public class TestController {
 
     /**
      * 上传主观题，缓存到redis
+     *
      * @param file
      * @param type
      * @return
      */
     @PostMapping("/subjective")
-    public ResultData uploadSubjective(MultipartFile file,String type){
+    public ResultData uploadSubjective(MultipartFile file, String type) {
         try {
             ResultData resultData = testService.uploadSubjective(file, type);
             return resultData;

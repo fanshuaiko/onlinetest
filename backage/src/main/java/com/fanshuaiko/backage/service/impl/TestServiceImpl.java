@@ -7,10 +7,13 @@ import com.fanshuaiko.backage.dict.QuestionType;
 import com.fanshuaiko.backage.dict.TestStatus;
 import com.fanshuaiko.backage.entity.Choice;
 import com.fanshuaiko.backage.entity.Subjective;
+import com.fanshuaiko.backage.entity.VO.TestReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestVO;
 import com.fanshuaiko.backage.service.TestService;
 import com.fanshuaiko.backage.utils.*;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,6 +208,15 @@ public class TestServiceImpl implements TestService {
         int i = testDao.deleteByPrimaryKey(id);
         return ResultData.newSuccessResultData(i);
     }
+
+    @Override
+    public ResultData pageQueryTest(int pageNum, int pageSize, String teacherNo) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<TestReturnVo> testVOList = testDao.queryByTeacherNo(teacherNo);
+        PageInfo<TestReturnVo> info = new PageInfo<>(testVOList);
+        return ResultData.newSuccessResultData(info);
+    }
+
 
     public List<Long> returnIdFromObj(List<Choice> list) {
         LinkedList<Long> ids = new LinkedList<>();

@@ -46,4 +46,14 @@ public interface TestService {
      * @return
      */
     ResultData deleteTest(Long id);
+
+    /**
+     * 根据教师编号分页查询考试
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param teacherNo
+     * @return
+     */
+    ResultData pageQueryTest(int pageNum, int pageSize, String teacherNo);
 }
