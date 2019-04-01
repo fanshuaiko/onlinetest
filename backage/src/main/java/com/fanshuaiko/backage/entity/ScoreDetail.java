@@ -1,7 +1,13 @@
 package com.fanshuaiko.backage.entity;
 
 import java.util.Date;
-
+/**
+ * @ClassName ScoreDetail
+ * @Description 详细得分实体类
+ * @Author fanshuaiko
+ * @Date 19-3-15 上午10:40
+ * @Version 1.0
+ **/
 public class ScoreDetail {
     private Long id;
 
