@@ -12,8 +12,17 @@ import com.fanshuaiko.backage.utils.ResultData;
 public interface ClassService {
     /**
      * 根据学校编码查询学院
+     *
      * @param college_no
      * @return
      */
     ResultData queryInstituteByCollegeNo(String college_no);
+
+    /**
+     * 根据学院编码查询专业
+     *
+     * @param instituteNo
+     * @return
+     */
+    ResultData queryMajorByInstituteNo(String instituteNo);
 }

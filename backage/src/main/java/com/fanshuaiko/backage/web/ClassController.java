@@ -28,18 +28,37 @@ public class ClassController {
 
     /**
      * 根据学校编码查询学院
-     * @param college_no
+     *
+     * @param collegeNo
      * @return
      */
-    @GetMapping("/college/{college_no}")
-    public ResultData queryInstituteByCollegeNo(@PathVariable("college_no") String college_no) {
+    @GetMapping("/institute/{collegeNo}")
+    public ResultData queryInstituteByCollegeNo(@PathVariable("collegeNo") String collegeNo) {
         try {
-            ResultData resultData = classService.queryInstituteByCollegeNo(college_no);
+            ResultData resultData = classService.queryInstituteByCollegeNo(collegeNo);
             return resultData;
         } catch (Exception e) {
-            log.info("--------test/createTest:--------");
+            log.info("--------class/queryInstituteByCollegeNo:--------");
             e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.ADD_FAILOR, ErrorCode.ADD_FAILOR_MSG);
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
+        }
+    }
+
+    /**
+     * 根据学院编码查询专业
+     *
+     * @param instituteNo
+     * @return
+     */
+    @GetMapping("/major/{instituteNo}")
+    public ResultData queryMajorByInstituteNo(@PathVariable("instituteNo") String instituteNo) {
+        try {
+            ResultData resultData = classService.queryMajorByInstituteNo(instituteNo);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------class/queryMajorByInstituteNo:--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }
     }
 }
