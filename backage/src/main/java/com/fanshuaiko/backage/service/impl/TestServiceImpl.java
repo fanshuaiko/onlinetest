@@ -7,6 +7,8 @@ import com.fanshuaiko.backage.dict.QuestionType;
 import com.fanshuaiko.backage.dict.TestStatus;
 import com.fanshuaiko.backage.entity.Choice;
 import com.fanshuaiko.backage.entity.Subjective;
+import com.fanshuaiko.backage.entity.TestQuestion;
+import com.fanshuaiko.backage.entity.VO.QuestionReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestVO;
 import com.fanshuaiko.backage.service.TestService;
@@ -215,6 +217,44 @@ public class TestServiceImpl implements TestService {
         List<TestReturnVo> testVOList = testDao.queryByTeacherNo(teacherNo);
         PageInfo<TestReturnVo> info = new PageInfo<>(testVOList);
         return ResultData.newSuccessResultData(info);
+    }
+
+    @Override
+    public ResultData queryQuestionDetail(long testNo) {
+        LinkedList<QuestionReturnVo> questionReturnVos = new LinkedList<>();
+        List<TestQuestion> testQuestions = testDao.queryTestQuestion(testNo);
+        QuestionReturnVo questionReturnVo ;
+        for (TestQuestion testQuestion : testQuestions) {
+            if(testQuestion.getQuestionType().equals(QuestionType.Subjective.getCODE())){
+                questionReturnVo = new QuestionReturnVo();
+                Subjective subjective = subjectiveDao.selectByPrimaryKey(testQuestion.getQuestionNo());
+                questionReturnVo.setId(subjective.getId());
+                questionReturnVo.setQuestion(subjective.getQuestion());
+                questionReturnVo.setAnswer(subjective.getAnswer());
+                questionReturnVo.setCourseName(subjective.getCourseName());
+                questionReturnVo.setScore(testQuestion.getScore());
+                questionReturnVo.setType(testQuestion.getQuestionType());
+                questionReturnVo.setCreateTime(subjective.getCreateTime());
+                questionReturnVo.setUpdateTime(subjective.getUpdateTime());
+                questionReturnVos.add(questionReturnVo);
+            }else{
+                questionReturnVo = new QuestionReturnVo();
+                Choice choice = choiceDao.selectByPrimaryKey(testQuestion.getQuestionNo());
+                questionReturnVo.setId(choice.getId());
+                questionReturnVo.setQuestion(choice.getQuestion());
+                questionReturnVo.setChoiceA(choice.getChoiceA());
+                questionReturnVo.setChoiceB(choice.getChoiceB());
+                questionReturnVo.setChoiceC(choice.getChoiceC());
+                questionReturnVo.setChoiceD(choice.getChoiceD());
+                questionReturnVo.setCourseName(choice.getCourseName());
+                questionReturnVo.setCreateTime(choice.getCreateTime());
+                questionReturnVo.setUpdateTime(choice.getUpdateTime());
+                questionReturnVo.setScore(testQuestion.getScore());
+                questionReturnVo.setType(testQuestion.getQuestionType());
+                questionReturnVos.add(questionReturnVo);
+            }
+        }
+        return ResultData.newSuccessResultData(questionReturnVos);
     }
 
 

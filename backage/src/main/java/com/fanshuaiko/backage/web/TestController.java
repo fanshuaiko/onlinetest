@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 /**
  * @ClassName TestController
@@ -119,6 +121,24 @@ public class TestController {
             log.info("--------test/uploadSubjective:--------");
             e.printStackTrace();
             return ResultData.newResultData(ErrorCode.FAILOR, "上传失败！");
+        }
+    }
+
+    /**
+     * 根据题目id查询题目细节
+     *
+     * @param testNo
+     * @return
+     */
+    @GetMapping("/questionDetail/{testNo}")
+    public ResultData queryQuestionDetail(@PathVariable("testNo") long testNo) {
+        try {
+            ResultData resultData = testService.queryQuestionDetail(testNo);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------question:queryQuestionDetail--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
         }
     }
 }

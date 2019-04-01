@@ -4,6 +4,8 @@ import com.fanshuaiko.backage.entity.VO.TestVO;
 import com.fanshuaiko.backage.utils.ResultData;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * @ClassName TestService
  * @Description
@@ -56,4 +58,12 @@ public interface TestService {
      * @return
      */
     ResultData pageQueryTest(int pageNum, int pageSize, String teacherNo);
+
+    /**
+     * 根据题目id查询题目细节
+     *
+     * @param testNo
+     * @return
+     */
+    ResultData queryQuestionDetail(long testNo);
 }
