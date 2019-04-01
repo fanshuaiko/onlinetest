@@ -1,13 +1,7 @@
 package com.fanshuaiko.backage.entity;
 
 import java.util.Date;
-/**
- * @ClassName ScoreDetail
- * @Description 得分详细实体类
- * @Author fanshuaiko
- * @Date 19-3-15 上午10:40
- * @Version 1.0
- **/
+
 public class ScoreDetail {
     private Long id;
 
@@ -20,6 +14,8 @@ public class ScoreDetail {
     private String studentScore;
 
     private String questionType;
+
+    private String flag; //0.未批改，1.已批改
 
     private Date createTime;
 
@@ -71,6 +67,14 @@ public class ScoreDetail {
 
     public void setQuestionType(String questionType) {
         this.questionType = questionType == null ? null : questionType.trim();
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag == null ? null : flag.trim();
     }
 
     public Date getCreateTime() {
