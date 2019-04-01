@@ -17,4 +17,6 @@ public interface PaperService {
      * @return
      */
     ResultData queryScoreDetail(long testNo);
+
+    ResultData saveStudentScoreDetail(long id,int score);
 }

@@ -28,4 +28,10 @@ public class PaperServiceImpl implements PaperService {
         }
         return ResultData.newSuccessResultData(scoreDetailReturnVo);
     }
+
+    @Override
+    public ResultData saveStudentScoreDetail(long id,int score) {
+        int i = scoreDetailDao.updateStudentScoreById(id,score);
+        return ResultData.newSuccessResultData(i);
+    }
 }

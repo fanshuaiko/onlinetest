@@ -106,4 +106,10 @@
         left join test_question tq on tq.question_no = s.id
         where sd.test_no = #{testNo} and sd.question_type = '4' and sd.flag = '0' limit 1
     </select>
+
+    <update id="updateStudentScoreById">
+        update score_detail
+        set student_score = #{score}
+        where id = #{id}
+    </update>
 </mapper>

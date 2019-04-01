@@ -6,10 +6,7 @@ import com.fanshuaiko.backage.utils.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName PaperController
@@ -41,6 +38,24 @@ public class PaperController {
             log.info("--------paper:queryScoreDetail--------");
             e.printStackTrace();
             return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
+        }
+    }
+
+    /**
+     * 根据score_detail的id更新学生题目得分
+     * @param id
+     * @param score
+     * @return
+     */
+    @PostMapping("/scoreDetail/{id}/{score}")
+    public ResultData saveStudentScoreDetail(@PathVariable("id") long id,@PathVariable("score") int score){
+        try {
+            ResultData resultData = paperService.saveStudentScoreDetail(id,score);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------paper:saveStudentScoreDetail--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR, ErrorCode.ADD_FAILOR_MSG);
         }
     }
 
