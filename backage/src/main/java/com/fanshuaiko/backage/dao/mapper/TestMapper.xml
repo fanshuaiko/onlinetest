@@ -198,7 +198,14 @@ where
 	t.teacher_no = #{teacherNo}
     </select>
 
-<select id="queryTestQuestion" parameterType="java.lang.Long" resultType="com.fanshuaiko.backage.entity.TestQuestion">
-    select * from test_question where test_no = #{testNo}
+    <select id="queryTestQuestion" parameterType="java.lang.Long"
+            resultType="com.fanshuaiko.backage.entity.TestQuestion">
+    select id,
+    test_no as testNo,
+    question_no as questionNo,
+    score,
+    question_type as questionType
+    from test_question
+    where test_no = #{testNo}
 </select>
 </mapper>
