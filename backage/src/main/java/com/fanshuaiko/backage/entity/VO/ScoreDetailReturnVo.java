@@ -13,7 +13,7 @@ public class ScoreDetailReturnVo {
     private String questionName; //题目名称
     private String studentAnswer; //学生答案
     private String answer; //正确答案
-    private String questionScore; //题目分值
+    private int questionScore; //题目分值
     private String questionType; //题目类型
     private String flag; //0.未批改，1.已批改
 
@@ -57,11 +57,11 @@ public class ScoreDetailReturnVo {
         this.answer = answer;
     }
 
-    public String getQuestionScore() {
+    public int getQuestionScore() {
         return questionScore;
     }
 
-    public void setQuestionScore(String questionScore) {
+    public void setQuestionScore(int questionScore) {
         this.questionScore = questionScore;
     }
 
