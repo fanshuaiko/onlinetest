@@ -80,7 +80,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByCollegeNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="queryInstituteByCollegeNo" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from institute

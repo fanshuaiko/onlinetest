@@ -21,5 +21,5 @@ public interface InstituteDao {
 
     int updateByPrimaryKey(Institute record);
 
-    List<Institute> selectByCollegeNo(String collegeNo); //根据学校编码查询学院
+    List<Institute> queryInstituteByCollegeNo(String collegeNo); //根据学校编码查询学院
 }
