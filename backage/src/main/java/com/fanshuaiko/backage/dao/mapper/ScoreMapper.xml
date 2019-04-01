@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fanshuaiko.backage.dao.ScoreDao">
+  <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.Score">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="student_no" jdbcType="VARCHAR" property="studentNo" />
+    <result column="test_no" jdbcType="BIGINT" property="testNo" />
+    <result column="choice" jdbcType="INTEGER" property="choice" />
+    <result column="subjective" jdbcType="INTEGER" property="subjective" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, student_no, test_no, choice, subjective, total, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from score
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fanshuaiko.backage.entity.Score">
+    insert into score (id, student_no, test_no, 
+      choice, subjective, total, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{studentNo,jdbcType=VARCHAR}, #{testNo,jdbcType=BIGINT}, 
+      #{choice,jdbcType=INTEGER}, #{subjective,jdbcType=INTEGER}, #{total,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.Score">
+    insert into score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="studentNo != null">
+        student_no,
+      </if>
+      <if test="testNo != null">
+        test_no,
+      </if>
+      <if test="choice != null">
+        choice,
+      </if>
+      <if test="subjective != null">
+        subjective,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="studentNo != null">
+        #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="testNo != null">
+        #{testNo,jdbcType=BIGINT},
+      </if>
+      <if test="choice != null">
+        #{choice,jdbcType=INTEGER},
+      </if>
+      <if test="subjective != null">
+        #{subjective,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fanshuaiko.backage.entity.Score">
+    update score
+    <set>
+      <if test="studentNo != null">
+        student_no = #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="testNo != null">
+        test_no = #{testNo,jdbcType=BIGINT},
+      </if>
+      <if test="choice != null">
+        choice = #{choice,jdbcType=INTEGER},
+      </if>
+      <if test="subjective != null">
+        subjective = #{subjective,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.Score">
+    update score
+    set student_no = #{studentNo,jdbcType=VARCHAR},
+      test_no = #{testNo,jdbcType=BIGINT},
+      choice = #{choice,jdbcType=INTEGER},
+      subjective = #{subjective,jdbcType=INTEGER},
+      total = #{total,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
