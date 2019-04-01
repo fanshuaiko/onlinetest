@@ -25,4 +25,12 @@ public interface ClassService {
      * @return
      */
     ResultData queryMajorByInstituteNo(String instituteNo);
+
+    /**
+     * 根据专业编码询班级
+     *
+     * @param majorNo
+     * @return
+     */
+    ResultData queryClassByMajorNo(String majorNo);
 }

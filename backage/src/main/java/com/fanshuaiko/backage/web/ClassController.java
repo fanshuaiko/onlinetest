@@ -61,4 +61,22 @@ public class ClassController {
             return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }
     }
+
+    /**
+     * 根据专业编码询班级
+     *
+     * @param majorNo
+     * @return
+     */
+    @GetMapping("/class/{majorNo}")
+    public ResultData queryClassByMajorNo(@PathVariable("majorNo") String majorNo) {
+        try {
+            ResultData resultData = classService.queryClassByMajorNo(majorNo);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------class/queryClassByMajorNo:--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
+        }
+    }
 }

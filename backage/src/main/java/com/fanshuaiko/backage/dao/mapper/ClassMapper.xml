@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fanshuaiko.backage.dao.ClassDao">
+  <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.Class">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="class_co" jdbcType="CHAR" property="classCo" />
+    <result column="class_no" jdbcType="VARCHAR" property="classNo" />
+    <result column="major_no" jdbcType="VARCHAR" property="majorNo" />
+    <result column="institute_no" jdbcType="VARCHAR" property="instituteNo" />
+    <result column="college_no" jdbcType="CHAR" property="collegeNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, class_co, class_no, major_no, institute_no, college_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from class
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from class
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fanshuaiko.backage.entity.Class">
+    insert into class (id, class_co, class_no, 
+      major_no, institute_no, college_no
+      )
+    values (#{id,jdbcType=INTEGER}, #{classCo,jdbcType=CHAR}, #{classNo,jdbcType=VARCHAR}, 
+      #{majorNo,jdbcType=VARCHAR}, #{instituteNo,jdbcType=VARCHAR}, #{collegeNo,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.Class">
+    insert into class
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="classCo != null">
+        class_co,
+      </if>
+      <if test="classNo != null">
+        class_no,
+      </if>
+      <if test="majorNo != null">
+        major_no,
+      </if>
+      <if test="instituteNo != null">
+        institute_no,
+      </if>
+      <if test="collegeNo != null">
+        college_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="classCo != null">
+        #{classCo,jdbcType=CHAR},
+      </if>
+      <if test="classNo != null">
+        #{classNo,jdbcType=VARCHAR},
+      </if>
+      <if test="majorNo != null">
+        #{majorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="instituteNo != null">
+        #{instituteNo,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeNo != null">
+        #{collegeNo,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fanshuaiko.backage.entity.Class">
+    update class
+    <set>
+      <if test="classCo != null">
+        class_co = #{classCo,jdbcType=CHAR},
+      </if>
+      <if test="classNo != null">
+        class_no = #{classNo,jdbcType=VARCHAR},
+      </if>
+      <if test="majorNo != null">
+        major_no = #{majorNo,jdbcType=VARCHAR},
+      </if>
+      <if test="instituteNo != null">
+        institute_no = #{instituteNo,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeNo != null">
+        college_no = #{collegeNo,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.Class">
+    update class
+    set class_co = #{classCo,jdbcType=CHAR},
+      class_no = #{classNo,jdbcType=VARCHAR},
+      major_no = #{majorNo,jdbcType=VARCHAR},
+      institute_no = #{instituteNo,jdbcType=VARCHAR},
+      college_no = #{collegeNo,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryClassByMajorNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from class
+    where major_no = #{majorNo}
+  </select>
+</mapper>
