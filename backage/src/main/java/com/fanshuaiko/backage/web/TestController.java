@@ -138,7 +138,7 @@ public class TestController {
         } catch (Exception e) {
             log.info("--------question:queryQuestionDetail--------");
             e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }
     }
 }

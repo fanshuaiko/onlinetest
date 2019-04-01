@@ -23,6 +23,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -213,7 +214,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public ResultData pageQueryTest(int pageNum, int pageSize, String teacherNo) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<TestReturnVo> testVOList = testDao.queryByTeacherNo(teacherNo);
         PageInfo<TestReturnVo> info = new PageInfo<>(testVOList);
         return ResultData.newSuccessResultData(info);
@@ -223,9 +224,9 @@ public class TestServiceImpl implements TestService {
     public ResultData queryQuestionDetail(long testNo) {
         LinkedList<QuestionReturnVo> questionReturnVos = new LinkedList<>();
         List<TestQuestion> testQuestions = testDao.queryTestQuestion(testNo);
-        QuestionReturnVo questionReturnVo ;
+        QuestionReturnVo questionReturnVo;
         for (TestQuestion testQuestion : testQuestions) {
-            if(testQuestion.getQuestionType().equals(QuestionType.Subjective.getCODE())){
+            if (testQuestion.getQuestionType().equals(QuestionType.Subjective.getCODE())) {
                 questionReturnVo = new QuestionReturnVo();
                 Subjective subjective = subjectiveDao.selectByPrimaryKey(testQuestion.getQuestionNo());
                 questionReturnVo.setId(subjective.getId());
@@ -237,15 +238,20 @@ public class TestServiceImpl implements TestService {
                 questionReturnVo.setCreateTime(subjective.getCreateTime());
                 questionReturnVo.setUpdateTime(subjective.getUpdateTime());
                 questionReturnVos.add(questionReturnVo);
-            }else{
+            } else {
                 questionReturnVo = new QuestionReturnVo();
                 Choice choice = choiceDao.selectByPrimaryKey(testQuestion.getQuestionNo());
                 questionReturnVo.setId(choice.getId());
                 questionReturnVo.setQuestion(choice.getQuestion());
                 questionReturnVo.setChoiceA(choice.getChoiceA());
                 questionReturnVo.setChoiceB(choice.getChoiceB());
-                questionReturnVo.setChoiceC(choice.getChoiceC());
-                questionReturnVo.setChoiceD(choice.getChoiceD());
+                if (!StringUtils.isEmpty(choice.getChoiceC())) {
+                    questionReturnVo.setChoiceC(choice.getChoiceC());
+                }
+                if (!StringUtils.isEmpty(choice.getChoiceD())) {
+                    questionReturnVo.setChoiceD(choice.getChoiceD());
+                }
+                questionReturnVo.setAnswer(choice.getAnswer());
                 questionReturnVo.setCourseName(choice.getCourseName());
                 questionReturnVo.setCreateTime(choice.getCreateTime());
                 questionReturnVo.setUpdateTime(choice.getUpdateTime());
