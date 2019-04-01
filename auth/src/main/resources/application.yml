@@ -1,0 +1,26 @@
+server:
+  port: 8082
+
+  #eureka注册中心
+eureka:
+  client:
+    eureka-server-u-r-l-context: http://localhost:8761/eureka/
+
+    #本应用的名称
+spring:
+  application:
+    name: auth
+
+
+  #redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+
+  #mysql8
+  datasource:
+    username: root
+    password: mysql123
+    url: jdbc:mysql://localhost:3306/gp?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
