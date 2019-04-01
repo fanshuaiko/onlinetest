@@ -8,6 +8,7 @@
     <result column="question_no" jdbcType="BIGINT" property="questionNo" />
     <result column="student_score" jdbcType="VARCHAR" property="studentScore" />
     <result column="question_type" jdbcType="CHAR" property="questionType" />
+    <result column="flag" jdbcType="CHAR" property="flag" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.fanshuaiko.backage.entity.ScoreDetail">
@@ -19,10 +20,12 @@
   <insert id="insert" parameterType="com.fanshuaiko.backage.entity.ScoreDetail">
     insert into score_detail (id, student_no, test_no, 
       question_no, student_score, question_type, 
-      create_time, student_answer)
+      flag, create_time, student_answer
+      )
     values (#{id,jdbcType=BIGINT}, #{studentNo,jdbcType=VARCHAR}, #{testNo,jdbcType=BIGINT}, 
       #{questionNo,jdbcType=BIGINT}, #{studentScore,jdbcType=VARCHAR}, #{questionType,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{studentAnswer,jdbcType=LONGVARCHAR})
+      #{flag,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{studentAnswer,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.ScoreDetail">
     insert into score_detail
@@ -44,6 +47,9 @@
       </if>
       <if test="questionType != null">
         question_type,
+      </if>
+      <if test="flag != null">
+        flag,
       </if>
       <if test="createTime != null">
         create_time,
@@ -70,6 +76,9 @@
       </if>
       <if test="questionType != null">
         #{questionType,jdbcType=CHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=CHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
