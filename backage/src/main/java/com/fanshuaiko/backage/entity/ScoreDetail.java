@@ -19,6 +19,8 @@ public class ScoreDetail {
 
     private String studentScore;
 
+    private int questionScore; //题目分值
+
     private String questionType;
 
     private String flag; //0.未批改，1.已批改
@@ -97,5 +99,29 @@ public class ScoreDetail {
 
     public void setStudentAnswer(String studentAnswer) {
         this.studentAnswer = studentAnswer == null ? null : studentAnswer.trim();
+    }
+
+    public int getQuestionScore() {
+        return questionScore;
+    }
+
+    public void setQuestionScore(int questionScore) {
+        this.questionScore = questionScore;
+    }
+
+    @Override
+    public String toString() {
+        return "ScoreDetail{" +
+                "id=" + id +
+                ", studentNo='" + studentNo + '\'' +
+                ", testNo=" + testNo +
+                ", questionNo=" + questionNo +
+                ", studentScore='" + studentScore + '\'' +
+                ", questionScore=" + questionScore +
+                ", questionType='" + questionType + '\'' +
+                ", flag='" + flag + '\'' +
+                ", createTime=" + createTime +
+                ", studentAnswer='" + studentAnswer + '\'' +
+                '}';
     }
 }
