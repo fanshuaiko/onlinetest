@@ -2,6 +2,7 @@ package com.fanshuaiko.backage.dao;
 
 import com.fanshuaiko.backage.entity.Score;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface ScoreDao {
 
     int updateByPrimaryKey(Score record);
 
-    int batchAdd(List<Score> scoreList); //批量保存总分
+    int batchAdd(@Param("scoreList") List<Score> scoreList); //批量保存总分
 }
