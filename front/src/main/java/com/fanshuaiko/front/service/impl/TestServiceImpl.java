@@ -1,7 +1,9 @@
 package com.fanshuaiko.front.service.impl;
 
+import com.fanshuaiko.front.dao.ScoreDetailDao;
 import com.fanshuaiko.front.dao.TestDao;
 import com.fanshuaiko.front.entity.Question;
+import com.fanshuaiko.front.entity.ScoreDetail;
 import com.fanshuaiko.front.entity.Test;
 import com.fanshuaiko.front.service.TestService;
 import com.fanshuaiko.front.utils.ResultData;
@@ -28,6 +30,8 @@ public class TestServiceImpl implements TestService {
     private TestDao testDao;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private ScoreDetailDao scoreDetailDao;
 
     @Override
     public ResultData queryTest(String studentNo) {
@@ -55,5 +59,11 @@ public class TestServiceImpl implements TestService {
 
         }
         return ResultData.newSuccessResultData(questionList);
+    }
+
+    @Override
+    public ResultData commitTest(List<ScoreDetail> scoreDetailList) {
+        int i = scoreDetailDao.batchAdd(scoreDetailList);
+        return ResultData.newSuccessResultData(i);
     }
 }

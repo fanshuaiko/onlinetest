@@ -1,6 +1,9 @@
 package com.fanshuaiko.front.service;
 
+import com.fanshuaiko.front.entity.ScoreDetail;
 import com.fanshuaiko.front.utils.ResultData;
+
+import java.util.List;
 
 /**
  * @ClassName TestService
@@ -25,4 +28,12 @@ public interface TestService {
      * @return
      */
     ResultData getQuestion(long testNo);
+
+    /**
+     * 提交考试，保存学生答题情况
+     *
+     * @param scoreDetailList
+     * @return
+     */
+    ResultData commitTest(List<ScoreDetail> scoreDetailList);
 }
