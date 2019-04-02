@@ -20,8 +20,8 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/test")
-public class testController {
-    private static Logger log = LoggerFactory.getLogger(testController.class);
+public class TestController {
+    private static Logger log = LoggerFactory.getLogger(TestController.class);
 
     @Autowired
     private TestService testService;
