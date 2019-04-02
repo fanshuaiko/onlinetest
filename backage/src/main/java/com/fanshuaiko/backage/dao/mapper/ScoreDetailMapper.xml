@@ -98,13 +98,12 @@
         s.question as questionName,
         sd.student_answer as studentAnswer,
         s.answer as answer,
-        tq.score as questionScore,
+        sd.question_score as questionScore,
         sd.question_type as questionType,
         sd.flag as flag
         from score_detail sd
         left join test t on t.id = #{testNo}
         left join subjective s on s.id = sd.question_no
-        left join test_question tq on tq.question_no = s.id
         where sd.test_no = #{testNo} and sd.question_type = '4' and sd.flag = '0' limit 1
     </select>
 
