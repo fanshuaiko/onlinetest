@@ -55,7 +55,7 @@ public class PaperController {
         } catch (Exception e) {
             log.info("--------paper:saveStudentScoreDetail--------");
             e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.ADD_FAILOR, ErrorCode.ADD_FAILOR_MSG);
+            return ResultData.newResultData(ErrorCode.UPDATE_FAILOR, ErrorCode.UPDATE_FAILOR_MSG);
         }
     }
 
