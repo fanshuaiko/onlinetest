@@ -18,6 +18,13 @@ spring:
     url: jdbc:mysql://localhost:3306/gp?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  #redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+
+
 #mybatis
 mybatis:
   mapper-locations: classpath:com/fanshuaiko/front/dao/mapper/*.xml
