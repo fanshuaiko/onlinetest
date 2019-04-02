@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -26,4 +28,6 @@ public interface ChoiceDao {
     List<Choice> queryByConditions(QuestionQueryTerm queryTerm); //多条件查询
 
     int batchAdd(@Param("choiceList") List<Choice> choiceList);//批量添加题目
+
+    List<Map<Long,String>> questionAnswerMap(@Param("ids") List<Long> ids); //根据题目id查询题目答案
 }

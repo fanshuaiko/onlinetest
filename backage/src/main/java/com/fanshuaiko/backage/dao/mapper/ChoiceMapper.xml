@@ -194,4 +194,11 @@
             now())
         </foreach>
     </insert>
+
+    <select id="questionAnswerMap" resultType="java.util.HashMap">
+        select id,answer from choice where id in
+        <foreach collection="ids" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
