@@ -19,4 +19,6 @@ public interface PaperService {
     ResultData queryScoreDetail(long testNo);
 
     ResultData saveStudentScoreDetail(long id,int score);
+
+    ResultData markChoice(long testNo);
 }

@@ -59,4 +59,20 @@ public class PaperController {
         }
     }
 
+    /**
+     * 批改该场考试的选择题
+     * @param testNo
+     * @return
+     */
+    @PostMapping("choice/{testNo}")
+    public ResultData markChoice(@PathVariable("testNo") long testNo){
+        try {
+            ResultData resultData = paperService.markChoice(testNo);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------paper:markChoice--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.FAILOR, "批改出现异常！");
+        }
+    }
 }
