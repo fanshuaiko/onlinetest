@@ -135,8 +135,31 @@
     where s.student_no = #{studentNo}
 </select>
 
+<select id="getSubjective" resultType="com.fanshuaiko.front.entity.Question" parameterType="java.lang.Long">
+    select
+    s.id as id,
+    s.question as question,
+    s.course_name as courseName,
+    s.type as type
+    from subjective s
+    left join test_question tq on tq.question_no = s.id
+    where tq.test_no = #{testNo}
+</select>
 
-
+    <select id="getChoice" resultType="com.fanshuaiko.front.entity.Question" parameterType="java.lang.Long">
+    select
+    c.id as id,
+    c.question as question,
+    c.choice_a as choiceA,
+    c.choice_b as choiceB,
+    c.choice_c as choiceC,
+    c.choice_d as choiceD,
+    c.course_name as courseName,
+    c.type as type
+    from choice c
+    left join test_question tq on tq.question_no = c.id
+    where tq.test_no = #{testNo}
+</select>
 
 
 </mapper>
