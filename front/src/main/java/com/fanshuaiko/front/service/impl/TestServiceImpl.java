@@ -10,7 +10,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -38,7 +37,9 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public ResultData getQuestion(long testNo) {
+        //从缓存获取题目
         List<Question> questionList = (List<Question>) redisTemplate.opsForValue().get(testNo);
+        //如果缓存中没有就冲数据库查询再放入缓存中
         if (CollectionUtils.isEmpty(questionList)) {
             questionList = new LinkedList<>();
             List<Question> choiceList = testDao.getChoice(testNo);
