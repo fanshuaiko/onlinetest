@@ -31,13 +31,30 @@ public class testController {
      * @param studentNo
      * @return
      */
-    @GetMapping("/{studentNo}")
+    @GetMapping("/student/{studentNo}")
     public ResultData queryTest(@PathVariable("studentNo") String studentNo){
         try {
             ResultData resultData = testService.queryTest(studentNo);
             return resultData;
         } catch (Exception e) {
             log.info("--------test/queryTest:--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
+        }
+    }
+
+    /**
+     * 根据考试编码查询该场考试的所有试题
+     * @param testNo
+     * @return
+     */
+    @GetMapping("/{testNo}")
+    public ResultData getQuestion(@PathVariable("testNo") long testNo){
+        try {
+            ResultData resultData = testService.getQuestion(testNo);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------test/getQuestion:--------");
             e.printStackTrace();
             return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }

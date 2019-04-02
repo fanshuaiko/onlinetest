@@ -18,4 +18,11 @@ public interface TestService {
      */
     ResultData queryTest(String studentNo);
 
+    /**
+     * 根据考试编码查询该场考试的所有试题
+     *
+     * @param testNo
+     * @return
+     */
+    ResultData getQuestion(long testNo);
 }
