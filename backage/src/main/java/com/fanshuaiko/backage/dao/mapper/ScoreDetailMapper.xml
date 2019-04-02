@@ -6,7 +6,8 @@
         <result column="student_no" jdbcType="VARCHAR" property="studentNo"/>
         <result column="test_no" jdbcType="BIGINT" property="testNo"/>
         <result column="question_no" jdbcType="BIGINT" property="questionNo"/>
-        <result column="student_score" jdbcType="VARCHAR" property="studentScore"/>
+        <result column="student_score" jdbcType="INTEGER" property="studentScore"/>
+        <result column="question_score" jdbcType="INTEGER" property="questionScore"/>
         <result column="question_type" jdbcType="CHAR" property="questionType"/>
         <result column="flag" jdbcType="CHAR" property="flag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -23,7 +24,7 @@
       flag, create_time, student_answer
       )
     values (#{id,jdbcType=BIGINT}, #{studentNo,jdbcType=VARCHAR}, #{testNo,jdbcType=BIGINT}, 
-      #{questionNo,jdbcType=BIGINT}, #{studentScore,jdbcType=VARCHAR}, #{questionType,jdbcType=CHAR}, 
+      #{questionNo,jdbcType=BIGINT}, #{studentScore,jdbcType=INTEGER}, #{questionType,jdbcType=CHAR},
       #{flag,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{studentAnswer,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -72,7 +73,7 @@
                 #{questionNo,jdbcType=BIGINT},
             </if>
             <if test="studentScore != null">
-                #{studentScore,jdbcType=VARCHAR},
+                #{studentScore,jdbcType=INTEGER},
             </if>
             <if test="questionType != null">
                 #{questionType,jdbcType=CHAR},
@@ -112,4 +113,13 @@
         set student_score = #{score}
         where id = #{id}
     </update>
+
+    <select id="queryAllByTestNo" resultMap="BaseResultMap">
+        select
+        id, student_no,
+        question_no, student_score,
+        student_answer
+        from score_detail
+        where test_no = #{test_no}
+    </select>
 </mapper>
