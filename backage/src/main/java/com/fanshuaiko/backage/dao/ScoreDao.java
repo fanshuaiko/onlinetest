@@ -4,6 +4,8 @@ import com.fanshuaiko.backage.entity.Score;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface ScoreDao {
@@ -18,4 +20,6 @@ public interface ScoreDao {
     int updateByPrimaryKeySelective(Score record);
 
     int updateByPrimaryKey(Score record);
+
+    int batchAdd(List<Score> scoreList); //批量保存总分
 }
