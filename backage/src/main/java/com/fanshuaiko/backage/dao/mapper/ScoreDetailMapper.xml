@@ -114,12 +114,29 @@
         where id = #{id}
     </update>
 
-    <select id="queryAllByTestNo" resultMap="BaseResultMap">
+    <select id="queryAllChoiceByTestNo" resultMap="BaseResultMap">
         select
-        id, student_no,
-        question_no, student_score,question_score
-        student_answer
+        id,
+        student_no,
+        question_no,
+        student_score,
+        question_score,
+        student_answer as studentAnswer
         from score_detail
-        where test_no = #{test_no}
+        where test_no = #{test_no} and question_type != '4' and flag = '0'
     </select>
+
+    <update id="batchUpdateStudentScore" parameterType="java.util.List">
+        update score_detail
+        set
+        flag = '1',
+        student_score =
+        <foreach collection="scoreDetails" item="item" index="index" separator=" " open="case ID" close="end">
+            when #{item.id} then #{item.studentScore}
+        </foreach>
+        where id in
+        <foreach collection="scoreDetails" index="index" item="item" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </update>
 </mapper>
