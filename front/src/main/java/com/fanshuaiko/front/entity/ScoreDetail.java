@@ -17,7 +17,7 @@ public class ScoreDetail {
 
     private Long questionNo;
 
-    private String studentScore;
+    private int studentScore;
 
     private String questionType;
 
@@ -59,12 +59,12 @@ public class ScoreDetail {
         this.questionNo = questionNo;
     }
 
-    public String getStudentScore() {
+    public int getStudentScore() {
         return studentScore;
     }
 
-    public void setStudentScore(String studentScore) {
-        this.studentScore = studentScore == null ? null : studentScore.trim();
+    public void setStudentScore(int studentScore) {
+        this.studentScore = studentScore;
     }
 
     public String getQuestionType() {
