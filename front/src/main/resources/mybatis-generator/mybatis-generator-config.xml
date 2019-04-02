@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+
+<generatorConfiguration>
+    <!-- 指定驱动文件的路径（也可以是相对路径） -->
+    <!--mysql 连接数据库jar 这里选择自己本地位置-->
+    <!--<classPathEntry location="/home/fan/.m2/repository/mysql/mysql-connector-java/8.0.15/mysql-connector-java-8.0.15.jar" />-->
+    <context id="mysql">
+        <!-- suppressDate :false时打开时间标志，true时关闭 -->
+        <!-- suppressAllComments :false时打开注释，true时关闭注释 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments"  value="true" />
+        </commentGenerator>
+
+        <!--数据库URL，用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/gp"
+                        userId="root"
+                        password="mysql123" />
+
+        <!-- mybatis里专门用来处理NUMERIC和INTEGER类型的策略 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 实体类生成配置,目标文件包和工程，注意maven工程结构目录下应该带上工程名和src/main/java-->
+        <javaModelGenerator targetPackage="com.fanshuaiko.front.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- mapper.xml文件生成配置,目标文件包和工程，注意maven工程结构目录下应该带上工程名和src/main/java-->
+        <sqlMapGenerator targetPackage="com.fanshuaiko.front.dao.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 接口生成配置,目标文件包和工程，注意maven工程结构目录下应该带上工程名和src/main/java-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.fanshuaiko.front.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 指定生成的表: tableName是数据库中的表名 domainObjectName是实体类名-->
+        <!-- mybatis generator代码生成器在默认的情况下会生成对于表实体类的一个Examle类,可以更改生成器的配置为false避免生成Examle类 -->
+        <!-- columnOverride:如果不存在则默认按数据库中字段类型创建实体类，如果存在则按以下指定的名称和类型创建实体类字段， -->
+        <!-- ignoreColumn:在实体类中不创建此属性 -->
+        <!--<table tableName="choice" domainObjectName="Choice" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <table tableName="score_detail" domainObjectName="ScoreDetail" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+
+    </context>
+</generatorConfiguration>
