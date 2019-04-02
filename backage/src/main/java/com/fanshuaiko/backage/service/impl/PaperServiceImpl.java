@@ -1,12 +1,15 @@
 package com.fanshuaiko.backage.service.impl;
 
 import com.fanshuaiko.backage.dao.ChoiceDao;
+import com.fanshuaiko.backage.dao.ScoreDao;
 import com.fanshuaiko.backage.dao.ScoreDetailDao;
 import com.fanshuaiko.backage.dao.TestDao;
+import com.fanshuaiko.backage.entity.Score;
 import com.fanshuaiko.backage.entity.ScoreDetail;
 import com.fanshuaiko.backage.entity.VO.ScoreDetailReturnVo;
 import com.fanshuaiko.backage.service.PaperService;
 import com.fanshuaiko.backage.utils.ResultData;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +36,17 @@ public class PaperServiceImpl implements PaperService {
     @Autowired
     private TestDao testDao;
 
+    @Autowired
+    private ScoreDao scoreDao;
+
     @Override
     public ResultData queryScoreDetail(long testNo) {
         ScoreDetailReturnVo scoreDetailReturnVo = scoreDetailDao.queryScoreDetail(testNo);
+        //返回null说明所有题目批改完成，开始统计总分
         if (null == scoreDetailReturnVo) {
-            return ResultData.newSuccessResultData("已经是最后一题！");
+            List<Score> scoreList = scoreDetailDao.sumTotalScore(testNo);
+            int count = scoreDao.batchAdd(scoreList);
+            return ResultData.newSuccessResultData("试卷全部批改完成，"+"共"+count+"套！");
         }
         return ResultData.newSuccessResultData(scoreDetailReturnVo);
     }
@@ -59,7 +68,7 @@ public class PaperServiceImpl implements PaperService {
         }
         List<ScoreDetail> scoreDetails = scoreDetailDao.queryAllChoiceByTestNo(testNo);
         for (ScoreDetail scoreDetail : scoreDetails) {
-            if (map.get(scoreDetail.getQuestionNo()).equals(scoreDetail.getStudentAnswer())){
+            if (map.get(scoreDetail.getQuestionNo()).equals(scoreDetail.getStudentAnswer())) {
                 scoreDetail.setStudentScore(scoreDetail.getQuestionScore());
             }
         }
