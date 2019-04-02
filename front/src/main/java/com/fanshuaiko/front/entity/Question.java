@@ -1,6 +1,8 @@
 package com.fanshuaiko.front.entity;
 
 
+import java.io.Serializable;
+
 /**
  * @ClassName Question
  * @Description 试题包装类
@@ -8,7 +10,7 @@ package com.fanshuaiko.front.entity;
  * @Date 19-4-2 上午10:00
  * @Version 1.0
  **/
-public class Question {
+public class Question implements Serializable {
 
     private Long id; //snowflake算法生成主键
 
