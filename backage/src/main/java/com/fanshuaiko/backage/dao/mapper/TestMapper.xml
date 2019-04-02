@@ -208,4 +208,8 @@ where
     from test_question
     where test_no = #{testNo}
 </select>
+
+    <select id="queryQuestionNos" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select question_no from test_question where test_no = #{test_no}
+    </select>
 </mapper>

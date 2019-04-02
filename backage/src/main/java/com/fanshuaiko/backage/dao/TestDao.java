@@ -35,4 +35,6 @@ public interface TestDao {
     List<TestReturnVo> queryByTeacherNo(String teacherNo); //根据教师编号查询考试信息
 
     List<TestQuestion> queryTestQuestion(long testNo); //根据testNo查询考试题目关系
+
+    List<Long> queryQuestionNos(Long testNo); //根据考试编号查询所有题目id
 }
