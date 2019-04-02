@@ -1,6 +1,5 @@
 package com.fanshuaiko.front.entity;
 
-import java.util.Date;
 /**
  * @ClassName ScoreDetail
  * @Description 题目得分
@@ -26,6 +25,8 @@ public class ScoreDetail {
     private String createTime;
 
     private String studentAnswer;
+
+    private int questionScore; //题目分值
 
     public Integer getId() {
         return id;
@@ -97,5 +98,29 @@ public class ScoreDetail {
 
     public void setStudentAnswer(String studentAnswer) {
         this.studentAnswer = studentAnswer == null ? null : studentAnswer.trim();
+    }
+
+    public int getQuestionScore() {
+        return questionScore;
+    }
+
+    public void setQuestionScore(int questionScore) {
+        this.questionScore = questionScore;
+    }
+
+    @Override
+    public String toString() {
+        return "ScoreDetail{" +
+                "id=" + id +
+                ", studentNo='" + studentNo + '\'' +
+                ", testNo=" + testNo +
+                ", questionNo=" + questionNo +
+                ", studentScore=" + studentScore +
+                ", questionType='" + questionType + '\'' +
+                ", flag='" + flag + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", studentAnswer='" + studentAnswer + '\'' +
+                ", questionScore=" + questionScore +
+                '}';
     }
 }
