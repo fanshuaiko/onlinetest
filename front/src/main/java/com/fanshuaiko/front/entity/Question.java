@@ -34,7 +34,7 @@ public class Question implements Serializable {
 
     private String updateTime; //修改时间
 
-    private int question_score; //题目分值
+    private int questionScore; //题目分值
 
     public Long getId() {
         return id;
@@ -124,12 +124,12 @@ public class Question implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public int getQuestion_score() {
-        return question_score;
+    public int getQuestionScore() {
+        return questionScore;
     }
 
-    public void setQuestion_score(int question_score) {
-        this.question_score = question_score;
+    public void setQuestionScore(int questionScore) {
+        this.questionScore = questionScore;
     }
 
     @Override
@@ -146,7 +146,7 @@ public class Question implements Serializable {
                 ", type='" + type + '\'' +
                 ", createTime='" + createTime + '\'' +
                 ", updateTime='" + updateTime + '\'' +
-                ", question_score=" + question_score +
+                ", questionScore=" + questionScore +
                 '}';
     }
 }
