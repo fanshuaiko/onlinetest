@@ -117,7 +117,7 @@
     <select id="queryAllByTestNo" resultMap="BaseResultMap">
         select
         id, student_no,
-        question_no, student_score,
+        question_no, student_score,question_score
         student_answer
         from score_detail
         where test_no = #{test_no}
