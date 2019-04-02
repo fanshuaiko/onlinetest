@@ -140,7 +140,8 @@
     s.id as id,
     s.question as question,
     s.course_name as courseName,
-    s.type as type
+    s.type as type,
+    tq.score as questionScore
     from subjective s
     left join test_question tq on tq.question_no = s.id
     where tq.test_no = #{testNo}
@@ -155,7 +156,8 @@
     c.choice_c as choiceC,
     c.choice_d as choiceD,
     c.course_name as courseName,
-    c.type as type
+    c.type as type,
+    tq.score as questionScore
     from choice c
     left join test_question tq on tq.question_no = c.id
     where tq.test_no = #{testNo}
