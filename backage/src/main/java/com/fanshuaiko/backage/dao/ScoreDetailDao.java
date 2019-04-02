@@ -1,5 +1,6 @@
 package com.fanshuaiko.backage.dao;
 
+import com.fanshuaiko.backage.entity.Score;
 import com.fanshuaiko.backage.entity.ScoreDetail;
 import com.fanshuaiko.backage.entity.VO.ScoreDetailReturnVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,4 +23,6 @@ public interface ScoreDetailDao {
     List<ScoreDetail> queryAllChoiceByTestNo(Long testNo); //根据考试编号查询所有选择题的得分信息
 
     int batchUpdateStudentScore(@Param("scoreDetails") List<ScoreDetail> scoreDetails); //批量更新学生得分
+
+    List<Score> sumTotalScore(long testNo); //统计每个人的总分
 }

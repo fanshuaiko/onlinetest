@@ -138,4 +138,14 @@
             #{item.id}
         </foreach>
     </update>
+
+    <select id="sumTotalScore" parameterType="com.fanshuaiko.backage.entity.Score">
+         select
+        student_no as studentNo,
+        test_no as testNo,
+        SUM(student_score) as total
+        from score_detail
+        where test_no = #{testNo}
+        group by student_no
+    </select>
 </mapper>
