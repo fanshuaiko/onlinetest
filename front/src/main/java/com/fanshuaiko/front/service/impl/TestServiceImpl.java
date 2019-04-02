@@ -39,13 +39,18 @@ public class TestServiceImpl implements TestService {
     @Override
     public ResultData getQuestion(long testNo) {
         List<Question> questionList = (List<Question>) redisTemplate.opsForValue().get(testNo);
-        if(CollectionUtils.isEmpty(questionList)){
+        if (CollectionUtils.isEmpty(questionList)) {
+            questionList = new LinkedList<>();
             List<Question> choiceList = testDao.getChoice(testNo);
             List<Question> subjectiveList = testDao.getSubjective(testNo);
-            questionList.addAll(choiceList);
-            questionList.addAll(subjectiveList);
-            redisTemplate.opsForValue().set(testNo,questionList);
-            redisTemplate.expire(testNo,1, TimeUnit.HOURS);
+            if (!CollectionUtils.isEmpty(choiceList)) {
+                questionList.addAll(choiceList);
+            }
+            if (!CollectionUtils.isEmpty(subjectiveList)) {
+                questionList.addAll(subjectiveList);
+            }
+            redisTemplate.opsForValue().set(testNo, questionList);
+            redisTemplate.expire(testNo, 1, TimeUnit.HOURS);
 
         }
         return ResultData.newSuccessResultData(questionList);
