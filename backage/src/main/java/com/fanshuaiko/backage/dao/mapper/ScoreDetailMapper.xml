@@ -108,8 +108,10 @@
     </select>
 
     <update id="updateStudentScoreById">
-        update score_detail
-        set student_score = #{score}
+        update
+        score_detail
+        set student_score = #{score},
+                flag = '1'
         where id = #{id}
     </update>
 
@@ -139,7 +141,7 @@
         </foreach>
     </update>
 
-    <select id="sumTotalScore" parameterType="com.fanshuaiko.backage.entity.Score">
+    <select id="sumTotalScore" resultType="com.fanshuaiko.backage.entity.Score">
          select
         student_no as studentNo,
         test_no as testNo,
