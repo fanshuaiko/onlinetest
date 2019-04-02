@@ -159,8 +159,8 @@
 
     <insert id="batchAdd" parameterType="com.fanshuaiko.front.entity.ScoreDetail">
         insert into score_detail (student_no, test_no,
-        question_no, student_score, question_type,
-        flag, create_time, student_answer
+        question_no, student_answer,student_score,question_score, question_type,
+        flag, create_time
         )
         values
         <foreach collection="scoreDetailList" item="item" index="index" separator=",">
@@ -168,11 +168,12 @@
             #{item.studentNo},
             #{item.testNo},
             #{item.questionNo},
+            #{item.studentAnswer},
             0,
+            #{item.questionScore},
             #{item.questionType},
             '0',
-            now(),
-            #{item.studentAnswer}
+            now()
             )
         </foreach>
     </insert>
