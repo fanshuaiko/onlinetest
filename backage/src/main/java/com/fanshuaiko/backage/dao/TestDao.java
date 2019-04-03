@@ -6,6 +6,7 @@ import com.fanshuaiko.backage.entity.VO.TestReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,4 +38,13 @@ public interface TestDao {
     List<TestQuestion> queryTestQuestion(long testNo); //根据testNo查询考试题目关系
 
     List<Long> queryQuestionNos(Long testNo); //根据考试编号查询所有题目id
+
+    @Select("select id,name,status,start_time as startTime,end_time as endTime from test where status !='2'")
+    List<Test> getAllTest();
+
+    @Select("update test set status = '1' where id = #{id}")
+    int setRunningStatus(Long id);
+
+    @Select("update test set status = '2' where id = #{id}")
+    int setFinishedStatus(Long id);
 }
