@@ -43,8 +43,8 @@ public interface TestDao {
     List<Test> getAllTest();
 
     @Select("update test set status = '1' where id = #{id}")
-    int setRunningStatus(Long id);
+    void setRunningStatus(Long id);
 
     @Select("update test set status = '2' where id = #{id}")
-    int setFinishedStatus(Long id);
+    void setFinishedStatus(Long id);
 }
