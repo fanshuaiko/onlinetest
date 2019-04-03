@@ -15,7 +15,7 @@ spring:
   datasource:
     username: root
     password: mysql123
-    url: jdbc:mysql://localhost:3306/gp?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/gp?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 #redis
