@@ -5,6 +5,7 @@ import com.fanshuaiko.front.dao.TestDao;
 import com.fanshuaiko.front.entity.Question;
 import com.fanshuaiko.front.entity.ScoreDetail;
 import com.fanshuaiko.front.entity.Test;
+import com.fanshuaiko.front.entity.vo.TestVo;
 import com.fanshuaiko.front.service.TestService;
 import com.fanshuaiko.front.utils.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public ResultData queryTest(String studentNo) {
-        List<Test> testList = testDao.queryTestByStudentNo(studentNo);
+        List<TestVo> testList = testDao.queryTestVoByStudentNo(studentNo);
         return ResultData.newSuccessResultData(testList);
     }
 

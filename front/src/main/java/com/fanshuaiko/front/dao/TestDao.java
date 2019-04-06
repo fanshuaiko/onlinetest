@@ -2,6 +2,7 @@ package com.fanshuaiko.front.dao;
 
 import com.fanshuaiko.front.entity.Question;
 import com.fanshuaiko.front.entity.Test;
+import com.fanshuaiko.front.entity.vo.TestVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,8 @@ public interface TestDao {
     int updateByPrimaryKey(Test record);
 
     List<Test> queryTestByStudentNo(String studentNo);
+
+    List<TestVo> queryTestVoByStudentNo(String studentNo);
 
     List<Question> getSubjective(long testNo);
 

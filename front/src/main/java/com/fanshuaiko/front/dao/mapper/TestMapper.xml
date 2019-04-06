@@ -135,6 +135,25 @@
     where s.student_no = #{studentNo}
 </select>
 
+    <select id="queryTestVoByStudentNo" parameterType="java.lang.String" resultType="com.fanshuaiko.front.entity.vo.TestVo">
+    select
+  	t.id as id,
+  	t.name as name,
+  	c.name as courseName,
+  	te.name as teacherName,
+  	t.total_score as totalScore,
+  	t.status as status,
+  	t.start_time as startTime,
+  	t.end_time as endTime,
+  	t.test_time as testTime
+    from test t
+    left join course c on c.id = t.course_id
+    left join teacher te on te.teacher_no = t.teacher_no
+    left join test_class tc on tc.test_no = t.id
+    left join student s on s.class_no = tc.class_no
+    where s.student_no = #{studentNo}
+</select>
+
 <select id="getSubjective" resultType="com.fanshuaiko.front.entity.Question" parameterType="java.lang.Long">
     select
     s.id as id,
