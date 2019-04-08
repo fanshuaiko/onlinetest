@@ -21,7 +21,6 @@
 
 <script>
 
-  // import Vue from 'vue/dist/vue.js'
 
   export default {
     name: "Login",
@@ -36,13 +35,14 @@
     methods: {
       submit() {
         //打印用户名密码
-        console.log(this.username,'::',this.password)
-        this.$axios.post('/api/auth/login',
-          {
-            params: {username: this.username, password: this.password}
-          },
-        {
-          headers:{'Content-Type': 'application/x-www-form-urlencoded'}
+        // console.log(this.username,'::',this.password);
+
+        let postData = this.$qs.stringify({username: this.username, password: this.password});
+
+        this.$axios({
+          method:'post',
+          url:'/api/auth/login',
+          data:postData
         }
       )
       .then(function (response) {
