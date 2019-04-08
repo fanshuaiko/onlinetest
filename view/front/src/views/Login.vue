@@ -34,22 +34,55 @@
     },
     methods: {
       submit() {
+
         //打印用户名密码
         // console.log(this.username,'::',this.password);
 
         let postData = this.$qs.stringify({username: this.username, password: this.password});
 
-        this.$axios({
-          method:'post',
-          url:'/api/auth/login',
-          data:postData
+        if (this.username == '') {
+          alert('用户名不能为空');
+          return false
         }
-      )
-      .then(function (response) {
-          console.log(response);
-        }).catch(function (error) {
-          console.log(error);
-        })
+        if (this.password == '') {
+          alert('密码名不能为空');
+          return false
+        }
+        this.$axios.post('/auth-api/auth/login', postData)
+          .then(res => {
+            console.log(res.data)
+            if (res.status == 200 && res.data['code'] == '0') {
+              // 登录成功查询该考生的所有考试信息
+                this.$axios.get('/front-api/test' + '/student' + '/' + this.username
+                  ,{headers:{'AUTHORIZATION':res.data['data']}})
+                  .then(res => {
+                    console.log(res.data)
+                  if (res.status == 200 && res.data['code'] == '0') {
+                    this.$router.push({
+                      path: '/tests',
+                      query: {
+                        testVoList: res.data['data']
+                      }
+                    })
+                  } else {
+                    alert(res.data['message'])
+                  }
+                })
+
+
+            } else {
+              alert(res.data['message'])
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+
+        // this.$axios.get('/front-api/test' + '/student' + '/' + this.username
+        //   , {headers: {'AUTHORIZATION': '14206c73-fbf8-4feb-80eb-38a61673bd16'}})
+        //   .then(res => {
+        //     console.log(res)
+        //   })
       }
 
     }
