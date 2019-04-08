@@ -1,17 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Home from './views/Home.vue'
-import ShowTests from './views/Tests.vue'
-import Login from "@/views/Login";
-
+import Login from "../views/Login";
+import Tests from "../views/Tests";
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
   routes: [
-
     {
       path: '/',
       name: 'login',
@@ -20,7 +15,7 @@ export default new Router({
     {
       path: '/tests',
       name: 'tests',
-      component: ShowTests
+      component: Tests
     }
   ]
 })
