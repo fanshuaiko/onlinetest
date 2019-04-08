@@ -42,6 +42,13 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String no = (String) authenticationToken.getPrincipal();
         Object password = authenticationToken.getCredentials();
+
+        if(null == no){
+            throw new UnknownAccountException("用户名不能为空！");
+        }
+        if(null == password){
+            throw new UnknownAccountException("密码不能为空！");
+        }
         log.info("------------用户登陆编号:"+no);
         log.info("------------用户输入的登陆密码:"+password.toString());
         Auth auth = authService.getAuthByNo(no);
