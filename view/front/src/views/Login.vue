@@ -62,7 +62,8 @@
                       path: '/tests',
                       query: {
                         // testVoList: JSON.stringify(res.data['data'])
-                        testVoList: res.data['data']
+                        testVoList: res.data['data'],
+                        AUTHORIZATION:res.data['data']
                       }
                     })
                   } else {
@@ -95,7 +96,7 @@
   @import "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css";
 
   body {
-    background-color: seagreen;
+    /*background-color: seagreen;*/
   }
 
   .form {
