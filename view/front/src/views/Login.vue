@@ -61,7 +61,7 @@
                     this.$router.push({
                       path: '/tests',
                       query: {
-                        testVoList: res.data['data']
+                        testVoList: JSON.stringify(res.data['data'])
                       }
                     })
                   } else {
