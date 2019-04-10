@@ -63,7 +63,8 @@
                       query: {
                         // testVoList: JSON.stringify(res.data['data'])
                         testVoList: response.data['data'],
-                        AUTHORIZATION:res.data['data']
+                        AUTHORIZATION:res.data['data'],
+                        username:this.username
                       }
                     })
                   } else {

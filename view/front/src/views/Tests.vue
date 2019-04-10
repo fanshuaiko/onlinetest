@@ -42,6 +42,7 @@
     data() {
       return {
         dataList: '',
+        username:''
       }
     },
 
@@ -53,7 +54,8 @@
 
       loadData() {
         var testVoList = this.$route.query.testVoList
-
+        var username = this.$route.query.username
+        this.username = username
         this.dataList = testVoList
         console.log('here is Tests:' + testVoList)
       },
@@ -70,20 +72,21 @@
           console.log('AUTHORIZATION::' + AUTHORIZATION)
           this.$axios.get('/front-api/test/' + test.id, {headers: {'AUTHORIZATION': AUTHORIZATION}})
             .then(res => {
-            console.log(res)
-            if (res.status == 200 && res.data['code'] == '0') {
-              this.$router.push({
-                path: '/main',
-                query: {
-                  questionList: res.data['data'],
-                  test:test,
-                  AUTHORIZATION: AUTHORIZATION
-                }
-              })
-            } else {
-              alert(res.data['message'])
-            }
-          })
+              console.log(res)
+              if (res.status == 200 && res.data['code'] == '0') {
+                this.$router.push({
+                  path: '/main',
+                  query: {
+                    questionList: res.data['data'],
+                    test: test,
+                    AUTHORIZATION: AUTHORIZATION,
+                    username: this.username
+                  }
+                })
+              } else {
+                alert(res.data['message'])
+              }
+            })
             .catch(err => {
               console.log(err)
             })
