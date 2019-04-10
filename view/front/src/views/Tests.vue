@@ -24,7 +24,7 @@
         </td>
         <td v-else-if="item.status === '1'">
           <button type="button" class="am-btn am-btn-success am-round"
-                  v-on:click="getQuestion(item.id)">进行中
+                  v-on:click="getQuestion(item)">进行中
           </button>
         </td>
         <td v-else-if="item.status === '2'">
@@ -58,8 +58,8 @@
         console.log('here is Tests:' + testVoList)
       },
 
-      getQuestion(testNo) {
-        console.log('getQuestion::' + testNo)
+      getQuestion(test) {
+        console.log('getQuestion::' + test)
         var AUTHORIZATION = this.$route.query.AUTHORIZATION
         if (AUTHORIZATION == '') {
           // alert("未登录或session过期，即将返回登录页面！")
@@ -68,7 +68,7 @@
           })
         } else {
           console.log('AUTHORIZATION::' + AUTHORIZATION)
-          this.$axios.get('/front-api/test/' + testNo, {headers: {'AUTHORIZATION': AUTHORIZATION}})
+          this.$axios.get('/front-api/test/' + test.id, {headers: {'AUTHORIZATION': AUTHORIZATION}})
             .then(res => {
             console.log(res)
             if (res.status == 200 && res.data['code'] == '0') {
@@ -76,6 +76,7 @@
                 path: '/main',
                 query: {
                   questionList: res.data['data'],
+                  test:test,
                   AUTHORIZATION: AUTHORIZATION
                 }
               })
