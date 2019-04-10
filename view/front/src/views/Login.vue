@@ -55,14 +55,14 @@
               // 登录成功查询该考生的所有考试信息
                 this.$axios.get('/front-api/test' + '/student' + '/' + this.username
                   ,{headers:{'AUTHORIZATION':res.data['data']}})
-                  .then(res => {
-                    console.log(res.data)
-                  if (res.status == 200 && res.data['code'] == '0') {
+                  .then(response => {
+                    console.log(response.data)
+                  if (response.status == 200 && response.data['code'] == '0') {
                     this.$router.push({
                       path: '/tests',
                       query: {
                         // testVoList: JSON.stringify(res.data['data'])
-                        testVoList: res.data['data'],
+                        testVoList: response.data['data'],
                         AUTHORIZATION:res.data['data']
                       }
                     })
