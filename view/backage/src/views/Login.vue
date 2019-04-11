@@ -38,11 +38,7 @@
         //打印用户名密码
         // console.log(this.username,'::',this.password);
 
-        var params = {
-          username:this.username,
-          password:this.password
-        }
-        let postData = JSON.stringify(params.toString())
+        let postData = this.$qs.stringify({username: this.username, password: this.password});
 
         if (this.username == '') {
           alert('用户名不能为空');
