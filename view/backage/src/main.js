@@ -6,6 +6,9 @@ import router from './router'
 //axios用户发送请求
 import axios from 'axios'
 Vue.prototype.$axios = axios
+//第三方，qs插件
+import qs from 'qs';
+Vue.prototype.$qs = qs;
 
 Vue.config.productionTip = false
 
