@@ -152,48 +152,25 @@
         </foreach>
     </insert>
 
-    <resultMap id="TestReturnVo" type="com.fanshuaiko.backage.entity.VO.TestReturnVo">
-        <result column="id" property="id" jdbcType="BIGINT"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="name" property="courseName" jdbcType="VARCHAR"/>
-        <result column="name" property="teacherName" jdbcType="VARCHAR"/>
-        <result column="total_score" property="totalScore" jdbcType="INTEGER"/>
-        <result column="status" property="status" jdbcType="CHAR"/>
-        <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
-        <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>
-        <result column="test_time" property="testTime" jdbcType="INTEGER"/>
-        <collection property="questionNo" ofType="java.lang.Long" javaType="java.util.List">
-            <result column="question_no"/>
-        </collection>
-        <collection property="classNo" ofType="java.lang.String" javaType="java.util.List">
-            <result column="class_no"/>
-        </collection>
-    </resultMap>
-
     <select id="queryByTeacherNo" parameterType="java.lang.String"
-            resultMap="TestReturnVo">
+            resultType="com.fanshuaiko.backage.entity.VO.TestReturnVo">
         select
-	t.id,
-	t.name,
-	c.name ,
-	te.name ,
-	t.total_score ,
-	t.status,
-	t.start_time ,
-	t.end_time ,
-	t.test_time ,
-	tq.question_no ,
-	tc.class_no
+	t.id as id ,
+	t.name as name,
+	c.name as courseName,
+	te.name as teacherName,
+	t.total_score as totalScore,
+	t.status as status,
+	t.start_time as startTime,
+	t.end_time as endTime,
+	t.test_time as testTime
+
 from
 	test t
-left join course c on
+right join course c on
 	t.course_id = c.id
-left join teacher te on
+right join teacher te on
 	t.teacher_no = te.teacher_no
-right join test_question tq on
-	t.id = tq.test_no
-right join test_class tc on
-	t.id = tc.test_no
 where
 	t.teacher_no = #{teacherNo}
     </select>
