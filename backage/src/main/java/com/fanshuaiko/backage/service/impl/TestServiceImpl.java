@@ -207,9 +207,18 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public ResultData deleteTest(Long id) {
-        int i = testDao.deleteByPrimaryKey(id);
-        return ResultData.newSuccessResultData(i);
+    public ResultData deleteTest(List<Long> ids) {
+        try {
+            if (ids.size() > 0) {
+                int i = testDao.batchDeleteByIds(ids);
+                return ResultData.newSuccessResultData(i);
+            }
+            return ResultData.newResultData(ErrorCode.DEL_ID_FAILOR, ErrorCode.DEL_ID_FAILOR_MSG);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.DEL_ID_FAILOR, ErrorCode.DEL_FAILOR_MSG);
+        }
     }
 
     @Override

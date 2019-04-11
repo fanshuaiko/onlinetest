@@ -47,4 +47,7 @@ public interface TestDao {
 
     @Select("update test set status = '2' where id = #{id}")
     void setFinishedStatus(Long id);
+
+    int batchDeleteByIds(@Param("ids") List<Long> ids);//批量删除
+
 }

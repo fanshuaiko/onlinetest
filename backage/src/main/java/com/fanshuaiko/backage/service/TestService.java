@@ -44,10 +44,10 @@ public interface TestService {
     /**
      * 删除考试
      *
-     * @param id
+     * @param ids
      * @return
      */
-    ResultData deleteTest(Long id);
+    ResultData deleteTest(List<Long> ids);
 
     /**
      * 根据教师编号分页查询考试

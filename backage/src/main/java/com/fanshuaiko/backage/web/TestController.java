@@ -50,13 +50,13 @@ public class TestController {
     /**
      * 删除考试
      *
-     * @param id
+     * @param ids
      * @return
      */
-    @DeleteMapping("/test/{id}")
-    public ResultData deleteTest(@PathVariable("id") Long id) {
+    @DeleteMapping("/test/{ids}")
+    public ResultData deleteTest(@PathVariable("ids") List<Long> ids) {
         try {
-            ResultData resultData = testService.deleteTest(id);
+            ResultData resultData = testService.deleteTest(ids);
             return resultData;
         } catch (Exception e) {
             log.info("--------test/deleteTest:--------");
