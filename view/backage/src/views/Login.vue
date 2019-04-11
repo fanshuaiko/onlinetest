@@ -53,10 +53,11 @@
             console.log(res.data)
             if (res.status == 200 && res.data['code'] == '0') {
               console.log('sessionId:' + res.data['data'])
+              sessionStorage.setItem('AUTHORIZATION',res.data['data'])
+              sessionStorage.setItem('username',this.username)
               this.$router.push(
                 {
                   path: '/main',
-                  AUTHORIZATION:res.data['data']
                 }
               )
             } else {
