@@ -52,10 +52,15 @@
           .then(res => {
             console.log(res.data)
             if (res.status == 200 && res.data['code'] == '0') {
-               console.log('sessionId:'+res.data['data'])
-
+              console.log('sessionId:' + res.data['data'])
+              this.$router.push(
+                {
+                  path: '/main',
+                  AUTHORIZATION:res.data['data']
+                }
+              )
             } else {
-              alert(res.data['message'])
+              this.$alert(res.data['message'])
             }
           })
           .catch(err => {
