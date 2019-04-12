@@ -14,6 +14,6 @@ export const pageQueryTest = params => {
 
 //查询所有课程
 export const getAllCourse = params =>{
-  return axios.get(`${backage_base}/course/course`)
+  return axios.get(`backage-api/course/course`)
 }
 
