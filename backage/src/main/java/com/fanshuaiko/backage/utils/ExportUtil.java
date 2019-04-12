@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 
 /**
  * @ClassName ExportUtil
@@ -18,7 +19,7 @@ public class ExportUtil {
             byte[] buffer = new byte[in.available()];
             in.read(buffer);
             in.close();
-            String fileName = new String(name.getBytes("UTF-8"));
+            String fileName = URLEncoder.encode(name,"UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setHeader("Content-disposition","attachment;filename="+fileName);
             BufferedOutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
