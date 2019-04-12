@@ -135,7 +135,9 @@
               </div>
               选择题库随机出题数量
               <!--              <el-form-item label="题库随机出题" prop="">-->
-              <el-input-number v-model="addForm.singleRandomCount" :min="0" :max="50"></el-input-number>
+              <el-input-number v-model="addForm.singleRandomCount" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              设置题目分值
+              <el-input-number v-model="addForm.singleScore" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
               <el-button type="primary">
                 <a href="/backage-api/file/single" style="color: white;text-decoration: none">
@@ -167,7 +169,9 @@
               </div>
               选择题库随机出题数量
               <!--              <el-form-item label="题库随机出题" prop="">-->
-              <el-input-number v-model="addForm.judgeRandomCount" :min="0" :max="50"></el-input-number>
+              <el-input-number v-model="addForm.judgeRandomCount" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              设置题目分值
+              <el-input-number v-model="addForm.judgeScore" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
               <el-button type="primary">
                 <a href="/backage-api/file/judge" style="color: white;text-decoration: none">
@@ -199,7 +203,9 @@
               </div>
               选择题库随机出题数量
               <!--              <el-form-item label="题库随机出题" prop="">-->
-              <el-input-number v-model="addForm.multipleRandomCount" :min="0" :max="50"></el-input-number>
+              <el-input-number v-model="addForm.multipleRandomCount" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              设置题目分值
+              <el-input-number v-model="addForm.multipleScore" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
               <el-button type="primary">
                 <a href="/backage-api/file/multiple" style="color: white;text-decoration: none">
@@ -231,7 +237,9 @@
               </div>
               选择题库随机出题数量
               <!--              <el-form-item label="题库随机出题" prop="">-->
-              <el-input-number v-model="addForm.subjectiveRandomCount" :min="0" :max="50"></el-input-number>
+              <el-input-number v-model="addForm.subjectiveRandomCount" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              设置题目分值
+              <el-input-number v-model="addForm.subjectiveScore" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
               <el-button type="primary">
                 <a href="/backage-api/file/subjective" style="color: white;text-decoration: none">
@@ -245,6 +253,7 @@
       </el-collapse>
 
       <div slot="footer" class="dialog-footer">
+        当前分值：{{currentTotalScore}} 预设总分{{addForm.totalScore}}
         <el-button @click="dialogAddFormVisible = false">取消</el-button>
         <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
       </div>
@@ -338,7 +347,11 @@
           subjective: 0
         },
 
-        allCourse: []
+        //所有课程
+        allCourse: [],
+
+        //当前总分
+        currentTotalScore: 0,
 
       }
     },
@@ -580,6 +593,14 @@
         })
       },
 
+      countCurrentTotalScore() {
+
+        this.currentTotalScore =
+          (this.completeUploadCount.single + this.addForm.singleRandomCount) * this.addForm.singleScore
+          + (this.completeUploadCount.judge + this.addForm.judgeRandomCount) * this.addForm.judgeScore
+          + (this.completeUploadCount.multiple + this.addForm.multipleRandomCount) * this.addForm.multipleScore
+          + (this.completeUploadCount.subjective + this.addForm.subjectiveRandomCount) * this.addForm.subjectiveScore
+      }
     }
   }
 
