@@ -67,6 +67,7 @@
 
     <!--新增页面-->
     <el-dialog title="新增" :visible.sync="dialogAddFormVisible">
+
       <!--    折叠面板  -->
       <el-collapse v-model="activeName" accordion>
 
@@ -86,6 +87,18 @@
                 </el-option>
               </el-select>
             </el-form-item>
+
+            <el-form-item label="参考班级" prop="classNoList">
+              <el-tree
+                :data="schoolTree"
+                show-checkbox
+                node-key="id"
+                :default-expanded-keys="[2, 3]"
+                :default-checked-keys="[5]"
+                :props="defaultProps">
+              </el-tree>
+            </el-form-item>
+
             <el-form-item label="任课教师" prop="teacherNo">
               <el-input v-model="addForm.teacherNo" auto-complete="off" :disabled="true"></el-input>
             </el-form-item>
@@ -135,9 +148,11 @@
               </div>
               选择题库随机出题数量
               <!--              <el-form-item label="题库随机出题" prop="">-->
-              <el-input-number v-model="addForm.singleRandomCount" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              <el-input-number v-model="addForm.singleRandomCount" :min="0" :max="50"
+                               @change="countCurrentTotalScore"></el-input-number>
               设置题目分值
-              <el-input-number v-model="addForm.singleScore" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              <el-input-number v-model="addForm.singleScore" :min="0" :max="50"
+                               @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
               <el-button type="primary">
                 <a href="/backage-api/file/single" style="color: white;text-decoration: none">
@@ -169,9 +184,11 @@
               </div>
               选择题库随机出题数量
               <!--              <el-form-item label="题库随机出题" prop="">-->
-              <el-input-number v-model="addForm.judgeRandomCount" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              <el-input-number v-model="addForm.judgeRandomCount" :min="0" :max="50"
+                               @change="countCurrentTotalScore"></el-input-number>
               设置题目分值
-              <el-input-number v-model="addForm.judgeScore" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              <el-input-number v-model="addForm.judgeScore" :min="0" :max="50"
+                               @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
               <el-button type="primary">
                 <a href="/backage-api/file/judge" style="color: white;text-decoration: none">
@@ -203,9 +220,11 @@
               </div>
               选择题库随机出题数量
               <!--              <el-form-item label="题库随机出题" prop="">-->
-              <el-input-number v-model="addForm.multipleRandomCount" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              <el-input-number v-model="addForm.multipleRandomCount" :min="0" :max="50"
+                               @change="countCurrentTotalScore"></el-input-number>
               设置题目分值
-              <el-input-number v-model="addForm.multipleScore" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              <el-input-number v-model="addForm.multipleScore" :min="0" :max="50"
+                               @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
               <el-button type="primary">
                 <a href="/backage-api/file/multiple" style="color: white;text-decoration: none">
@@ -237,9 +256,11 @@
               </div>
               选择题库随机出题数量
               <!--              <el-form-item label="题库随机出题" prop="">-->
-              <el-input-number v-model="addForm.subjectiveRandomCount" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              <el-input-number v-model="addForm.subjectiveRandomCount" :min="0" :max="50"
+                               @change="countCurrentTotalScore"></el-input-number>
               设置题目分值
-              <el-input-number v-model="addForm.subjectiveScore" :min="0" :max="50" @change="countCurrentTotalScore"></el-input-number>
+              <el-input-number v-model="addForm.subjectiveScore" :min="0" :max="50"
+                               @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
               <el-button type="primary">
                 <a href="/backage-api/file/subjective" style="color: white;text-decoration: none">
@@ -255,7 +276,7 @@
       <div slot="footer" class="dialog-footer">
         当前分值：{{currentTotalScore}} 预设总分{{addForm.totalScore}}
         <el-button @click="dialogAddFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
+        <el-button type="primary" @click="checkQuestion" :loading="addLoading">提交</el-button>
       </div>
 
     </el-dialog>
@@ -296,7 +317,8 @@
         addForm: {
           name: '', //考试名称
           courseId: '', //所属课程id
-          teacherNo: sessionStorage.getItem('username'), //任课教师id，也是创建考试的教师
+          // teacherNo: sessionStorage.getItem('username'), //任课教师id，也是创建考试的教师
+          teacherNo: 't10001', //任课教师id，也是创建考试的教师
           totalScore: 0, //考试总分
           status: '', //考试状态,0.未开始，1.进行中，3.已结束
           startTime: '', //开考时间
@@ -323,8 +345,26 @@
         //新增页面表单填写校验规则
         addFormRules: {
           name: [
-            {required: true, message: '请输入姓名', trigger: 'blur'}
-          ]
+            {required: true, message: '请输入考试名称', trigger: 'blur'}
+          ],
+          courseId: [
+            {required: true, message: '请选择所属课程', trigger: 'blur'}
+          ],
+          classNoList: [
+            {required: true, message: '请选择班级参考', trigger: 'blur'}
+          ],
+          teacherNo: [
+            {required: true, message: '请选择任课教师', trigger: 'blur'}
+          ],
+          totalScore: [
+            {required: true, message: '请输入考试总分', trigger: 'blur'}
+          ],
+          startTime: [
+            {required: true, message: '请选择开考时间', trigger: 'blur'}
+          ],
+          testTime: [
+            {required: true, message: '请输入考试时长', trigger: 'blur'}
+          ],
         },
         //提交时等待效果
         addLoading: false,
@@ -352,6 +392,81 @@
 
         //当前总分
         currentTotalScore: 0,
+
+        schoolTree:[
+          {
+            "collegeNo":10622,
+            "label":"学校",
+            "children":[
+              {
+                "instituteNo":"i10001",
+                "label":"数学与统计学院",
+                "children":[{
+                  "majorNo":"m1001",
+                  "label":"基础数学"+"专业",
+                  "children":[{
+                    "classNo":"c1001",
+                    "label":"1"+"班"
+                  },{
+                    "classNo":"c1002",
+                    "label":"2"+"班"
+                  },{
+                    "classNo":"c1003",
+                    "label":"3"+"班"
+                  },{
+                    "classNo":"c1004",
+                    "label":"4"+"班"
+                  }]
+                },
+                  {
+                    "majorNo":"m1002",
+                    "label":"应用数学"+"专业",
+                    "children":[{
+                      "classNo":"c1005",
+                      "label":"1"+"班"
+                    },{
+                      "classNo":"c1006",
+                      "label":"2"+"班"
+                    },{
+                      "classNo":"c1007",
+                      "label":"3"+"班"
+                    },{
+                      "classNo":"c1008",
+                      "label":"4"+"班"
+                    }]
+                  },
+                  {
+                    "majorNo":"m1003",
+                    "label":"计算数学"+"专业"
+                  }]
+              },
+              {
+                "instituteNo":"i10002",
+                "label":"物理与电子工程学院",
+                "children":[{
+                  "majorNo":"m1005",
+                  "label":"物理"+"专业"
+                },
+                  {
+                    "majorNo":"m1006",
+                    "label":"电子信息工程"+"专业"
+                  },
+                  {
+                    "majorNo":"m1007",
+                    "label":"电子信息科学与技术"+"专业"
+                  }]
+              },
+              {
+                "instituteNo":"i10003",
+                "label":"计算机学院"
+              },
+              {
+                "instituteNo":"i10004",
+                "label":"土木工程学院"
+              }
+            ]
+          }
+        ]
 
       }
     },
@@ -593,14 +708,37 @@
         })
       },
 
+      //计算当前页面上的总分值
       countCurrentTotalScore() {
-
         this.currentTotalScore =
           (this.completeUploadCount.single + this.addForm.singleRandomCount) * this.addForm.singleScore
           + (this.completeUploadCount.judge + this.addForm.judgeRandomCount) * this.addForm.judgeScore
           + (this.completeUploadCount.multiple + this.addForm.multipleRandomCount) * this.addForm.multipleScore
           + (this.completeUploadCount.subjective + this.addForm.subjectiveRandomCount) * this.addForm.subjectiveScore
+      },
+
+      //检查当前是否有题目和相应分值
+      checkQuestion() {
+        if (this.currentTotalScore == 0) {
+          this.$notify.warning({
+            title: 'Info',
+            message: '题目数量或分值不能为空！',
+            showClose: false
+          });
+        } else {
+          this.submitAddForm()
+        }
+      },
+
+      //提交新建考试表单
+      submitAddForm() {
+        //格式化日期
+        this.addForm.startTime = moment(this.addForm.startTime).format('YYYY-MM-DD HH:mm:ss')
+        api.createTest(this.addForm).then(res => {
+          // this.$alert('新建考试失败')
+        })
       }
+
     }
   }
 
