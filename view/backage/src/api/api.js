@@ -17,3 +17,8 @@ export const getAllCourse = params =>{
   return axios.get(`backage-api/course/course`)
 }
 
+//新建考试
+export const createTest = params =>{
+  return axios.post('backage_base/test/test',params)
+}
+
