@@ -27,6 +27,8 @@ public class TestVO {
 
     private String endTime; //结束时间
 
+    private int testTime;//考试时长，单位分钟
+
     private long singleRedisId; //保存在redis中的单选题id
 
     private long judgeRedisId; //保存在redis中判断题id
@@ -221,6 +223,14 @@ public class TestVO {
         this.subjectiveIdList = subjectiveIdList;
     }
 
+    public int getTestTime() {
+        return testTime;
+    }
+
+    public void setTestTime(int testTime) {
+        this.testTime = testTime;
+    }
+
     @Override
     public String toString() {
         return "TestVO{" +
@@ -228,10 +238,11 @@ public class TestVO {
                 ", name='" + name + '\'' +
                 ", courseId=" + courseId +
                 ", teacherNo='" + teacherNo + '\'' +
-                ", totalScore='" + totalScore + '\'' +
+                ", totalScore=" + totalScore +
                 ", status='" + status + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", testTime=" + testTime +
                 ", singleRedisId=" + singleRedisId +
                 ", judgeRedisId=" + judgeRedisId +
                 ", multipleRedisId=" + multipleRedisId +

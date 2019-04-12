@@ -129,11 +129,11 @@
     <insert id="insertTest" parameterType="com.fanshuaiko.backage.entity.VO.TestVO">
     insert into test (id, name, course_id,
       teacher_no, total_score, status,
-      start_time, end_time)
+      start_time, end_time,test_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER},
       #{teacherNo,jdbcType=VARCHAR}, #{totalScore,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
        #{startTime},
-      #{endTime})
+      #{endTime}),#{testTime}
   </insert>
 
     <insert id="insertTestClass" parameterType="com.fanshuaiko.backage.entity.VO.TestVO">
