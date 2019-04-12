@@ -1,8 +1,8 @@
 <template>
   <section>
-    <!--    -->
+    <!-- 新建按钮   -->
     <el-col :span="24" class="toolbar">
-      <el-button type="primary" @click="handleAdd">新建</el-button>
+      <el-button type="primary" @click="clickNewCreateButton">新建</el-button>
     </el-col>
 
     <!--    数据列表-->
@@ -66,48 +66,213 @@
 
 
     <!--新增页面-->
-    <el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false">
-      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="addForm.sex">
-            <el-radio class="radio" :label="1">男</el-radio>
-            <el-radio class="radio" :label="0">女</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input-number v-model="addForm.age" :min="0" :max="200"></el-input-number>
-        </el-form-item>
-        <el-form-item label="生日">
-          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.birth"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input type="textarea" v-model="addForm.addr"></el-input>
-        </el-form-item>
-      </el-form>
+    <el-dialog title="新增" :visible.sync="dialogAddFormVisible">
+      <!--    折叠面板  -->
+      <el-collapse v-model="activeName" accordion>
+
+        <el-form :model="addForm" label-width="100px" :rules="addFormRules" ref="addForm">
+
+          <!--          基础信息-->
+          <el-collapse-item title="基础信息" name="1">
+            <el-form-item label="考试名称" prop="name">
+              <el-input v-model="addForm.name" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="所属课程" prop="courseId">
+              <el-select v-model="addForm.courseId" placeholder="请选择">
+                <el-option
+                  v-for="item in allCourse"
+                  :key="item.id"
+                  :value="item.name">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="任课教师" prop="teacherNo">
+              <el-input v-model="addForm.teacherNo" auto-complete="off" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="考试总分" prop="totalScore">
+              <el-input-number v-model="addForm.totalScore" :min="0" :max="200"></el-input-number>
+            </el-form-item>
+            <el-form-item label="开考时间" prop="startTime">
+              <div class="block">
+                <!--          <span class="demonstration">设置默认时间</span>-->
+                <el-date-picker
+                  v-model="addForm.startTime"
+                  type="datetime"
+                  placeholder="选择开考日期时间"
+                  default-time="09:00:00">
+                </el-date-picker>
+              </div>
+            </el-form-item>
+            <el-form-item label="考试时长" prop="testTime">
+              <el-input-number v-model="addForm.testTime" :min="0" :max="200"></el-input-number>
+            </el-form-item>
+
+          </el-collapse-item>
+
+          <!--          试题信息-->
+          <el-collapse-item title="试题信息" name="2">
+
+            <!--            单选题卡片-->
+            <el-card class="box-card" style="width: 20%;float: left;margin-right: 6%;">
+              <div slot="header" class="clearfix">
+                <span>单选题</span>
+              </div>
+              <el-upload
+                class="upload-demo"
+                action="backage-api/test/choice"
+                :on-remove="handleRemoveUploadSingle"
+                :before-remove="beforeRemove"
+                :data="uploadQuestionType.single"
+                :on-success="uploadSingleSuccess"
+                :on-error="uploadFail"
+
+              >
+                <el-button size="primary" type="primary">点击上传<i class="el-icon-upload el-icon--right"></i></el-button>
+              </el-upload>
+              <div>
+                <i class="el-icon-circle-check el-icon--right" style="color: deepskyblue"></i>
+                已上传{{completeUploadCount.single}}道题目
+              </div>
+              选择题库随机出题数量
+              <!--              <el-form-item label="题库随机出题" prop="">-->
+              <el-input-number v-model="addForm.singleRandomCount" :min="0" :max="50"></el-input-number>
+              <!--              </el-form-item>-->
+              <el-button type="primary">
+                <a href="/backage-api/file/single" style="color: white;text-decoration: none">
+                  下载模板
+                </a>
+                <i class="el-icon-download el-icon--right"></i>
+              </el-button>
+            </el-card>
+
+            <!--            判断题卡片-->
+            <el-card class="box-card" style="width: 20%;float: left;margin-right: 6%;">
+              <div slot="header" class="clearfix">
+                <span>判断题</span>
+              </div>
+              <el-upload
+                class="upload-demo"
+                action="backage-api/test/choice"
+                :on-remove="handleRemoveUploadjudge"
+                :before-remove="beforeRemove"
+                :data="uploadQuestionType.judge"
+                :on-success="uploadJudgeSuccess"
+                :on-error="uploadFail"
+              >
+                <el-button size="primary" type="primary">点击上传<i class="el-icon-upload el-icon--right"></i></el-button>
+              </el-upload>
+              <div>
+                <i class="el-icon-circle-check el-icon--right" style="color: deepskyblue"></i>
+                已上传{{completeUploadCount.judge}}道题目
+              </div>
+              选择题库随机出题数量
+              <!--              <el-form-item label="题库随机出题" prop="">-->
+              <el-input-number v-model="addForm.judgeRandomCount" :min="0" :max="50"></el-input-number>
+              <!--              </el-form-item>-->
+              <el-button type="primary">
+                <a href="/backage-api/file/judge" style="color: white;text-decoration: none">
+                  下载模板
+                </a>
+                <i class="el-icon-download el-icon--right"></i>
+              </el-button>
+            </el-card>
+
+            <!--            多选题卡片-->
+            <el-card class="box-card" style="width: 20%;float: left;margin-right: 6%;">
+              <div slot="header" class="clearfix">
+                <span>多选题</span>
+              </div>
+              <el-upload
+                class="upload-demo"
+                action="backage-api/test/choice"
+                :on-remove="handleRemoveUploadMultiple"
+                :before-remove="beforeRemove"
+                :data="uploadQuestionType.multiple"
+                :on-success="uploadMutipleSuccess"
+                :on-error="uploadFail"
+              >
+                <el-button size="primary" type="primary">点击上传<i class="el-icon-upload el-icon--right"></i></el-button>
+              </el-upload>
+              <div>
+                <i class="el-icon-circle-check el-icon--right" style="color: deepskyblue"></i>
+                已上传{{completeUploadCount.multiple}}道题目
+              </div>
+              选择题库随机出题数量
+              <!--              <el-form-item label="题库随机出题" prop="">-->
+              <el-input-number v-model="addForm.multipleRandomCount" :min="0" :max="50"></el-input-number>
+              <!--              </el-form-item>-->
+              <el-button type="primary">
+                <a href="/backage-api/file/multiple" style="color: white;text-decoration: none">
+                  下载模板
+                </a>
+                <i class="el-icon-download el-icon--right"></i>
+              </el-button>
+            </el-card>
+
+            <!--            主观题卡片-->
+            <el-card class="box-card" style="width: 20%;float: left;">
+              <div slot="header" class="clearfix">
+                <span>主观题</span>
+              </div>
+              <el-upload
+                class="upload-demo"
+                action="backage-api/test/choice"
+                :on-remove="handleRemoveUploadSubjective"
+                :before-remove="beforeRemove"
+                :data="uploadQuestionType.subjective"
+                :on-success="uploadSubjectiveSuccess"
+                :on-error="uploadFail"
+              >
+                <el-button size="primary" type="primary">点击上传<i class="el-icon-upload el-icon--right"></i></el-button>
+              </el-upload>
+              <div>
+                <i class="el-icon-circle-check el-icon--right" style="color: deepskyblue"></i>
+                已上传{{completeUploadCount.subjective}}道题目
+              </div>
+              选择题库随机出题数量
+              <!--              <el-form-item label="题库随机出题" prop="">-->
+              <el-input-number v-model="addForm.subjectiveRandomCount" :min="0" :max="50"></el-input-number>
+              <!--              </el-form-item>-->
+              <el-button type="primary">
+                <a href="/backage-api/file/subjective" style="color: white;text-decoration: none">
+                  下载模板
+                </a>
+                <i class="el-icon-download el-icon--right"></i>
+              </el-button>
+            </el-card>
+          </el-collapse-item>
+        </el-form>
+      </el-collapse>
+
       <div slot="footer" class="dialog-footer">
-        <el-button @click.native="addFormVisible = false">取消</el-button>
+        <el-button @click="dialogAddFormVisible = false">取消</el-button>
         <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
       </div>
+
     </el-dialog>
+
 
   </section>
 </template>
 
 <script>
+
+  import * as api from '../api/api';
+
+  let moment = require("moment");
+
   export default {
     name: "Tests",
     data() {
       return {
+
         //后台返回的封装好的分页数据
         testVoList: [],
         total: 0,
         pageNum: 1,
         pageSize: 5,
 
-        username: 't10001',
+        username: sessionStorage.getItem('username'),
 
         //页面等待效果
         loading: true,
@@ -116,24 +281,65 @@
 
         sels: [],//列表选中列
 
-        addFormVisible: false,//新增界面是否显示
-
+        //是否显示新增页面
+        dialogAddFormVisible: false,
         //新增界面数据
         addForm: {
-          name: '',
-          sex: -1,
-          age: 0,
-          birth: '',
-          addr: ''
+          name: '', //考试名称
+          courseId: '', //所属课程id
+          teacherNo: sessionStorage.getItem('username'), //任课教师id，也是创建考试的教师
+          totalScore: 0, //考试总分
+          status: '', //考试状态,0.未开始，1.进行中，3.已结束
+          startTime: '', //开考时间
+          endTime: '', //结束时间
+          testTime: 0,//考试时长，单位分钟
+          singleRedisId: 0, //保存在redis中的单选题id
+          judgeRedisId: 0,//保存在redis中判断题id
+          multipleRedisId: 0, //保存在redis中多选题id
+          subjectiveRedisId: 0, //保存在redis中主观题id
+          singleScore: 0, //单选题分值
+          judgeScore: 0, //判断题分值
+          multipleScore: 0, //多选题分值
+          subjectiveScore: 0, //主观题分值
+          classNoList: [], //参与考试的班级
+          // singleIdList: [], //选择题id
+          // judgeIdList: [], //判断题id
+          // multipleIdList: [], //多选题id
+          // subjectiveIdList: [], //主观题
+          singleRandomCount: 0, //单选题随机出题数量
+          judgeRandomCount: 0, //判断题随机出题数量
+          multipleRandomCount: 0, //多选题随机出题数量
+          subjectiveRandomCount: 0, //主观题题随机出题数量
         },
         //新增页面表单填写校验规则
         addFormRules: {
           name: [
-            { required: true, message: '请输入姓名', trigger: 'blur' }
+            {required: true, message: '请输入姓名', trigger: 'blur'}
           ]
         },
         //提交时等待效果
-        addLoading:false
+        addLoading: false,
+
+        //弹出新建表单手风琴效果展示第一个模块
+        activeName: '1',
+
+        uploadQuestionType: {
+          single: {type: '1'},
+          judge: {type: '2'},
+          multiple: {type: '3'},
+          subjective: {type: '4'}
+        },//上传题目类型
+
+        //用于显示已上传题目数量
+        completeUploadCount: {
+          single: 0,
+          judge: 0,
+          multiple: 0,
+          subjective: 0
+        },
+
+        allCourse: []
+
       }
     },
     mounted() {
@@ -145,7 +351,12 @@
       pageQueryTest() {
         console.log('Tests:pageQueryTest:AUTHORIZATION:' + sessionStorage.getItem('AUTHORIZATION'))
         console.log('Tests:pageQueryTest:username:' + sessionStorage.getItem('username'))
-        this.$axios.get('backage-api/test/test/' + this.pageNum + '/' + this.pageSize + '/' + this.username)
+        var params = {
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          username: this.username
+        }
+        api.pageQueryTest(params)
           .then(res => {
             console.log('main:loadData:axios-get:' + JSON.stringify(res))
             this.testVoList = res.data.data['list']
@@ -166,7 +377,7 @@
           this.listLoading = true;
           //NProgress.start();
           // let para = { ids: ids };
-          this.$axios.delete('backage-api/test/test/' + ids).then((res) => {
+          api.deleteTestByIds(ids).then((res) => {
             this.listLoading = false;
             //NProgress.done();
             this.$message({
@@ -181,14 +392,14 @@
       },
       //删除单条
       handleDel(index, row) {
-        console.log('ids---------------:' + row.id)
+        console.log('id---------------:' + row.id)
         this.$confirm('确认删除该记录吗?', '提示', {
           type: 'warning'
         }).then(() => {
           this.listLoading = true;
           //NProgress.start();
           // let para = { id: row.id };
-          this.$axios.delete('backage-api/test/test/' + row.id).then((res) => {
+          api.deleteTestByIds(row.id).then((res) => {
             if (res.status == 200 && res.data['code'] == '0') {
               this.listLoading = false;
               //NProgress.done();
@@ -223,17 +434,7 @@
       selsChange(sels) {
         this.sels = sels;
       },
-      //显示新增界面
-      handleAdd() {
-        this.addFormVisible = true;
-        this.addForm = {
-          name: '',
-          sex: -1,
-          age: 0,
-          birth: '',
-          addr: ''
-        };
-      },
+
       //提交新建的考试
       addSubmit: function () {
         this.$refs.addForm.validate((valid) => {
@@ -251,13 +452,134 @@
                   type: 'success'
                 });
                 this.$refs['addForm'].resetFields();
-                this.addFormVisible = false;
+                this.dialogAddFormVisible = false;
                 this.getUsers();
               });
             });
           }
         });
       },
+
+      //移除上传的题目
+      handleRemoveUploadSingle() {
+        this.addForm.singleRedisId = 0
+        this.completeUploadCount.single = 0
+        console.log('Test:handleRemoveUploadQuestion():singleRedisId::' + this.addForm.singleRedisId)
+      },
+      handleRemoveUploadjudge() {
+        this.addForm.judgeRedisId = 0
+        this.completeUploadCount.judge = 0
+        console.log('Test:handleRemoveUploadQuestion():singleRedisId::' + this.addForm.judgeRedisId)
+      },
+      handleRemoveUploadMultiple() {
+        this.addForm.multipleRedisId = 0
+        this.completeUploadCount.multiple = 0
+        console.log('Test:handleRemoveUploadQuestion():singleRedisId::' + this.addForm.multipleRedisId)
+      },
+      handleRemoveUploadSubjective() {
+        this.addForm.subjectiveRedisId = 0
+        this.completeUploadCount.subjective = 0
+        console.log('Test:handleRemoveUploadQuestion():singleRedisId::' + this.addForm.subjectiveRedisId)
+      },
+
+      //这样写会出现异常，页面会无故多次调用这个方法，所以向上面那样分开写
+      //
+      // handleRemoveUploadQuestion(type) {
+      //   if (type == '1') {
+      //     //移除上传的单选题
+      //     this.addForm.singleRedisId = 0
+      //     this.completeUploadCount.single = 0
+      //     console.log('Test:handleRemoveUploadQuestion():singleRedisId' + this.addForm.singleRedisId)
+      //   } else if (type == '2') {
+      //     //移除上传的判断题
+      //     this.addForm.judgeRedisId = ''
+      //   } else if (type == '3') {
+      //     //移除上传的多选题
+      //     this.addForm.multipleRedisId = ''
+      //   } else if (type == '4') {
+      //     //移除上传的主观题
+      //     this.addForm.subjectiveRedisId = ''
+      //   }
+      // },
+
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${file.name}？`);
+      },
+
+      //单选题题目上传成功
+      uploadSingleSuccess(res, file) {
+        if (res['code'] == '0') {
+          var result = res['data']
+          for (var key in result) {
+            console.log('key:::' + key)
+            console.log('result[key]:::' + result[key])
+            this.addForm.singleRedisId = key
+            this.completeUploadCount.single = result[key]
+          }
+        } else {
+          this.uploadFail(res, file)
+        }
+      },
+      //判断题题目上传成功
+      uploadJudgeSuccess(res, file) {
+        if (res['code'] == '0') {
+          var result = res['data']
+          for (var key in result) {
+            console.log('key:::' + key)
+            console.log('result[key]:::' + result[key])
+            this.addForm.judgeRedisId = key
+            this.completeUploadCount.judge = result[key]
+          }
+        } else {
+          this.uploadFail(res, file)
+        }
+      },
+      //多选题题目上传成功
+      uploadMutipleSuccess(res, file) {
+        if (res['code'] == '0') {
+          var result = res['data']
+          for (var key in result) {
+            console.log('key:::' + key)
+            console.log('result[key]:::' + result[key])
+            this.addForm.multipleRedisId = key
+            this.completeUploadCount.multiple = result[key]
+          }
+        } else {
+          this.uploadFail(res, file)
+        }
+      },
+      //主观题题目上传成功
+      uploadSubjectiveSuccess(res, file) {
+        if (res['code'] == '0') {
+          var result = res['data']
+          for (var key in result) {
+            console.log('key:::' + key)
+            console.log('result[key]:::' + result[key])
+            this.addForm.subjectiveRedisId = key
+            this.completeUploadCount.subjective = result[key]
+          }
+        } else {
+          this.uploadFail(res, file)
+        }
+      },
+
+      //题目上传失败
+      uploadFail(res, file) {
+        this.$alert(res['message'])
+      },
+      //点击新建按钮时，弹出新建页面并查询赋值所有课程
+      clickNewCreateButton() {
+        this.dialogAddFormVisible = true
+        this.getAllCourse()
+      },
+      //获取所有课程
+      getAllCourse() {
+        api.getAllCourse().then(res => {
+          this.allCourse = res.data['data']
+          console.log('所有课程：：' + JSON.stringify(this.allCourse))
+        })
+      },
+
     }
   }
 
