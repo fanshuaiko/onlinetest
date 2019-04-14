@@ -45,8 +45,9 @@
           <label v-if="scope.row.status=='2'">已结束</label>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="150">
+      <el-table-column label="操作" width="250">
         <template scope="scope">
+          <el-button size="small" @click="getQuestions(scope.row)">预览试卷</el-button>
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>
@@ -84,7 +85,7 @@
                   v-for="item in allCourse"
                   :key="item.id"
                   :value="item.name"
-                  >
+                >
                 </el-option>
               </el-select>
             </el-form-item>
@@ -716,9 +717,9 @@
         console.log('submitAddForm:表单数据：：' + JSON.stringify(this.addForm))
         api.createTest(this.addForm).then(res => {
           console.log('submitAddForm:res::' + JSON.stringify(res))
-          if(res.status==200&&res['code']=='0'){
+          if (res.status == 200 && res['code'] == '0') {
             //关闭等待效果
-            this.addLoading=false
+            this.addLoading = false
             //成功后关闭新建页面
             this.dialogAddFormVisible = false
             this.$notify({
@@ -730,7 +731,7 @@
             this.getUsers()
           }
           this.$alert('新建考试失败')
-        }).catch(err=>{
+        }).catch(err => {
           this.$alert(err.toString())
         })
       },
@@ -746,13 +747,32 @@
       },
 
       //设置下拉框选中的课程的id
-      setCourseId(val){
-       let obj={}
-       obj = this.allCourse.find((item)=>{
-         return item.name ===val
-       })
+      setCourseId(val) {
+        let obj = {}
+        obj = this.allCourse.find((item) => {
+          return item.name === val
+        })
         this.addForm.courseId = obj.id
-        console.log('this.addForm.courseId ::'+ obj.id )
+        console.log('this.addForm.courseId ::' + obj.id)
+      },
+
+      //跳转到试题展示页面
+      getQuestions(row) {
+        api.getQuestionByTestNo(row.id).then(res => {
+          console.log('getQuestionByTestNo:' + JSON.stringify(res))
+          if (res.status == 200 && res.data['code'] == '0') {
+            var questions = res.data['data']
+            this.$router.push({
+              path: '/paper',
+              query:{
+                questions:questions,
+                testName:this.testVoList[0].name
+              }
+            })
+          }else{
+            this.$alert(res.data['message'])
+          }
+        })
       }
     }
   }
