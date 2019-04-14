@@ -201,4 +201,17 @@
             #{item}
         </foreach>
     </select>
+
+    <select id="returnRandomQuestionIds" resultType="java.lang.Long">
+        SELECT
+	      ch.id
+        FROM
+	      `choice` ch left JOIN course co ON co.id = #{courseId}
+        WHERE
+	      `type`=#{type}
+        ORDER BY
+	      ch.id
+        LIMIT #{count};
+
+    </select>
 </mapper>

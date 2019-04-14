@@ -143,4 +143,17 @@
     now())
     </foreach>
   </insert>
+
+  <select id="returnRandomQuestionIds" resultType="java.lang.Long">
+        SELECT
+	      ch.id
+        FROM
+	      `subjective` ch left JOIN course co ON co.id = #{courseId}
+        WHERE
+	      `type`=#{type}
+        ORDER BY
+	      ch.id
+        LIMIT #{count};
+
+    </select>
 </mapper>

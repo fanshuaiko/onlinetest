@@ -30,4 +30,6 @@ public interface ChoiceDao {
     int batchAdd(@Param("choiceList") List<Choice> choiceList);//批量添加题目
 
     List<Map<Long,String>> questionAnswerMap(@Param("ids") List<Long> ids); //根据题目id查询题目答案
+
+    List<Long> returnRandomQuestionIds(String type, int count,int courseId); //根据类型随机返回指定数量的id
 }
