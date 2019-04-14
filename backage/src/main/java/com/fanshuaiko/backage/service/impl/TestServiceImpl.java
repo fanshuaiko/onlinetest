@@ -26,6 +26,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -63,6 +65,14 @@ public class TestServiceImpl implements TestService {
         try {
             testVO.setId(SnowflakeIdWorker.nextId());
             testVO.setStatus(TestStatus.NotBegin.getCODE());
+
+            //设置考试结束时间
+            SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+            Date startTime = sdf.parse(testVO.getStartTime());
+            Date endTime =new Date(startTime.getTime()+testVO.getTestTime()*60*1000);
+            String endTime2= sdf.format(endTime);
+            testVO.setEndTime(endTime2);
+
             //保存test相关信息到test表
             int i = testDao.insertTest(testVO);
             log.info("插入test成功，记录" + i + "条");
@@ -117,28 +127,40 @@ public class TestServiceImpl implements TestService {
             }
 
             //保存题目到test_question表
-            if (testVO.getSingleRedisId() == 0 && !CollectionUtils.isEmpty(testVO.getJudgeIdList())) {
-                if (!CollectionUtils.isEmpty(testVO.getSingleIdList())) {
-
-                    testDao.insertTestQuestion(testVO.getId(), testVO.getSingleIdList(), testVO.getSingleScore(), QuestionType.SingleChoice.getCODE());
+            if (testVO.getSingleRandomCount()!=0) {
+                //根据课程和题目类型随机返回指定数量的题目id
+                List<Long> ids = returnRandomQuestionIds(QuestionType.SingleChoice.getCODE(), testVO.getSingleRandomCount(),testVO.getCourseId());
+                if(ids.size()!=0){
+                testDao.insertTestQuestion(testVO.getId(), ids, testVO.getSingleScore(), QuestionType.SingleChoice.getCODE());
+                }else{
+                    return ResultData.newResultData(ErrorCode.ADD_FAILOR, "题库中没有该课程的单选题！");
                 }
             }
-            if (testVO.getJudgeRedisId() == 0 && !CollectionUtils.isEmpty(testVO.getJudgeIdList())) {
-                if (!CollectionUtils.isEmpty(testVO.getJudgeIdList())) {
-
-                    testDao.insertTestQuestion(testVO.getId(), testVO.getJudgeIdList(), testVO.getJudgeScore(), QuestionType.JudgeChoice.getCODE());
+            if (testVO.getJudgeRandomCount()!=0) {
+                //根据课程和题目类型随机返回指定数量的题目id
+                List<Long> ids = returnRandomQuestionIds(QuestionType.JudgeChoice.getCODE(), testVO.getJudgeRandomCount(),testVO.getCourseId());
+                if(ids.size()!=0){
+                    testDao.insertTestQuestion(testVO.getId(), ids, testVO.getJudgeScore(), QuestionType.JudgeChoice.getCODE());
+                }else{
+                    return ResultData.newResultData(ErrorCode.ADD_FAILOR, "题库中没有该课程的判断题！");
                 }
             }
-            if (testVO.getMultipleRedisId() == 0 && !CollectionUtils.isEmpty(testVO.getMultipleIdList())) {
-                if (!CollectionUtils.isEmpty(testVO.getMultipleIdList())) {
-
-                    testDao.insertTestQuestion(testVO.getId(), testVO.getMultipleIdList(), testVO.getMultipleScore(), QuestionType.MultipleChoice.getCODE());
+            if (testVO.getMultipleRandomCount()!=0) {
+                //根据课程和题目类型随机返回指定数量的题目id
+                List<Long> ids = returnRandomQuestionIds(QuestionType.MultipleChoice.getCODE(), testVO.getMultipleRandomCount(),testVO.getCourseId());
+                if(ids.size()!=0){
+                    testDao.insertTestQuestion(testVO.getId(), ids, testVO.getMultipleScore(), QuestionType.MultipleChoice.getCODE());
+                }else{
+                    return ResultData.newResultData(ErrorCode.ADD_FAILOR, "题库中没有该课程的多选题！");
                 }
             }
-            if (testVO.getSubjectiveRedisId() == 0 && !CollectionUtils.isEmpty(testVO.getSubjectiveIdList())) {
-                if (!CollectionUtils.isEmpty(testVO.getSubjectiveIdList())) {
-
-                    testDao.insertTestQuestion(testVO.getId(), testVO.getSubjectiveIdList(), testVO.getSubjectiveScore(), QuestionType.Subjective.getCODE());
+            if (testVO.getSubjectiveRandomCount()!=0) {
+                //根据课程和题目类型随机返回指定数量的题目id
+                List<Long> ids = returnRandomQuestionIds(QuestionType.Subjective.getCODE(), testVO.getSubjectiveRandomCount(),testVO.getCourseId());
+                if(ids.size()!=0){
+                    testDao.insertTestQuestion(testVO.getId(), ids, testVO.getSubjectiveScore(), QuestionType.Subjective.getCODE());
+                }else{
+                    return ResultData.newResultData(ErrorCode.ADD_FAILOR, "题库中没有该课程的主观题！");
                 }
             }
 
@@ -279,5 +301,22 @@ public class TestServiceImpl implements TestService {
             ids.add(choice.getId());
         }
         return ids;
+    }
+
+    public List<Long> returnRandomQuestionIds(String type, int count,int courseId) {
+        if (type.equals(QuestionType.SingleChoice.getCODE())) {
+            List<Long> ids = choiceDao.returnRandomQuestionIds(type, count,courseId);
+            return ids;
+        } else if (type.equals(QuestionType.JudgeChoice.getCODE())) {
+            List<Long> ids = choiceDao.returnRandomQuestionIds(type, count,courseId);
+            return ids;
+        } else if (type.equals(QuestionType.MultipleChoice.getCODE())) {
+            List<Long> ids = choiceDao.returnRandomQuestionIds(type, count,courseId);
+            return ids;
+        } else if (type.equals(QuestionType.Subjective.getCODE())) {
+            List<Long> ids = subjectiveDao.returnRandomQuestionIds(type, count,courseId);
+            return ids;
+        }
+        return null;
     }
 }
