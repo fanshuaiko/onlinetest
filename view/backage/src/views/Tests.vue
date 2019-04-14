@@ -79,11 +79,12 @@
               <el-input v-model="addForm.name" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="所属课程" prop="courseId">
-              <el-select v-model="addForm.courseId" placeholder="请选择">
+              <el-select v-model="courseName" placeholder="请选择" @change="setCourseId">
                 <el-option
                   v-for="item in allCourse"
                   :key="item.id"
-                  :value="item.name">
+                  :value="item.name"
+                  >
                 </el-option>
               </el-select>
             </el-form-item>
@@ -92,10 +93,10 @@
               <el-tree
                 :data="schoolTree"
                 show-checkbox
-                node-key="id"
-                :default-expanded-keys="[2, 3]"
-                :default-checked-keys="[5]"
-                :props="defaultProps">
+                node-key="classNo"
+                ref="tree"
+                @check-change="getTreeCheckedKeys"
+              >
               </el-tree>
             </el-form-item>
 
@@ -107,7 +108,6 @@
             </el-form-item>
             <el-form-item label="开考时间" prop="startTime">
               <div class="block">
-                <!--          <span class="demonstration">设置默认时间</span>-->
                 <el-date-picker
                   v-model="addForm.startTime"
                   type="datetime"
@@ -117,7 +117,7 @@
               </div>
             </el-form-item>
             <el-form-item label="考试时长" prop="testTime">
-              <el-input-number v-model="addForm.testTime" :min="0" :max="200"></el-input-number>
+              <el-input-number v-model="addForm.testTime" :min="0" :max="200"></el-input-number>&nbsp;&nbsp;&nbsp;分钟
             </el-form-item>
 
           </el-collapse-item>
@@ -276,7 +276,7 @@
       <div slot="footer" class="dialog-footer">
         当前分值：{{currentTotalScore}} 预设总分{{addForm.totalScore}}
         <el-button @click="dialogAddFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="checkQuestion" :loading="addLoading">提交</el-button>
+        <el-button type="primary" @click="checkQuestion('addForm')" :loading="addLoading">提交</el-button>
       </div>
 
     </el-dialog>
@@ -304,6 +304,8 @@
 
         username: sessionStorage.getItem('username'),
 
+        courseName: '', //所属课程名称
+
         //页面等待效果
         loading: true,
         //列表等待效果
@@ -316,7 +318,7 @@
         //新增界面数据
         addForm: {
           name: '', //考试名称
-          courseId: '', //所属课程id
+          courseId: 0, //所属课程id
           // teacherNo: sessionStorage.getItem('username'), //任课教师id，也是创建考试的教师
           teacherNo: 't10001', //任课教师id，也是创建考试的教师
           totalScore: 0, //考试总分
@@ -333,10 +335,6 @@
           multipleScore: 0, //多选题分值
           subjectiveScore: 0, //主观题分值
           classNoList: [], //参与考试的班级
-          // singleIdList: [], //选择题id
-          // judgeIdList: [], //判断题id
-          // multipleIdList: [], //多选题id
-          // subjectiveIdList: [], //主观题
           singleRandomCount: 0, //单选题随机出题数量
           judgeRandomCount: 0, //判断题随机出题数量
           multipleRandomCount: 0, //多选题随机出题数量
@@ -348,22 +346,22 @@
             {required: true, message: '请输入考试名称', trigger: 'blur'}
           ],
           courseId: [
-            {required: true, message: '请选择所属课程', trigger: 'blur'}
+            {required: true, message: '请选择所属课程', trigger: 'change'}
           ],
           classNoList: [
-            {required: true, message: '请选择班级参考', trigger: 'blur'}
+            {required: true, message: '请选择参考班级', trigger: 'change'}
           ],
           teacherNo: [
             {required: true, message: '请选择任课教师', trigger: 'blur'}
           ],
           totalScore: [
-            {required: true, message: '请输入考试总分', trigger: 'blur'}
+            {required: true, message: '请输入考试总分', trigger: 'change'}
           ],
           startTime: [
-            {required: true, message: '请选择开考时间', trigger: 'blur'}
+            {required: true, message: '请选择开考时间', trigger: 'change'}
           ],
           testTime: [
-            {required: true, message: '请输入考试时长', trigger: 'blur'}
+            {required: true, message: '请输入考试时长', trigger: 'change'}
           ],
         },
         //提交时等待效果
@@ -393,76 +391,77 @@
         //当前总分
         currentTotalScore: 0,
 
-        schoolTree:[
+        //学校班级层级树
+        schoolTree: [
           {
-            "collegeNo":10622,
-            "label":"学校",
-            "children":[
+            "collegeNo": 10622,
+            "label": "学校",
+            "children": [
               {
-                "instituteNo":"i10001",
-                "label":"数学与统计学院",
-                "children":[{
-                  "majorNo":"m1001",
-                  "label":"基础数学"+"专业",
-                  "children":[{
-                    "classNo":"c1001",
-                    "label":"1"+"班"
-                  },{
-                    "classNo":"c1002",
-                    "label":"2"+"班"
-                  },{
-                    "classNo":"c1003",
-                    "label":"3"+"班"
-                  },{
-                    "classNo":"c1004",
-                    "label":"4"+"班"
+                "instituteNo": "i10001",
+                "label": "数学与统计学院",
+                "children": [{
+                  "majorNo": "m1001",
+                  "label": "基础数学" + "专业",
+                  "children": [{
+                    "classNo": "c1001",
+                    "label": "1" + "班"
+                  }, {
+                    "classNo": "c1002",
+                    "label": "2" + "班"
+                  }, {
+                    "classNo": "c1003",
+                    "label": "3" + "班"
+                  }, {
+                    "classNo": "c1004",
+                    "label": "4" + "班"
                   }]
                 },
                   {
-                    "majorNo":"m1002",
-                    "label":"应用数学"+"专业",
-                    "children":[{
-                      "classNo":"c1005",
-                      "label":"1"+"班"
-                    },{
-                      "classNo":"c1006",
-                      "label":"2"+"班"
-                    },{
-                      "classNo":"c1007",
-                      "label":"3"+"班"
-                    },{
-                      "classNo":"c1008",
-                      "label":"4"+"班"
+                    "majorNo": "m1002",
+                    "label": "应用数学" + "专业",
+                    "children": [{
+                      "classNo": "c1005",
+                      "label": "1" + "班"
+                    }, {
+                      "classNo": "c1006",
+                      "label": "2" + "班"
+                    }, {
+                      "classNo": "c1007",
+                      "label": "3" + "班"
+                    }, {
+                      "classNo": "c1008",
+                      "label": "4" + "班"
                     }]
                   },
                   {
-                    "majorNo":"m1003",
-                    "label":"计算数学"+"专业"
+                    "majorNo": "m1003",
+                    "label": "计算数学" + "专业"
                   }]
               },
               {
-                "instituteNo":"i10002",
-                "label":"物理与电子工程学院",
-                "children":[{
-                  "majorNo":"m1005",
-                  "label":"物理"+"专业"
+                "instituteNo": "i10002",
+                "label": "物理与电子工程学院",
+                "children": [{
+                  "majorNo": "m1005",
+                  "label": "物理" + "专业"
                 },
                   {
-                    "majorNo":"m1006",
-                    "label":"电子信息工程"+"专业"
+                    "majorNo": "m1006",
+                    "label": "电子信息工程" + "专业"
                   },
                   {
-                    "majorNo":"m1007",
-                    "label":"电子信息科学与技术"+"专业"
+                    "majorNo": "m1007",
+                    "label": "电子信息科学与技术" + "专业"
                   }]
               },
               {
-                "instituteNo":"i10003",
-                "label":"计算机学院"
+                "instituteNo": "i10003",
+                "label": "计算机学院"
               },
               {
-                "instituteNo":"i10004",
-                "label":"土木工程学院"
+                "instituteNo": "i10004",
+                "label": "土木工程学院"
               }
             ]
           }
@@ -561,31 +560,6 @@
       //监控选中列的数量
       selsChange(sels) {
         this.sels = sels;
-      },
-
-      //提交新建的考试
-      addSubmit: function () {
-        this.$refs.addForm.validate((valid) => {
-          if (valid) {
-            this.$confirm('确认提交吗？', '提示', {}).then(() => {
-              this.addLoading = true;
-              //NProgress.start();
-              let para = Object.assign({}, this.addForm);
-              para.birth = (!para.birth || para.birth == '') ? '' : util.formatDate.format(new Date(para.birth), 'yyyy-MM-dd');
-              addUser(para).then((res) => {
-                this.addLoading = false;
-                //NProgress.done();
-                this.$message({
-                  message: '提交成功',
-                  type: 'success'
-                });
-                this.$refs['addForm'].resetFields();
-                this.dialogAddFormVisible = false;
-                this.getUsers();
-              });
-            });
-          }
-        });
       },
 
       //移除上传的题目
@@ -718,27 +692,68 @@
       },
 
       //检查当前是否有题目和相应分值
-      checkQuestion() {
-        if (this.currentTotalScore == 0) {
-          this.$notify.warning({
-            title: 'Info',
-            message: '题目数量或分值不能为空！',
-            showClose: false
-          });
-        } else {
-          this.submitAddForm()
-        }
+      checkQuestion(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            if (this.currentTotalScore == 0) {
+              this.$notify.warning({
+                title: 'Info',
+                message: '题目数量或分值不能为空！',
+                showClose: false
+              });
+            } else {
+              this.submitAddForm()
+            }
+          }
+        })
       },
 
       //提交新建考试表单
       submitAddForm() {
+        this.addLoading = true
         //格式化日期
         this.addForm.startTime = moment(this.addForm.startTime).format('YYYY-MM-DD HH:mm:ss')
+        console.log('submitAddForm:表单数据：：' + JSON.stringify(this.addForm))
         api.createTest(this.addForm).then(res => {
-          // this.$alert('新建考试失败')
+          console.log('submitAddForm:res::' + JSON.stringify(res))
+          if(res.status==200&&res['code']=='0'){
+            //关闭等待效果
+            this.addLoading=false
+            //成功后关闭新建页面
+            this.dialogAddFormVisible = false
+            this.$notify({
+              title: 'Info',
+              message: '成功创建一场考试！',
+              type: 'success'
+            })
+            //更新列表
+            this.getUsers()
+          }
+          this.$alert('新建考试失败')
+        }).catch(err=>{
+          this.$alert(err.toString())
         })
-      }
+      },
 
+      //设置班级tree选中的classNo到classNoList
+      getTreeCheckedKeys() {
+        var arr = this.$refs.tree.getCheckedKeys()
+        arr = arr.filter(function (e) {
+          return e
+        })
+        console.log('tree选中的值去空后：：：' + arr);
+        this.addForm.classNoList = arr
+      },
+
+      //设置下拉框选中的课程的id
+      setCourseId(val){
+       let obj={}
+       obj = this.allCourse.find((item)=>{
+         return item.name ===val
+       })
+        this.addForm.courseId = obj.id
+        console.log('this.addForm.courseId ::'+ obj.id )
+      }
     }
   }
 
