@@ -57,7 +57,7 @@
               sessionStorage.setItem('username',this.username)
               this.$router.push(
                 {
-                  path: '/main',
+                  path: '/tests',
                 }
               )
             } else {
