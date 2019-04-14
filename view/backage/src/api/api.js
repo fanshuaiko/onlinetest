@@ -22,3 +22,8 @@ export const createTest = params =>{
   return axios.post(`${backage_base}/test`,params)
 }
 
+//根据考试编号查询该场考试的试题
+export const getQuestionByTestNo = params =>{
+  return axios.get(`backage-api/questionDetail/`+params)
+}
+
