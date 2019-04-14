@@ -47,13 +47,13 @@ public class TestVO {
 
     private List<String> classNoList; //参与考试的班级
 
-    private List<Long> singleIdList; //选择题id
+    private int singleRandomCount; //选择题随机题数量
 
-    private List<Long> judgeIdList; //判断题id
+    private int judgeRandomCount; //判断题随机题数量
 
-    private List<Long> multipleIdList; //多选题id
+    private int multipleRandomCount; //多选题随机题数量
 
-    private List<Long> subjectiveIdList; //主观题
+    private int subjectiveRandomCount; //主观题随机题数量
 
     public Long getId() {
         return id;
@@ -191,36 +191,36 @@ public class TestVO {
         this.classNoList = classNoList;
     }
 
-    public List<Long> getSingleIdList() {
-        return singleIdList;
+    public int getSingleRandomCount() {
+        return singleRandomCount;
     }
 
-    public void setSingleIdList(List<Long> singleIdList) {
-        this.singleIdList = singleIdList;
+    public void setSingleRandomCount(int singleRandomCount) {
+        this.singleRandomCount = singleRandomCount;
     }
 
-    public List<Long> getJudgeIdList() {
-        return judgeIdList;
+    public int getJudgeRandomCount() {
+        return judgeRandomCount;
     }
 
-    public void setJudgeIdList(List<Long> judgeIdList) {
-        this.judgeIdList = judgeIdList;
+    public void setJudgeRandomCount(int judgeRandomCount) {
+        this.judgeRandomCount = judgeRandomCount;
     }
 
-    public List<Long> getMultipleIdList() {
-        return multipleIdList;
+    public int getMultipleRandomCount() {
+        return multipleRandomCount;
     }
 
-    public void setMultipleIdList(List<Long> multipleIdList) {
-        this.multipleIdList = multipleIdList;
+    public void setMultipleRandomCount(int multipleRandomCount) {
+        this.multipleRandomCount = multipleRandomCount;
     }
 
-    public List<Long> getSubjectiveIdList() {
-        return subjectiveIdList;
+    public int getSubjectiveRandomCount() {
+        return subjectiveRandomCount;
     }
 
-    public void setSubjectiveIdList(List<Long> subjectiveIdList) {
-        this.subjectiveIdList = subjectiveIdList;
+    public void setSubjectiveRandomCount(int subjectiveRandomCount) {
+        this.subjectiveRandomCount = subjectiveRandomCount;
     }
 
     public int getTestTime() {
@@ -252,10 +252,10 @@ public class TestVO {
                 ", multipleScore=" + multipleScore +
                 ", subjectiveScore=" + subjectiveScore +
                 ", classNoList=" + classNoList +
-                ", singleIdList=" + singleIdList +
-                ", judgeIdList=" + judgeIdList +
-                ", multipleIdList=" + multipleIdList +
-                ", subjectiveIdList=" + subjectiveIdList +
+                ", singleRandomCount=" + singleRandomCount +
+                ", judgeRandomCount=" + judgeRandomCount +
+                ", multipleRandomCount=" + multipleRandomCount +
+                ", subjectiveRandomCount=" + subjectiveRandomCount +
                 '}';
     }
 }
