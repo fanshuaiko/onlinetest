@@ -1,17 +1,16 @@
 <template>
-  <el-container style=" border: 1px solid #eee">
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+  <el-container style=" border: 1px solid #eee;height: 100%">
+    <el-aside width="200px" style="background-color: white">
 
       <el-header style="text-align: center; font-size: 20px;">
         ONLINETEST
       </el-header>
 
-      <el-menu :default-openeds="['1', '3']">
+      <el-menu :default-openeds="['1']"  @select="handleSelect">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>考试</template>
           <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="1-1">根据教师编号分页查询考试</el-menu-item>
+            <el-menu-item index="1-1">所有考试</el-menu-item>
             <el-menu-item index="1-2">选项2</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group title="分组2">
@@ -23,7 +22,7 @@
           </el-submenu>
         </el-submenu>
         <el-submenu index="2">
-          <template slot="title"><i class="el-icon-menu"></i>导航二</template>
+          <template slot="title"><i class="el-icon-menu"></i>题目管理</template>
           <el-menu-item-group>
             <template slot="title">分组一</template>
             <el-menu-item index="2-1">选项1</el-menu-item>
@@ -38,7 +37,7 @@
           </el-submenu>
         </el-submenu>
         <el-submenu index="3">
-          <template slot="title"><i class="el-icon-setting"></i>导航三</template>
+          <template slot="title"><i class="el-icon-setting"></i>考试分析</template>
           <el-menu-item-group>
             <template slot="title">分组一</template>
             <el-menu-item index="3-1">选项1</el-menu-item>
@@ -69,15 +68,14 @@
       </el-header>
 
       <el-main>
-        <el-table :data="tableData">
-          <el-table-column prop="date" label="日期" width="140">
-          </el-table-column>
-          <el-table-column prop="name" label="姓名" width="120">
-          </el-table-column>
-          <el-table-column prop="address" label="地址">
-          </el-table-column>
-        </el-table>
+        <el-col :span="24" class="content-wrapper">
+          <transition name="fade" mode="out-in">
+            <router-view></router-view>
+          </transition>
+        </el-col>
       </el-main>
+
+
     </el-container>
   </el-container>
 </template>
@@ -108,9 +106,18 @@
       loadData() {
         // var AUTHORIZATION = this.$route.query.AUTHORIZATION
 
+      },
+      handleSelect(key, keyPath) {
+        switch (key) {
+          case '1-1':
+            this.$router.push('/tests');
+            break;
+          case '2':
+            this.$router.push('/forms');
+            break;
+        }
       }
     }
-
   }
 </script>
 
@@ -123,5 +130,9 @@
 
   .el-aside {
     color: #333;
+  }
+
+  .el-menu-item-group{
+    background-color:#E8E8E8;
   }
 </style>
