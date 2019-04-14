@@ -16,12 +16,12 @@ export default new Router({
     {
       path: '/main',
       name: 'main',
-      component: Main
+      component: Main,
+      iconCls: 'el-icon-message',//图标样式class
+      children:[
+        {path:'/tests',component:Tests,name:'所有考试'}
+        ]
     },
-    {
-      path: '/tests',
-      name: 'tests',
-      component: Tests
-    }
+
   ]
 })
