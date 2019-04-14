@@ -19,6 +19,6 @@ export const getAllCourse = params =>{
 
 //新建考试
 export const createTest = params =>{
-  return axios.post('backage_base/test/test',params)
+  return axios.post(`${backage_base}/test`,params)
 }
 
