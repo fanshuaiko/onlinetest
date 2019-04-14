@@ -6,7 +6,7 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="course_id" jdbcType="INTEGER" property="courseId"/>
         <result column="teacher_no" jdbcType="VARCHAR" property="teacherNo"/>
-        <result column="total_score" jdbcType="VARCHAR" property="totalScore"/>
+        <result column="total_score" jdbcType="INTEGER" property="totalScore"/>
         <result column="status" jdbcType="CHAR" property="status"/>
         <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
         <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
@@ -29,10 +29,11 @@
       teacher_no, total_score, status, 
       start_time, end_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER}, 
-      #{teacherNo,jdbcType=VARCHAR}, #{totalScore,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{teacherNo,jdbcType=VARCHAR}, #{totalScore,jdbcType=INTEGER}, #{status,jdbcType=CHAR},
       #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.Test">
+
         insert into test
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -74,7 +75,7 @@
                 #{teacherNo,jdbcType=VARCHAR},
             </if>
             <if test="totalScore != null">
-                #{totalScore,jdbcType=VARCHAR},
+                #{totalScore,jdbcType=INTEGER},
             </if>
             <if test="status != null">
                 #{status,jdbcType=CHAR},
@@ -100,7 +101,7 @@
                 teacher_no = #{teacherNo,jdbcType=VARCHAR},
             </if>
             <if test="totalScore != null">
-                total_score = #{totalScore,jdbcType=VARCHAR},
+                total_score = #{totalScore,jdbcType=INTEGER},
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=CHAR},
@@ -119,7 +120,7 @@
     set name = #{name,jdbcType=VARCHAR},
       course_id = #{courseId,jdbcType=INTEGER},
       teacher_no = #{teacherNo,jdbcType=VARCHAR},
-      total_score = #{totalScore,jdbcType=VARCHAR},
+      total_score = #{totalScore,jdbcType=INTEGER},
       status = #{status,jdbcType=CHAR},
       start_time = #{startTime},
       end_time = #{endTime}
@@ -131,9 +132,9 @@
       teacher_no, total_score, status,
       start_time, end_time,test_time)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER},
-      #{teacherNo,jdbcType=VARCHAR}, #{totalScore,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+      #{teacherNo,jdbcType=VARCHAR}, #{totalScore,jdbcType=INTEGER}, #{status,jdbcType=CHAR},
        #{startTime},
-      #{endTime}),#{testTime}
+      #{endTime},#{testTime})
   </insert>
 
     <insert id="insertTestClass" parameterType="com.fanshuaiko.backage.entity.VO.TestVO">
