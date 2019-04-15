@@ -31,3 +31,8 @@ export const getQuestionByTestNo = params =>{
 export  const  choicePageQuery = params =>{
   return axios.get(`backage-api/question/choice`,{params:params})
 }
+
+//多条件分页查询主观题
+export  const  choicePageQuery = params =>{
+  return axios.get(`backage-api/question/subjective`,{params:params})
+}
