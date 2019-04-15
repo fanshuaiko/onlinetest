@@ -6,7 +6,7 @@
         ONLINETEST
       </el-header>
 
-      <el-menu :default-openeds="['1']"  @select="handleSelect">
+      <el-menu :default-openeds="['1']" @select="handleSelect">
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>考试</template>
           <el-menu-item-group>
@@ -15,12 +15,14 @@
         </el-submenu>
         <el-submenu index="2">
           <template slot="title"><i class="el-icon-menu"></i>题目管理</template>
+          <el-menu-item-group>
             <el-menu-item index="2-3">选择题管理</el-menu-item>
             <el-menu-item index="2-3">主观题管理</el-menu-item>
-          <el-submenu index="2-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="2-4-1">选项4-1</el-menu-item>
-          </el-submenu>
+            <el-submenu index="2-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="2-4-1">选项4-1</el-menu-item>
+            </el-submenu>
+          </el-menu-item-group>
         </el-submenu>
         <el-submenu index="1">
           <template slot="title"><i class="el-icon-message"></i>阅卷</template>
@@ -85,9 +87,9 @@
       };
       return {
         tableData: Array(20).fill(item),
-        username:'t10001',
-        pageNum:1,
-        pageSize:5
+        username: 't10001',
+        pageNum: 1,
+        pageSize: 5
       }
     },
 
@@ -125,7 +127,7 @@
     color: #333;
   }
 
-  .el-menu-item-group{
-    background-color:#E8E8E8;
+  .el-menu-item-group {
+    background-color: #E8E8E8;
   }
 </style>
