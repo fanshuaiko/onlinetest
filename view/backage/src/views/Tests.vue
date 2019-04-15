@@ -242,7 +242,7 @@
               </div>
               <el-upload
                 class="upload-demo"
-                action="backage-api/test/choice"
+                action="backage-api/test/subjective"
                 :on-remove="handleRemoveUploadSubjective"
                 :before-remove="beforeRemove"
                 :data="uploadQuestionType.subjective"
