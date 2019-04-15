@@ -121,7 +121,7 @@ public class QuestionController {
         } catch (Exception e) {
             log.info("--------importChoice:--------");
             e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR, ErrorCode.ADD_FAILOR_MSG);
         }
     }
 
@@ -212,7 +212,7 @@ public class QuestionController {
         } catch (Exception e) {
             log.info("--------importSubjective:--------");
             e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.ADD_FAILOR_MSG, ErrorCode.ADD_FAILOR_MSG);
+            return ResultData.newResultData(ErrorCode.ADD_FAILOR, ErrorCode.ADD_FAILOR_MSG);
         }
     }
 
