@@ -29,5 +29,5 @@ export const getQuestionByTestNo = params =>{
 
 //多条件分页查询选择题
 export  const  choicePageQuery = params =>{
-  return axios.get(`backage-api/question/choice`+params)
+  return axios.get(`backage-api/question/choice`,{params:params})
 }
