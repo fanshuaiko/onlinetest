@@ -33,6 +33,6 @@ export  const  choicePageQuery = params =>{
 }
 
 //多条件分页查询主观题
-export  const  choicePageQuery = params =>{
+export  const  subjectivePageQuery = params =>{
   return axios.get(`backage-api/question/subjective`,{params:params})
 }
