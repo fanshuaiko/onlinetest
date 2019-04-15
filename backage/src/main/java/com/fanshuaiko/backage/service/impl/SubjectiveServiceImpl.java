@@ -60,7 +60,7 @@ public class SubjectiveServiceImpl implements SubjectiveService {
     }
     @Override
 
-    public ResultData importChoice(MultipartFile file, String type){
+    public ResultData importSubjective(MultipartFile file, String type){
         try {
             ResultData resultData = importUtil.checkImportSubjective(file, type);
             if (resultData.getData() == null) {

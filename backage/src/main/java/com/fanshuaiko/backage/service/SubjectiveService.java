@@ -44,5 +44,5 @@ public interface SubjectiveService {
      * @param type
      * @return
      */
-    ResultData importChoice(MultipartFile file, String type);
+    ResultData importSubjective(MultipartFile file, String type);
 }

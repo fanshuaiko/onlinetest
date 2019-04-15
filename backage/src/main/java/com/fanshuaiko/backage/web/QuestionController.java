@@ -198,7 +198,7 @@ public class QuestionController {
     }
 
     /**
-     * 选择题导入
+     * 主观题题导入
      *
      * @param file
      * @param type
@@ -207,7 +207,7 @@ public class QuestionController {
     @PostMapping("/subjective/file")
     public ResultData importSubjective(MultipartFile file, String type) {
         try {
-            ResultData resultData = subjectiveService.importChoice(file, type);
+            ResultData resultData = subjectiveService.importSubjective(file, type);
             return resultData;
         } catch (Exception e) {
             log.info("--------importSubjective:--------");
