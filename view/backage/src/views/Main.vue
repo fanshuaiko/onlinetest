@@ -18,6 +18,7 @@
           <el-menu-item-group>
             <el-menu-item index="2-1">选择题管理</el-menu-item>
             <el-menu-item index="2-2">主观题管理</el-menu-item>
+            <el-menu-item index="2-3">题目上传</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="3">
@@ -75,17 +76,8 @@
   export default {
     name: "Main",
     data() {
-
-      const item = {
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄',
-      };
       return {
-        tableData: Array(20).fill(item),
-        username: 't10001',
-        pageNum: 1,
-        pageSize: 5
+        username: sessionStorage.getItem('username'),
       }
     },
 
@@ -108,6 +100,9 @@
             break;
           case '2-2':
             this.$router.push('/subjectiveManager');
+            break;
+          case '2-3':
+            this.$router.push('/uploadQuestion');
             break;
         }
       }
