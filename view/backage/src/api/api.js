@@ -36,3 +36,13 @@ export  const  choicePageQuery = params =>{
 export  const  subjectivePageQuery = params =>{
   return axios.get(`backage-api/question/subjective`,{params:params})
 }
+
+//多条件分页查询主观题
+export  const  updateChoice = params =>{
+  return axios.put(`backage-api/question/choice`,params)
+}
+
+//根据id删除当前选择题
+export const deleteChoiceById = params =>{
+  return axios.delete(`backage-api/question/choice/`+params)
+}
