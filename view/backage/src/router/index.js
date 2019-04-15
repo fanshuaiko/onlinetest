@@ -5,6 +5,7 @@ import Main from "../views/Main";
 import Tests from "../views/Tests";
 import Paper from "../views/Paper";
 import ChoiceManager from "../views/ChoiceManager";
+import SubjectiveManager from "../views/SubjectiveManager";
 
 Vue.use(Router)
 
@@ -23,6 +24,7 @@ export default new Router({
       children: [
         {path: '/tests', component: Tests, name: '所有考试'},
         {path: '/choiceManager', component: ChoiceManager, name: '选择题管理'},
+        {path: '/subjectiveManager', component: SubjectiveManager, name: '主观题管理'},
       ]
     },
     {
