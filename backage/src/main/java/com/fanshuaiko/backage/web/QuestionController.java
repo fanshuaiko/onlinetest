@@ -77,14 +77,14 @@ public class QuestionController {
      * @return
      */
     @PutMapping("/choice")
-    public ResultData updateChoice(Choice choice) {
+    public ResultData updateChoice(@RequestBody Choice choice) {
         try {
             ResultData resultData = choiceService.updateByPrimaryKey(choice);
             return resultData;
         } catch (Exception e) {
             log.info("--------updateChoice:--------");
             e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.DEL_FAILOR, ErrorCode.DEL_FAILOR_MSG);
+            return ResultData.newResultData(ErrorCode.UPDATE_FAILOR, ErrorCode.UPDATE_FAILOR_MSG);
         }
     }
 
