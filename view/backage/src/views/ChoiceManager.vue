@@ -29,7 +29,7 @@
             [单选题]、{{item.question}}&nbsp;&nbsp;[参考答案]:
             <el-select v-model="item.answer" placeholder="请选择" :disabled="disable">
               <el-option
-                v-for="item in options"
+                v-for="item in singleOptions"
                 :key="item.value"
                 :label="item.value"
                 :value="item.value">
@@ -44,7 +44,22 @@
                        @click="edit"></el-button>
           </div>
           <div class="panel-heading" v-if="item.type == '2'">
-            [判断题]、{{item.question}}&nbsp;&nbsp;[参考答案]:{{item.answer}}&nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
+            [判断题]、{{item.question}}&nbsp;&nbsp;[参考答案]:
+            <el-select v-model="item.answer" placeholder="请选择" :disabled="disable">
+              <el-option
+                v-for="item in judgeOptions"
+                :key="item.value"
+                :label="item.value"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            &nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
+            <el-button type="success" size="mini" icon="el-icon-check" circle style="float: right" :disabled="disable"
+                       @click="saveEdit(item)"></el-button>
+            <el-button type="danger" size="mini" icon="el-icon-delete" circle style="float: right"
+                       @click="deleteChoice(item.id)"></el-button>
+            <el-button type="primary" size="mini" icon="el-icon-edit" circle style="float: right"
+                       @click="edit"></el-button>
           </div>
           <div class="panel-heading" v-if="item.type == '3'">
             [多选题]、{{item.question}}&nbsp;&nbsp;[参考答案]:{{item.answer}}&nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
@@ -120,7 +135,8 @@
         //选项是否可编辑
         disable: true,
 
-        options: [{
+        //选项
+        singleOptions: [{
           value: 'A',
         }, {
           value: 'B',
@@ -128,6 +144,12 @@
           value: 'C',
         }, {
           value: 'D',
+        }],
+
+        judgeOptions: [{
+          value: 'A',
+        }, {
+          value: 'B',
         }]
 
       }
