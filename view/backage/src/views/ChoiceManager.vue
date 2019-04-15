@@ -21,28 +21,56 @@
     </el-form>
 
     <!--    题目列表-->
-    <el-collapse accordion v-for="item in questionList">
+    <el-collapse v-for="item in questionList" accordion>
       <el-collapse-item v-bind:title="item.question" class="panel-heading">
         <div class="panel panel-success">
           <!--        <div class="questions" style="width: 50%;margin:0 auto; " v-for="item in questionList">-->
-          <div class="panel-heading" v-if="item.type == '1'">[单选题]、{{item.question}}&nbsp;&nbsp;[参考答案]:{{item.answer}}&nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
+          <div class="panel-heading" v-if="item.type == '1'">
+            [单选题]、{{item.question}}&nbsp;&nbsp;[参考答案]:
+            <el-select v-model="item.answer" placeholder="请选择" :disabled="disable">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.value"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            &nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
+            <el-button type="success" size="mini" icon="el-icon-check" circle style="float: right" :disabled="disable"
+                       @click="saveEdit(item)"></el-button>
+            <el-button type="danger" size="mini" icon="el-icon-delete" circle style="float: right"
+                       @click="deleteChoice(item.id)"></el-button>
+            <el-button type="primary" size="mini" icon="el-icon-edit" circle style="float: right"
+                       @click="edit"></el-button>
           </div>
-          <div class="panel-heading" v-if="item.type == '2'">[判断题]、{{item.question}}&nbsp;&nbsp;[参考答案]:{{item.answer}}&nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
+          <div class="panel-heading" v-if="item.type == '2'">
+            [判断题]、{{item.question}}&nbsp;&nbsp;[参考答案]:{{item.answer}}&nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
           </div>
-          <div class="panel-heading" v-if="item.type == '3'">[多选题]、{{item.question}}&nbsp;&nbsp;[参考答案]:{{item.answer}}&nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
+          <div class="panel-heading" v-if="item.type == '3'">
+            [多选题]、{{item.question}}&nbsp;&nbsp;[参考答案]:{{item.answer}}&nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
           </div>
-          <div class="panel-heading" v-if="item.type == '4'">[主观题]、{{item.question}}&nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]</div>
+          <div class="panel-heading" v-if="item.type == '4'">
+            [主观题]、{{item.question}}&nbsp;&nbsp;&nbsp;&nbsp;[所属课程：{{item.courseName}}]
+          </div>
           <div class="panel-body" v-if="item.type != '4'">
-            A.&nbsp;&nbsp;{{item.choiceA}}
+            <el-input placeholder="请输入内容" v-model="item.choiceA" :disabled="disable">
+              <template slot="prepend">A.</template>
+            </el-input>
           </div>
           <div class="panel-body" v-if="item.type != '4'">
-            B.&nbsp;&nbsp;{{item.choiceB}}
+            <el-input placeholder="请输入内容" v-model="item.choiceB" :disabled="disable">
+              <template slot="prepend">B.</template>
+            </el-input>
           </div>
           <div class="panel-body" v-if="item.type == '1' || item.type == '3'">
-            C.&nbsp;&nbsp;{{item.choiceC}}
+            <el-input placeholder="请输入内容" v-model="item.choiceC" :disabled="disable">
+              <template slot="prepend">C.</template>
+            </el-input>
           </div>
           <div class="panel-body" v-if="item.type == '1' || item.type == '3'">
-            D.&nbsp;&nbsp;{{item.choiceD}}
+            <el-input placeholder="请输入内容" v-model="item.choiceD" :disabled="disable">
+              <template slot="prepend">D.</template>
+            </el-input>
           </div>
           <div class="panel-body" v-if="item.type == '4'">
             参考答案:&nbsp;&nbsp;{{item.answer}}
@@ -89,6 +117,19 @@
         //总记录数
         total: 0,
 
+        //选项是否可编辑
+        disable: true,
+
+        options: [{
+          value: 'A',
+        }, {
+          value: 'B',
+        }, {
+          value: 'C',
+        }, {
+          value: 'D',
+        }]
+
       }
     },
     methods: {
@@ -126,6 +167,49 @@
         this.choicePageQuery();
       },
 
+      //设置当前题目为可编辑
+      edit() {
+        this.disable = false
+      },
+
+      //保存题目修改
+      saveEdit(item) {
+        this.disable = true
+        console.log('item::::' + JSON.stringify(item))
+        api.updateChoice(item).then(res => {
+          console.log(JSON.stringify(res))
+          if (res.data['code'] == '0') {
+            //刷新列表数据
+            this.choicePageQuery()
+            this.$message({
+              message: '修改成功',
+              type: 'success'
+            })
+          } else {
+            this.$message.error('修改失败');
+          }
+        })
+      },
+
+      //删除当前题目
+      deleteChoice(id) {
+        this.$confirm('确认删除选中记录吗？', '提示', {
+          type: 'warning'
+        }).then(() => {
+          api.deleteChoiceById(id).then(res=>{
+            if(res.data['code'] == '0'){
+              this.$message({
+                message: '删除成功',
+                type: 'success'
+              })
+              //  更新列表数据
+              this.choicePageQuery()
+            }else{
+              this.$message.error('删除失败');
+            }
+          })
+        })
+      }
     }
   }
 </script>
