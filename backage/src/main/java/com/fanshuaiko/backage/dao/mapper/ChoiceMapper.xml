@@ -133,7 +133,7 @@
                 answer = #{answer,jdbcType=VARCHAR},
             </if>
             <if test="courseName != null">
-                courseName = #{courseName,jdbcType=VARCHAR},
+                course_name = #{courseName,jdbcType=VARCHAR},
             </if>
             <if test="type != null">
                 type = #{type,jdbcType=CHAR},
@@ -142,7 +142,7 @@
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
             <if test="updateTime != null">
-                now(),
+                update_time = now()
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
