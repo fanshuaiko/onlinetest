@@ -24,7 +24,7 @@
         <el-submenu index="3">
           <template slot="title"><i class="el-icon-message"></i>阅卷</template>
           <el-menu-item-group>
-            <el-menu-item index="3-1">选项</el-menu-item>
+            <el-menu-item index="3-1">批改试卷</el-menu-item>
             <el-menu-item index="3-1">选项</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -103,6 +103,9 @@
             break;
           case '2-3':
             this.$router.push('/uploadQuestion');
+            break;
+          case '3-1':
+            this.$router.push('/markPaper');
             break;
         }
       }
