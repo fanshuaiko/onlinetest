@@ -49,7 +49,8 @@ public class PaperServiceImpl implements PaperService {
         if (null == scoreDetailReturnVo) {
             List<Score> scoreList = scoreDetailDao.sumTotalScore(testNo);
             int count = scoreDao.batchAdd(scoreList);
-            return ResultData.newSuccessResultData("试卷全部批改完成，" + "共" + count + "套！");
+            int i = paperStatusDao.updateSubjectiveStatusByTestNo(testNo);
+            return ResultData.newResultData("0","试卷全部批改完成");
         }
         return ResultData.newSuccessResultData(scoreDetailReturnVo);
     }

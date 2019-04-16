@@ -101,4 +101,10 @@
         set choice_status = '1'
         where test_no = #{testNo}
     </update>
+
+    <update id="updateSubjectiveStatusByTestNo" parameterType="java.lang.Long">
+        update paper_status
+        set subjective_status = '1'
+        where test_no = #{testNo}
+    </update>
 </mapper>
