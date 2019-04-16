@@ -1,87 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fanshuaiko.backage.dao.PaperStatusDao">
-  <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.PaperStatus">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="test_no" jdbcType="BIGINT" property="testNo" />
-    <result column="choice_status" jdbcType="CHAR" property="choiceStatus" />
-    <result column="subjective_status" jdbcType="CHAR" property="subjectiveStatus" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, test_no, choice_status, subjective_status
+    <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.PaperStatus">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="test_no" jdbcType="BIGINT" property="testNo"/>
+        <result column="test_name" jdbcType="VARCHAR" property="testName"/>
+        <result column="choice_status" jdbcType="CHAR" property="choiceStatus"/>
+        <result column="subjective_status" jdbcType="CHAR" property="subjectiveStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, test_no,test_name, choice_status, subjective_status
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from paper_status
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from paper_status
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from paper_status
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.fanshuaiko.backage.entity.PaperStatus">
-    insert into paper_status (id, test_no, choice_status, 
+    <insert id="insert" parameterType="com.fanshuaiko.backage.entity.PaperStatus">
+    insert into paper_status (id, test_no,test_name, choice_status,
       subjective_status)
-    values (#{id,jdbcType=INTEGER}, #{testNo,jdbcType=BIGINT}, #{choiceStatus,jdbcType=CHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{testNo,jdbcType=BIGINT},#{testName,jdbcType=VARCHAR}, #{choiceStatus,jdbcType=CHAR},
       #{subjectiveStatus,jdbcType=CHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.PaperStatus">
-    insert into paper_status
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="testNo != null">
-        test_no,
-      </if>
-      <if test="choiceStatus != null">
-        choice_status,
-      </if>
-      <if test="subjectiveStatus != null">
-        subjective_status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="testNo != null">
-        #{testNo,jdbcType=BIGINT},
-      </if>
-      <if test="choiceStatus != null">
-        #{choiceStatus,jdbcType=CHAR},
-      </if>
-      <if test="subjectiveStatus != null">
-        #{subjectiveStatus,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fanshuaiko.backage.entity.PaperStatus">
-    update paper_status
-    <set>
-      <if test="testNo != null">
-        test_no = #{testNo,jdbcType=BIGINT},
-      </if>
-      <if test="choiceStatus != null">
-        choice_status = #{choiceStatus,jdbcType=CHAR},
-      </if>
-      <if test="subjectiveStatus != null">
-        subjective_status = #{subjectiveStatus,jdbcType=CHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.PaperStatus">
+    <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.PaperStatus">
+        insert into paper_status
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="testNo != null">
+                test_no,
+            </if>
+            <if test="testName != null">
+                test_name,
+            </if>
+            <if test="choiceStatus != null">
+                choice_status,
+            </if>
+            <if test="subjectiveStatus != null">
+                subjective_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="testNo != null">
+                #{testNo,jdbcType=BIGINT},
+            </if>
+            <if test="testName != null">
+                #{testName,jdbcType=VARCHAR},
+            </if>
+            <if test="choiceStatus != null">
+                #{choiceStatus,jdbcType=CHAR},
+            </if>
+            <if test="subjectiveStatus != null">
+                #{subjectiveStatus,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fanshuaiko.backage.entity.PaperStatus">
+        update paper_status
+        <set>
+            <if test="testNo != null">
+                test_no = #{testNo,jdbcType=BIGINT},
+            </if>
+            <if test="testName != null">
+                test_name = #{testName,jdbcType=VARCHAR},
+            </if>
+            <if test="choiceStatus != null">
+                choice_status = #{choiceStatus,jdbcType=CHAR},
+            </if>
+            <if test="subjectiveStatus != null">
+                subjective_status = #{subjectiveStatus,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.PaperStatus">
     update paper_status
     set test_no = #{testNo,jdbcType=BIGINT},
+    test_name = #{testName,jdbcType=VARCHAR},
       choice_status = #{choiceStatus,jdbcType=CHAR},
       subjective_status = #{subjectiveStatus,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
     <select id="selectAll" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from paper_status
     </select>
 </mapper>
