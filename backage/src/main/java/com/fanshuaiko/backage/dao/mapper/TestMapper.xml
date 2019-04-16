@@ -198,4 +198,10 @@ where
             #{item}
         </foreach>
     </delete>
+
+    <select id="selectByQuestionNo" parameterType="java.lang.Long" resultType="com.fanshuaiko.backage.entity.TestQuestion">
+        select id,test_no,question_no,score,question_type
+        from test_question
+        where question_no = #{testNo}
+    </select>
 </mapper>
