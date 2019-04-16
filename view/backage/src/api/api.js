@@ -51,3 +51,9 @@ export const deleteChoiceById = params =>{
 export const pageQueryPaperStatus = params =>{
   return axios.get(`backage-api/paper/paperStatus/`+params.pageNum + '/' + params.pageSize)
 }
+
+//批改选择题
+export const markChoice = params =>{
+  return axios.post(`backage-api/paper/choice/`+params)
+}
+
