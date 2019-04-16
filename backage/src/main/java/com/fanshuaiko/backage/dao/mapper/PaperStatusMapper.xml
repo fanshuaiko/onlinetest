@@ -95,4 +95,10 @@
         <include refid="Base_Column_List"/>
         from paper_status
     </select>
+
+    <update id="updateChoiceStatusByTestNo" parameterType="java.lang.Long">
+        update paper_status
+        set choice_status = '1'
+        where test_no = #{testNo}
+    </update>
 </mapper>

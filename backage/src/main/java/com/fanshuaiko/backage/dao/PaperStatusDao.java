@@ -22,4 +22,6 @@ public interface PaperStatusDao {
     int updateByPrimaryKey(PaperStatus record);
 
     List<PaperStatus> selectAll();//查询所有
+
+    int updateChoiceStatusByTestNo(long testNo);//更新选择题批改状态为已批改
 }

@@ -76,7 +76,8 @@ public class PaperServiceImpl implements PaperService {
             }
         }
         int count = scoreDetailDao.batchUpdateStudentScore(scoreDetails);
-        return ResultData.newSuccessResultData(count);
+        int i = paperStatusDao.updateChoiceStatusByTestNo(testNo);
+        return ResultData.newSuccessResultData(i);
     }
 
     @Override
