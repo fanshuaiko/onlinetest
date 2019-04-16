@@ -7,6 +7,7 @@ import Paper from "../views/Paper";
 import ChoiceManager from "../views/ChoiceManager";
 import SubjectiveManager from "../views/SubjectiveManager";
 import UploadQuestion from "../views/UploadQuestion";
+import MarkPaper from "../views/MarkPaper";
 
 Vue.use(Router)
 
@@ -27,6 +28,7 @@ export default new Router({
         {path: '/choiceManager', component: ChoiceManager, name: '选择题管理'},
         {path: '/subjectiveManager', component: SubjectiveManager, name: '主观题管理'},
         {path: '/uploadQuestion', component: UploadQuestion, name: '题目上传'},
+        {path: '/markPaper', component: MarkPaper, name: '试卷批改'},
       ]
     },
     {
