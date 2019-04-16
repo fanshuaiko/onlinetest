@@ -218,16 +218,18 @@
         this.$confirm('确认删除选中记录吗？', '提示', {
           type: 'warning'
         }).then(() => {
-          api.deleteChoiceById(id).then(res=>{
-            if(res.data['code'] == '0'){
+          api.deleteChoiceById(id).then(res => {
+            if (res.data['code'] == '0') {
               this.$message({
                 message: '删除成功',
                 type: 'success'
               })
               //  更新列表数据
               this.choicePageQuery()
-            }else{
-              this.$message.error('删除失败');
+            } else if (res.data['code'] == '9902') {
+              this.$alert(res.data['message']);
+            } else {
+              this.$alert('删除失败')
             }
           })
         })
