@@ -50,4 +50,6 @@ public interface TestDao {
 
     int batchDeleteByIds(@Param("ids") List<Long> ids);//批量删除
 
+    List<TestQuestion> selectByQuestionNo(Long testNo);//根据试题编号查询
+
 }
