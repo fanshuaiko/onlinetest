@@ -1,14 +1,14 @@
 package com.fanshuaiko.backage.service.impl;
 
-import com.fanshuaiko.backage.dao.ChoiceDao;
-import com.fanshuaiko.backage.dao.ScoreDao;
-import com.fanshuaiko.backage.dao.ScoreDetailDao;
-import com.fanshuaiko.backage.dao.TestDao;
+import com.fanshuaiko.backage.dao.*;
+import com.fanshuaiko.backage.entity.PaperStatus;
 import com.fanshuaiko.backage.entity.Score;
 import com.fanshuaiko.backage.entity.ScoreDetail;
 import com.fanshuaiko.backage.entity.VO.ScoreDetailReturnVo;
 import com.fanshuaiko.backage.service.PaperService;
 import com.fanshuaiko.backage.utils.ResultData;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +39,9 @@ public class PaperServiceImpl implements PaperService {
     @Autowired
     private ScoreDao scoreDao;
 
+    @Autowired
+    private PaperStatusDao paperStatusDao;
+
     @Override
     public ResultData queryScoreDetail(long testNo) {
         ScoreDetailReturnVo scoreDetailReturnVo = scoreDetailDao.queryScoreDetail(testNo);
@@ -46,7 +49,7 @@ public class PaperServiceImpl implements PaperService {
         if (null == scoreDetailReturnVo) {
             List<Score> scoreList = scoreDetailDao.sumTotalScore(testNo);
             int count = scoreDao.batchAdd(scoreList);
-            return ResultData.newSuccessResultData("试卷全部批改完成，"+"共"+count+"套！");
+            return ResultData.newSuccessResultData("试卷全部批改完成，" + "共" + count + "套！");
         }
         return ResultData.newSuccessResultData(scoreDetailReturnVo);
     }
@@ -74,5 +77,13 @@ public class PaperServiceImpl implements PaperService {
         }
         int count = scoreDetailDao.batchUpdateStudentScore(scoreDetails);
         return ResultData.newSuccessResultData(count);
+    }
+
+    @Override
+    public ResultData pageQueryPaperStatus(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<PaperStatus> paperStatuses = paperStatusDao.selectAll();
+        PageInfo<PaperStatus> paperStatusPageInfo = new PageInfo<>(paperStatuses);
+        return ResultData.newSuccessResultData(paperStatusPageInfo);
     }
 }

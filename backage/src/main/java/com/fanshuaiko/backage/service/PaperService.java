@@ -21,4 +21,6 @@ public interface PaperService {
     ResultData saveStudentScoreDetail(long id,int score);
 
     ResultData markChoice(long testNo);
+
+    ResultData pageQueryPaperStatus(int pageNum, int pageSize);
 }

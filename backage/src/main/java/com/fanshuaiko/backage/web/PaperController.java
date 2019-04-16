@@ -1,5 +1,6 @@
 package com.fanshuaiko.backage.web;
 
+import com.fanshuaiko.backage.entity.VO.QuestionQueryTerm;
 import com.fanshuaiko.backage.service.PaperService;
 import com.fanshuaiko.backage.utils.ErrorCode;
 import com.fanshuaiko.backage.utils.ResultData;
@@ -73,6 +74,24 @@ public class PaperController {
             log.info("--------paper:markChoice--------");
             e.printStackTrace();
             return ResultData.newResultData(ErrorCode.FAILOR, "批改出现异常！");
+        }
+    }
+
+    /**
+     * 分页查询PagerStatus
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("paperStatus/{pageNum}/{pageSize}")
+    public ResultData pageQueryPaperStatus(@PathVariable("pageNum") int pageNum,@PathVariable("pageSize") int pageSize){
+        try {
+            ResultData resultData = paperService.pageQueryPaperStatus(pageNum,pageSize);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------paper:pageQueryPaperStatus--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }
     }
 }
