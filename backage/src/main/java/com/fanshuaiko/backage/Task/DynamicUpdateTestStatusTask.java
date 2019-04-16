@@ -1,6 +1,7 @@
 package com.fanshuaiko.backage.Task;
 
 import com.fanshuaiko.backage.dao.TestDao;
+import com.fanshuaiko.backage.dict.TestStatus;
 import com.fanshuaiko.backage.entity.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -37,16 +39,20 @@ public class DynamicUpdateTestStatusTask implements SchedulingConfigurer {
                         long startTime = test.getStartTime().getTime();
                         long endTime = test.getEndTime().getTime();
                         long nowTime = new Date().getTime();
-                        System.out.println("当前时间："+new Date());
-                        if ((nowTime - startTime) >= 0) {
+                        System.out.println("当前时间：" + new Date());
+                        if ((nowTime - startTime) >= 0 && (nowTime - endTime) < 0) {
                             //将考试状态置为进行中
-                            testDao.setRunningStatus(test.getId());
-                            System.out.println("已将考试"+test.getId()+":"+test.getName()+" 的状态置为进行中");
+                            if (!test.getStatus().equals(TestStatus.Running.getCODE())) {
+                                testDao.setRunningStatus(test.getId());
+                                System.out.println("已将考试" + test.getId() + ":" + test.getName() + " 的状态置为进行中");
+                            }
                         }
                         if ((nowTime - endTime) >= 0) {
                             //将考试状态置为已结束
-                            testDao.setFinishedStatus(test.getId());
-                            System.out.println("已将考试"+test.getId()+":"+test.getName()+" 的状态置为已结束");
+                            if (!test.getStatus().equals(TestStatus.Finished.getCODE())) {
+                                testDao.setFinishedStatus(test.getId());
+                                System.out.println("已将考试" + test.getId() + ":" + test.getName() + " 的状态置为已结束");
+                            }
                         }
                     }
                 },//设置执行周期
