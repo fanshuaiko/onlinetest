@@ -57,3 +57,12 @@ export const markChoice = params =>{
   return axios.post(`backage-api/paper/choice/`+params)
 }
 
+//查询未批改的一道主观题
+export const queryScoreDetail = params =>{
+  return axios.get(`backage-api/paper/scoreDetail/`+params)
+}
+
+//保存当前批改题目的得分
+export const saveStudentScoreDetail = params =>{
+  return axios.post(`backage-api/paper/scoreDetail/`+params.id+'/'+params.score)
+}
