@@ -46,3 +46,8 @@ export  const  updateChoice = params =>{
 export const deleteChoiceById = params =>{
   return axios.delete(`backage-api/question/choice/`+params)
 }
+
+//分页查询PaperStatus
+export const pageQueryPaperStatus = params =>{
+  return axios.delete(`backage-api/paper/paperStatus/`+params.pageNum + '/' + params.pageSize)
+}
