@@ -2,12 +2,15 @@ package com.fanshuaiko.backage.service.impl;
 
 import com.fanshuaiko.backage.dao.ChoiceDao;
 import com.fanshuaiko.backage.dao.CourseDao;
+import com.fanshuaiko.backage.dao.TestDao;
 import com.fanshuaiko.backage.entity.Choice;
+import com.fanshuaiko.backage.entity.TestQuestion;
 import com.fanshuaiko.backage.entity.VO.QuestionQueryTerm;
 import com.fanshuaiko.backage.service.ChoiceService;
 import com.fanshuaiko.backage.utils.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +37,9 @@ public class ChoiceServiceImpl implements ChoiceService {
     @Autowired
     private ImportUtilService importUtil;
 
+    @Autowired
+    private TestDao testDao;
+
 
     @Override
     public ResultData insert(Choice choice) {
@@ -44,8 +50,14 @@ public class ChoiceServiceImpl implements ChoiceService {
 
     @Override
     public ResultData deleteByPrimaryKey(long id) {
-        int count = choiceDao.deleteByPrimaryKey(id);
-        return ResultData.newSuccessResultData(count);
+        //如果该题目被某个考试使用，则不能删除
+        List<TestQuestion> testQuestions = testDao.selectByQuestionNo(id);
+        if (testQuestions.size() == 0) {
+            int count = choiceDao.deleteByPrimaryKey(id);
+            return ResultData.newSuccessResultData(count);
+        }
+        return ResultData.newResultData(ErrorCode.DEL_FAILOR, "该题目已被其他考试使用，不能删除");
+
     }
 
     public ResultData updateByPrimaryKey(Choice choice) {
