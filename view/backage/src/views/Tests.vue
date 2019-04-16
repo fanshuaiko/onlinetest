@@ -320,8 +320,8 @@
         addForm: {
           name: '', //考试名称
           courseId: 0, //所属课程id
-          // teacherNo: sessionStorage.getItem('username'), //任课教师id，也是创建考试的教师
-          teacherNo: 't10001', //任课教师id，也是创建考试的教师
+          teacherNo: sessionStorage.getItem('username'), //任课教师id，也是创建考试的教师
+          // teacherNo: 't10001', //任课教师id，也是创建考试的教师
           totalScore: 0, //考试总分
           status: '', //考试状态,0.未开始，1.进行中，3.已结束
           startTime: '', //开考时间
