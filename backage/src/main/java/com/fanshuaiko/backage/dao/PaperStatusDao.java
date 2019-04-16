@@ -4,6 +4,8 @@ import com.fanshuaiko.backage.entity.PaperStatus;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface PaperStatusDao {
@@ -18,4 +20,6 @@ public interface PaperStatusDao {
     int updateByPrimaryKeySelective(PaperStatus record);
 
     int updateByPrimaryKey(PaperStatus record);
+
+    List<PaperStatus> selectAll();//查询所有
 }
