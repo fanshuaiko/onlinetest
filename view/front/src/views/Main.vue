@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app" style="position: absolute;width:100%;height: 100%;" @mouseleave="catchMouseOut">
     <div class="question-main">
       <div class="top">
         <div class="process">
@@ -90,6 +90,11 @@
         </div>
       </div>
     </div>
+
+    <!--弹出提示鼠标离开页面信息    -->
+    <el-dialog title="鼠标监测" :visible.sync="mouseOutVisible">
+      离开页面{{mouseleaveCount}}次，两次将自动提交试卷
+    </el-dialog>
   </div>
 </template>
 
@@ -127,7 +132,11 @@
         //多选题选中的值
         multipleValue: [],
         //主观题的答案
-        subjectiveValue: ''
+        subjectiveValue: '',
+        //鼠标离开页面
+        mouseleaveCount: 0,
+        //鼠标离开页面提示信息是否展示
+        mouseOutVisible:false
 
       }
     },
@@ -265,6 +274,18 @@
         this.questionType = questionType
         this.studentAnswer = studentAnswer
         this.questionScore = questionScore
+      },
+
+      catchMouseOut() {
+        this.mouseleaveCount++
+        this.mouseOutVisible = true
+        //离开次数达到2次自动提交试卷
+        if(this.mouseleaveCount == 2){
+          this.submitPaper()
+          this.$router.push({
+            path: '/submit'
+          })
+        }
       }
     }
 
