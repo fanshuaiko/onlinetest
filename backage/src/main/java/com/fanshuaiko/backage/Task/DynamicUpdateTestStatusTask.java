@@ -59,6 +59,7 @@ public class DynamicUpdateTestStatusTask implements SchedulingConfigurer {
                                 System.out.println("已将考试" + test.getId() + ":" + test.getName() + " 的状态置为已结束");
                                 PaperStatus paperStatus = new PaperStatus();
                                 paperStatus.setTestNo(test.getId());
+                                paperStatus.setTestName(test.getName());
                                 paperStatus.setChoiceStatus("0");
                                 paperStatus.setSubjectiveStatus("0");
                                 int i = paperStatusDao.insertSelective(paperStatus);
