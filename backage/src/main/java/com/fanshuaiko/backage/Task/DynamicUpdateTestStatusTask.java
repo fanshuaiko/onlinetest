@@ -1,7 +1,9 @@
 package com.fanshuaiko.backage.Task;
 
+import com.fanshuaiko.backage.dao.PaperStatusDao;
 import com.fanshuaiko.backage.dao.TestDao;
 import com.fanshuaiko.backage.dict.TestStatus;
+import com.fanshuaiko.backage.entity.PaperStatus;
 import com.fanshuaiko.backage.entity.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +32,9 @@ public class DynamicUpdateTestStatusTask implements SchedulingConfigurer {
     @Autowired
     TestDao testDao;
 
+    @Autowired
+    PaperStatusDao paperStatusDao;
+
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
         //执行任务
         scheduledTaskRegistrar.addTriggerTask(() -> {
@@ -52,6 +57,12 @@ public class DynamicUpdateTestStatusTask implements SchedulingConfigurer {
                             if (!test.getStatus().equals(TestStatus.Finished.getCODE())) {
                                 testDao.setFinishedStatus(test.getId());
                                 System.out.println("已将考试" + test.getId() + ":" + test.getName() + " 的状态置为已结束");
+                                PaperStatus paperStatus = new PaperStatus();
+                                paperStatus.setTestNo(test.getId());
+                                paperStatus.setChoiceStatus("0");
+                                paperStatus.setSubjectiveStatus("0");
+                                int i = paperStatusDao.insertSelective(paperStatus);
+                                System.out.println("已设置了"+i+"条testNo为"+test.getId()+"的PaperStatus");
                             }
                         }
                     }
