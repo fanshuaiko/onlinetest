@@ -12,6 +12,8 @@ public class PaperStatus {
 
     private Long testNo;
 
+    private String testName;
+
     private String choiceStatus;
 
     private String subjectiveStatus;
@@ -46,5 +48,24 @@ public class PaperStatus {
 
     public void setSubjectiveStatus(String subjectiveStatus) {
         this.subjectiveStatus = subjectiveStatus == null ? null : subjectiveStatus.trim();
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
+    }
+
+    @Override
+    public String toString() {
+        return "PaperStatus{" +
+                "id=" + id +
+                ", testNo=" + testNo +
+                ", testName='" + testName + '\'' +
+                ", choiceStatus='" + choiceStatus + '\'' +
+                ", subjectiveStatus='" + subjectiveStatus + '\'' +
+                '}';
     }
 }
