@@ -402,41 +402,41 @@
                 "instituteNo": "i10001",
                 "label": "数学与统计学院",
                 "children": [{
-                  "majorNo": "m1001",
+                  "majorNo": "m10001",
                   "label": "基础数学" + "专业",
                   "children": [{
-                    "classNo": "c1001",
+                    "classNo": "c10001",
                     "label": "1" + "班"
                   }, {
-                    "classNo": "c1002",
+                    "classNo": "c10002",
                     "label": "2" + "班"
                   }, {
-                    "classNo": "c1003",
+                    "classNo": "c10003",
                     "label": "3" + "班"
                   }, {
-                    "classNo": "c1004",
+                    "classNo": "c10004",
                     "label": "4" + "班"
                   }]
                 },
                   {
-                    "majorNo": "m1002",
+                    "majorNo": "m10002",
                     "label": "应用数学" + "专业",
                     "children": [{
-                      "classNo": "c1005",
+                      "classNo": "c10005",
                       "label": "1" + "班"
                     }, {
-                      "classNo": "c1006",
+                      "classNo": "c10006",
                       "label": "2" + "班"
                     }, {
-                      "classNo": "c1007",
+                      "classNo": "c10007",
                       "label": "3" + "班"
                     }, {
-                      "classNo": "c1008",
+                      "classNo": "c10008",
                       "label": "4" + "班"
                     }]
                   },
                   {
-                    "majorNo": "m1003",
+                    "majorNo": "m10003",
                     "label": "计算数学" + "专业"
                   }]
               },
@@ -444,15 +444,15 @@
                 "instituteNo": "i10002",
                 "label": "物理与电子工程学院",
                 "children": [{
-                  "majorNo": "m1005",
+                  "majorNo": "m10005",
                   "label": "物理" + "专业"
                 },
                   {
-                    "majorNo": "m1006",
+                    "majorNo": "m10006",
                     "label": "电子信息工程" + "专业"
                   },
                   {
-                    "majorNo": "m1007",
+                    "majorNo": "m10007",
                     "label": "电子信息科学与技术" + "专业"
                   }]
               },
