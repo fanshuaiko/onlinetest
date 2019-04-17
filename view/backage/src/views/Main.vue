@@ -31,8 +31,7 @@
         <el-submenu index="4">
           <template slot="title"><i class="el-icon-setting"></i>考试分析</template>
           <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="4-1">选项1</el-menu-item>
+            <el-menu-item index="4-1">分数查询</el-menu-item>
             <el-menu-item index="4-2">选项2</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group title="分组2">
@@ -106,6 +105,9 @@
             break;
           case '3-1':
             this.$router.push('/markPaper');
+            break;
+          case '4-1':
+            this.$router.push('/studentScore');
             break;
         }
       }
