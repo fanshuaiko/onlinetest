@@ -162,11 +162,12 @@
 
     </select>
 
-    <select id="selectMaxAndMinScore" parameterType="java.lang.Long"
+    <select id="selectMaxAndMinAndAvgScore" parameterType="java.lang.Long"
             resultType="com.fanshuaiko.backage.entity.VO.TestAnalyze">
         select
         max(total) as maxScore,
-        min(total) as minScore
+        min(total) as minScore,
+        avg(total) as averageScore
         from score
         where test_no = #{testNo}
     </select>

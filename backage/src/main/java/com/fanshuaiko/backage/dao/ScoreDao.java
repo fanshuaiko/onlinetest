@@ -29,7 +29,7 @@ public interface ScoreDao {
 
     List<ScoreReturnVo> queryByConditions(ScoreQueryTerm scoreQueryTerm); //多添件查询分数
 
-    TestAnalyze selectMaxAndMinScore(Long testNo); //查询最高分和最低分
+    TestAnalyze selectMaxAndMinAndAvgScore(Long testNo); //查询最高分和最低分
 
     int countPassStudent(Long testNo); //查询及格人数
 }
