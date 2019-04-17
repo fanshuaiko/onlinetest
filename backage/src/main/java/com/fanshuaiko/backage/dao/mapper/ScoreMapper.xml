@@ -162,11 +162,24 @@
 
     </select>
 
-    <select id="selectMaxAndMinScore" parameterType="java.lang.Long" resultType="com.fanshuaiko.backage.entity.VO.TestAnalyze">
+    <select id="selectMaxAndMinScore" parameterType="java.lang.Long"
+            resultType="com.fanshuaiko.backage.entity.VO.TestAnalyze">
         select
         max(total) as maxScore,
         min(total) as minScore
         from score
         where test_no = #{testNo}
+    </select>
+
+    <select id="countPassStudent" parameterType="java.lang.Long">
+        SELECT
+	    COUNT(*)
+        FROM score s
+        LEFT JOIN test t ON t.id = s.test_no
+        WHERE
+	    test_no = #{testNo}
+        AND
+	    s.total >= (t.total_score * 0.6)
+
     </select>
 </mapper>
