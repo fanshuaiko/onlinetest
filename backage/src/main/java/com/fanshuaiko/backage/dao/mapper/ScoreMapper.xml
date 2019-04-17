@@ -131,4 +131,34 @@
             )
         </foreach>
     </insert>
+
+    <select id="queryByConditions" parameterType="com.fanshuaiko.backage.entity.VO.ScoreQueryTerm"
+            resultType="com.fanshuaiko.backage.entity.VO.ScoreReturnVo">
+        select
+        t.name as testName,
+        st.student_no as studentNo,
+        st.name as studentName,
+        m.name as majorName,
+        c.class_co as classCo,
+        s.total as totalScore
+        from score s
+        left join test t on s.test_no = t.id
+        left join student st on st.student_no = s.student_no
+        left join major m on m.major_no = st.major_no
+        left join class c on c.class_no = st.class_no
+        where 1=1
+        <if test="majorName !=null and majorName !=''">
+            and m.name = {#majorName}
+        </if>
+        <if test="classCo !=null and classCo !=''">
+            and c.classCo = {#classCo}
+        </if>
+        <if test="studentName !=null and studentName !=''">
+            and st.name = {#studentName}
+        </if>
+        <if test="studentNo !=null and studentNo !=''">
+            and st.student_no = {#studentNo}
+        </if>
+
+    </select>
 </mapper>
