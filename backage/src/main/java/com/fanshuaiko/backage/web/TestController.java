@@ -141,4 +141,21 @@ public class TestController {
             return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }
     }
+
+    /**
+     * 获取考试分析数据
+     * @param testNo
+     * @return
+     */
+    @GetMapping("/analyze/{testNo}")
+    public ResultData getTestAnalyzeData(@PathVariable("testNo") Long testNo){
+        try {
+            ResultData resultData = testService.getTestAnalyzeData(testNo);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------question:getTestAnalyzeData--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
+        }
+    }
 }

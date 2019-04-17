@@ -1,6 +1,8 @@
 package com.fanshuaiko.backage.service.impl;
 
+import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
 import com.fanshuaiko.backage.dao.ChoiceDao;
+import com.fanshuaiko.backage.dao.ScoreDao;
 import com.fanshuaiko.backage.dao.SubjectiveDao;
 import com.fanshuaiko.backage.dao.TestDao;
 import com.fanshuaiko.backage.dict.QuestionType;
@@ -9,6 +11,7 @@ import com.fanshuaiko.backage.entity.Choice;
 import com.fanshuaiko.backage.entity.Subjective;
 import com.fanshuaiko.backage.entity.TestQuestion;
 import com.fanshuaiko.backage.entity.VO.QuestionReturnVo;
+import com.fanshuaiko.backage.entity.VO.TestAnalyze;
 import com.fanshuaiko.backage.entity.VO.TestReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestVO;
 import com.fanshuaiko.backage.service.TestService;
@@ -16,6 +19,7 @@ import com.fanshuaiko.backage.utils.*;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.netflix.discovery.converters.Auto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +64,9 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private ImportUtilService importUtil;
 
+    @Autowired
+    private ScoreDao scoreDao;
+
     @Override
     public ResultData createTest(TestVO testVO) {
         try {
@@ -67,10 +74,10 @@ public class TestServiceImpl implements TestService {
             testVO.setStatus(TestStatus.NotBegin.getCODE());
 
             //设置考试结束时间
-            SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date startTime = sdf.parse(testVO.getStartTime());
-            Date endTime =new Date(startTime.getTime()+testVO.getTestTime()*60*1000);
-            String endTime2= sdf.format(endTime);
+            Date endTime = new Date(startTime.getTime() + testVO.getTestTime() * 60 * 1000);
+            String endTime2 = sdf.format(endTime);
             testVO.setEndTime(endTime2);
 
             //保存test相关信息到test表
@@ -127,39 +134,39 @@ public class TestServiceImpl implements TestService {
             }
 
             //保存题目到test_question表
-            if (testVO.getSingleRandomCount()!=0) {
+            if (testVO.getSingleRandomCount() != 0) {
                 //根据课程和题目类型随机返回指定数量的题目id
-                List<Long> ids = returnRandomQuestionIds(QuestionType.SingleChoice.getCODE(), testVO.getSingleRandomCount(),testVO.getCourseId());
-                if(ids.size()!=0){
-                testDao.insertTestQuestion(testVO.getId(), ids, testVO.getSingleScore(), QuestionType.SingleChoice.getCODE());
-                }else{
+                List<Long> ids = returnRandomQuestionIds(QuestionType.SingleChoice.getCODE(), testVO.getSingleRandomCount(), testVO.getCourseId());
+                if (ids.size() != 0) {
+                    testDao.insertTestQuestion(testVO.getId(), ids, testVO.getSingleScore(), QuestionType.SingleChoice.getCODE());
+                } else {
                     return ResultData.newResultData(ErrorCode.ADD_FAILOR, "题库中没有该课程的单选题！");
                 }
             }
-            if (testVO.getJudgeRandomCount()!=0) {
+            if (testVO.getJudgeRandomCount() != 0) {
                 //根据课程和题目类型随机返回指定数量的题目id
-                List<Long> ids = returnRandomQuestionIds(QuestionType.JudgeChoice.getCODE(), testVO.getJudgeRandomCount(),testVO.getCourseId());
-                if(ids.size()!=0){
+                List<Long> ids = returnRandomQuestionIds(QuestionType.JudgeChoice.getCODE(), testVO.getJudgeRandomCount(), testVO.getCourseId());
+                if (ids.size() != 0) {
                     testDao.insertTestQuestion(testVO.getId(), ids, testVO.getJudgeScore(), QuestionType.JudgeChoice.getCODE());
-                }else{
+                } else {
                     return ResultData.newResultData(ErrorCode.ADD_FAILOR, "题库中没有该课程的判断题！");
                 }
             }
-            if (testVO.getMultipleRandomCount()!=0) {
+            if (testVO.getMultipleRandomCount() != 0) {
                 //根据课程和题目类型随机返回指定数量的题目id
-                List<Long> ids = returnRandomQuestionIds(QuestionType.MultipleChoice.getCODE(), testVO.getMultipleRandomCount(),testVO.getCourseId());
-                if(ids.size()!=0){
+                List<Long> ids = returnRandomQuestionIds(QuestionType.MultipleChoice.getCODE(), testVO.getMultipleRandomCount(), testVO.getCourseId());
+                if (ids.size() != 0) {
                     testDao.insertTestQuestion(testVO.getId(), ids, testVO.getMultipleScore(), QuestionType.MultipleChoice.getCODE());
-                }else{
+                } else {
                     return ResultData.newResultData(ErrorCode.ADD_FAILOR, "题库中没有该课程的多选题！");
                 }
             }
-            if (testVO.getSubjectiveRandomCount()!=0) {
+            if (testVO.getSubjectiveRandomCount() != 0) {
                 //根据课程和题目类型随机返回指定数量的题目id
-                List<Long> ids = returnRandomQuestionIds(QuestionType.Subjective.getCODE(), testVO.getSubjectiveRandomCount(),testVO.getCourseId());
-                if(ids.size()!=0){
+                List<Long> ids = returnRandomQuestionIds(QuestionType.Subjective.getCODE(), testVO.getSubjectiveRandomCount(), testVO.getCourseId());
+                if (ids.size() != 0) {
                     testDao.insertTestQuestion(testVO.getId(), ids, testVO.getSubjectiveScore(), QuestionType.Subjective.getCODE());
-                }else{
+                } else {
                     return ResultData.newResultData(ErrorCode.ADD_FAILOR, "题库中没有该课程的主观题！");
                 }
             }
@@ -294,6 +301,29 @@ public class TestServiceImpl implements TestService {
         return ResultData.newSuccessResultData(questionReturnVos);
     }
 
+    @Override
+    public ResultData getTestAnalyzeData(Long testNo) {
+        TestAnalyze testAnalyze = new TestAnalyze();
+        testAnalyze.setTestNo(testNo);
+        //计算参考人数
+        int studentCount = testDao.sumStudentCount(testNo);
+        testAnalyze.setStudentCount(studentCount);
+        //计算最高分、最低分、平均分
+        TestAnalyze testAnalyze1 = scoreDao.selectMaxAndMinAndAvgScore(testNo);
+        testAnalyze.setMaxScore(testAnalyze1.getMaxScore());
+        testAnalyze.setMinScore(testAnalyze1.getMinScore());
+        testAnalyze.setAverageScore(testAnalyze1.getAverageScore());
+        //及格人数
+        int passCount = scoreDao.countPassStudent(testNo);
+        testAnalyze.setPassCount(passCount);
+        //不及格人数
+        testAnalyze.setUnPassCount(studentCount-passCount);
+        //及格率
+        testAnalyze.setPassRate(passCount/studentCount);
+
+        return ResultData.newSuccessResultData(testAnalyze);
+    }
+
 
     public List<Long> returnIdFromObj(List<Choice> list) {
         LinkedList<Long> ids = new LinkedList<>();
@@ -303,18 +333,18 @@ public class TestServiceImpl implements TestService {
         return ids;
     }
 
-    public List<Long> returnRandomQuestionIds(String type, int count,int courseId) {
+    public List<Long> returnRandomQuestionIds(String type, int count, int courseId) {
         if (type.equals(QuestionType.SingleChoice.getCODE())) {
-            List<Long> ids = choiceDao.returnRandomQuestionIds(type, count,courseId);
+            List<Long> ids = choiceDao.returnRandomQuestionIds(type, count, courseId);
             return ids;
         } else if (type.equals(QuestionType.JudgeChoice.getCODE())) {
-            List<Long> ids = choiceDao.returnRandomQuestionIds(type, count,courseId);
+            List<Long> ids = choiceDao.returnRandomQuestionIds(type, count, courseId);
             return ids;
         } else if (type.equals(QuestionType.MultipleChoice.getCODE())) {
-            List<Long> ids = choiceDao.returnRandomQuestionIds(type, count,courseId);
+            List<Long> ids = choiceDao.returnRandomQuestionIds(type, count, courseId);
             return ids;
         } else if (type.equals(QuestionType.Subjective.getCODE())) {
-            List<Long> ids = subjectiveDao.returnRandomQuestionIds(type, count,courseId);
+            List<Long> ids = subjectiveDao.returnRandomQuestionIds(type, count, courseId);
             return ids;
         }
         return null;

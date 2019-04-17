@@ -66,4 +66,12 @@ public interface TestService {
      * @return
      */
     ResultData queryQuestionDetail(long testNo);
+
+    /**
+     * 获取考试分析数据
+     *
+     * @param testNo
+     * @return
+     */
+    ResultData getTestAnalyzeData(Long testNo);
 }
