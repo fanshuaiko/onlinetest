@@ -95,6 +95,11 @@
     <el-dialog title="鼠标监测" :visible.sync="mouseOutVisible">
       离开页面{{mouseleaveCount}}次，两次将自动提交试卷
     </el-dialog>
+
+    <!--    显示摄像头-->
+<!--    <div class="camera">-->
+      <video id="v" ref="camera" class="camera"></video>
+<!--    </div>-->
   </div>
 </template>
 
@@ -136,11 +141,12 @@
         //鼠标离开页面
         mouseleaveCount: 0,
         //鼠标离开页面提示信息是否展示
-        mouseOutVisible:false
+        mouseOutVisible: false
 
       }
     },
     mounted() {
+      this.camera()
       this.loadData()
       this.countdown()
       this.nextQuestion()
@@ -276,23 +282,68 @@
         this.questionScore = questionScore
       },
 
+      //捕获鼠标离开页面次数
       catchMouseOut() {
         this.mouseleaveCount++
         this.mouseOutVisible = true
         //离开次数达到2次自动提交试卷
-        if(this.mouseleaveCount == 2){
+        if (this.mouseleaveCount == 2) {
           this.submitPaper()
           this.$router.push({
             path: '/submit'
           })
         }
+      },
+
+      //调取摄像头
+      camera() {
+        // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+        if (navigator.mediaDevices === undefined) {
+          navigator.mediaDevices = {};
+        }
+        if (navigator.mediaDevices.getUserMedia === undefined) {
+          navigator.mediaDevices.getUserMedia = function (constraints) {
+            // 首先，如果有getUserMedia的话，就获得它
+            var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+            // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+            if (!getUserMedia) {
+              return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+            }
+
+            // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+            return new Promise(function (resolve, reject) {
+              getUserMedia.call(navigator, constraints, resolve, reject);
+            });
+          }
+        }
+        const constraints = {
+          video: true,
+          audio: false
+        };
+        let promise = navigator.mediaDevices.getUserMedia(constraints);
+        promise.then(stream => {
+          let v = this.$refs.camera;
+          // 旧的浏览器可能没有srcObject
+          if ("srcObject" in v) {
+            v.srcObject = stream;
+          } else {
+            // 防止再新的浏览器里使用它，应为它已经不再支持了
+            v.src = window.URL.createObjectURL(stream);
+          }
+          v.onloadedmetadata = function (e) {
+            v.play();
+          };
+        }).catch(err => {
+          console.error(err.name + ": " + err.message);
+        })
       }
     }
 
   }
 </script>
 
-<style>
+<style scoped>
   /*@import "http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css";*/
   @import "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css";
 
@@ -305,6 +356,14 @@
     width: 70%;
     height: 60%;
     border: 1px solid darkgrey;
+  }
+
+  .camera{
+    /*position: absolute;*/
+    width: 10%;
+    height: 20%;
+    float: right;
+    /*border: 1px solid darkgrey;*/
   }
 
   .top {
