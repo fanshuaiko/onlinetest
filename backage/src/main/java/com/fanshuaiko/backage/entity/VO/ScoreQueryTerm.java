@@ -12,6 +12,8 @@ public class ScoreQueryTerm {
     private int classCo; //班级
     private String studentName; //学生姓名
     private int studentNo; //学号
+    private int pageSize;//分页参数
+    private int pageNum;//分页参数
 
     public String getMajorName() {
         return majorName;
@@ -45,6 +47,22 @@ public class ScoreQueryTerm {
         this.studentNo = studentNo;
     }
 
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
     @Override
     public String toString() {
         return "ScoreQueryTerm{" +
@@ -52,6 +70,8 @@ public class ScoreQueryTerm {
                 ", classCo=" + classCo +
                 ", studentName='" + studentName + '\'' +
                 ", studentNo=" + studentNo +
+                ", pageSize=" + pageSize +
+                ", pageNum=" + pageNum +
                 '}';
     }
 }
