@@ -150,13 +150,13 @@
         <if test="majorName !=null and majorName !=''">
             and m.name = {#majorName}
         </if>
-        <if test="classCo !=null and classCo !=''">
+        <if test="classCo !=null and classCo !=0">
             and c.classCo = {#classCo}
         </if>
         <if test="studentName !=null and studentName !=''">
             and st.name = {#studentName}
         </if>
-        <if test="studentNo !=null and studentNo !=''">
+        <if test="studentNo !=null and studentNo !=0">
             and st.student_no = {#studentNo}
         </if>
 
