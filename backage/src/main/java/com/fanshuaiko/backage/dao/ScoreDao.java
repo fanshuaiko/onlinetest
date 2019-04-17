@@ -3,6 +3,7 @@ package com.fanshuaiko.backage.dao;
 import com.fanshuaiko.backage.entity.Score;
 import com.fanshuaiko.backage.entity.VO.ScoreQueryTerm;
 import com.fanshuaiko.backage.entity.VO.ScoreReturnVo;
+import com.fanshuaiko.backage.entity.VO.TestAnalyze;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -27,4 +28,6 @@ public interface ScoreDao {
     int batchAdd(@Param("scoreList") List<Score> scoreList); //批量保存总分
 
     List<ScoreReturnVo> queryByConditions(ScoreQueryTerm scoreQueryTerm); //多添件查询分数
+
+    TestAnalyze selectMaxAndMinScore(Long testNo); //查询最高分和最低分
 }

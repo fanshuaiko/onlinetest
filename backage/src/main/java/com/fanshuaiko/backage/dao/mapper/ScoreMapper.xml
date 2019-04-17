@@ -161,4 +161,12 @@
         </if>
 
     </select>
+
+    <select id="selectMaxAndMinScore" parameterType="java.lang.Long" resultType="com.fanshuaiko.backage.entity.VO.TestAnalyze">
+        select
+        max(total) as maxScore,
+        min(total) as minScore
+        from score
+        where test_no = #{testNo}
+    </select>
 </mapper>
