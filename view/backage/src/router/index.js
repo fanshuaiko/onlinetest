@@ -8,6 +8,7 @@ import ChoiceManager from "../views/ChoiceManager";
 import SubjectiveManager from "../views/SubjectiveManager";
 import UploadQuestion from "../views/UploadQuestion";
 import MarkPaper from "../views/MarkPaper";
+import StudentScore from "../views/StudentScore";
 
 Vue.use(Router)
 
@@ -29,6 +30,7 @@ export default new Router({
         {path: '/subjectiveManager', component: SubjectiveManager, name: '主观题管理'},
         {path: '/uploadQuestion', component: UploadQuestion, name: '题目上传'},
         {path: '/markPaper', component: MarkPaper, name: '试卷批改'},
+        {path: '/studentScore', component: StudentScore, name: '分数查询'},
       ]
     },
     {
