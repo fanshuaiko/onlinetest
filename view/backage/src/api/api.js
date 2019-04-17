@@ -69,10 +69,10 @@ export const saveStudentScoreDetail = params =>{
 
 //模糊查询专业名称
 export const likeQueryMajorName = params =>{
-  return axios.get(`backage-api/class/major/name/`+params)
+  return axios.get(`backage-api/class/major/name`,{params:params})
 }
 
 //多条件分页查询分数
 export const pageQueryStudentScore = params =>{
-  return axios.get(`backage-api/paper/score`+params)
+  return axios.get(`backage-api/paper/score`,{params:params})
 }
