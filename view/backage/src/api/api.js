@@ -72,3 +72,7 @@ export const likeQueryMajorName = params =>{
   return axios.get(`backage-api/class/major/name/`+params)
 }
 
+//多条件分页查询分数
+export const likeQueryMajorName = params =>{
+  return axios.get(`backage-api/paper/score`+params)
+}
