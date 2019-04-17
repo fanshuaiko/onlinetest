@@ -148,16 +148,16 @@
         left join class c on c.class_no = st.class_no
         where 1=1
         <if test="majorName !=null and majorName !=''">
-            and m.name = {#majorName}
+            and m.name = #{majorName}
         </if>
         <if test="classCo !=null and classCo !=0">
-            and c.classCo = {#classCo}
+            and c.classCo = #{classCo}
         </if>
         <if test="studentName !=null and studentName !=''">
-            and st.name = {#studentName}
+            and st.name = #{studentName}
         </if>
         <if test="studentNo !=null and studentNo !=0">
-            and st.student_no = {#studentNo}
+            and st.student_no = #{studentNo}
         </if>
 
     </select>
