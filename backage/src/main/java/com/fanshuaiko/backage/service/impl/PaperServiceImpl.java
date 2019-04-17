@@ -5,6 +5,8 @@ import com.fanshuaiko.backage.entity.PaperStatus;
 import com.fanshuaiko.backage.entity.Score;
 import com.fanshuaiko.backage.entity.ScoreDetail;
 import com.fanshuaiko.backage.entity.VO.ScoreDetailReturnVo;
+import com.fanshuaiko.backage.entity.VO.ScoreQueryTerm;
+import com.fanshuaiko.backage.entity.VO.ScoreReturnVo;
 import com.fanshuaiko.backage.service.PaperService;
 import com.fanshuaiko.backage.utils.ResultData;
 import com.github.pagehelper.PageHelper;
@@ -50,7 +52,7 @@ public class PaperServiceImpl implements PaperService {
             List<Score> scoreList = scoreDetailDao.sumTotalScore(testNo);
             int count = scoreDao.batchAdd(scoreList);
             int i = paperStatusDao.updateSubjectiveStatusByTestNo(testNo);
-            return ResultData.newResultData("0","试卷全部批改完成");
+            return ResultData.newResultData("0", "试卷全部批改完成");
         }
         return ResultData.newSuccessResultData(scoreDetailReturnVo);
     }
@@ -83,9 +85,17 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     public ResultData pageQueryPaperStatus(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         List<PaperStatus> paperStatuses = paperStatusDao.selectAll();
         PageInfo<PaperStatus> paperStatusPageInfo = new PageInfo<>(paperStatuses);
         return ResultData.newSuccessResultData(paperStatusPageInfo);
+    }
+
+    @Override
+    public ResultData pageQueryStudentScore(ScoreQueryTerm scoreQueryTerm) {
+        PageHelper.startPage(scoreQueryTerm.getPageNum(),scoreQueryTerm.getPageSize());
+        List<ScoreReturnVo> scoreReturnVoList =scoreDao.queryByConditions(scoreQueryTerm);
+        PageInfo<ScoreReturnVo> scoreReturnVoPageInfo = new PageInfo<>(scoreReturnVoList);
+        return ResultData.newSuccessResultData(scoreReturnVoPageInfo);
     }
 }

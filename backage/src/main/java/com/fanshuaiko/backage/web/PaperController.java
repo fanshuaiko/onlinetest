@@ -1,6 +1,7 @@
 package com.fanshuaiko.backage.web;
 
 import com.fanshuaiko.backage.entity.VO.QuestionQueryTerm;
+import com.fanshuaiko.backage.entity.VO.ScoreQueryTerm;
 import com.fanshuaiko.backage.service.PaperService;
 import com.fanshuaiko.backage.utils.ErrorCode;
 import com.fanshuaiko.backage.utils.ResultData;
@@ -90,6 +91,23 @@ public class PaperController {
             return resultData;
         } catch (Exception e) {
             log.info("--------paper:pageQueryPaperStatus--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
+        }
+    }
+
+    /**
+     * 多参数分页查询学生分数
+     * @param scoreQueryTerm
+     * @return
+     */
+    @GetMapping("/score")
+    public ResultData pageQueryStudentScore(ScoreQueryTerm scoreQueryTerm){
+        try {
+            ResultData resultData = paperService.pageQueryStudentScore(scoreQueryTerm);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------paper:pageQueryStudentScore--------");
             e.printStackTrace();
             return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }

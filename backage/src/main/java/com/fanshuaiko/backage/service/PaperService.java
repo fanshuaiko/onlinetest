@@ -1,5 +1,6 @@
 package com.fanshuaiko.backage.service;
 
+import com.fanshuaiko.backage.entity.VO.ScoreQueryTerm;
 import com.fanshuaiko.backage.utils.ResultData;
 
 /**
@@ -23,4 +24,6 @@ public interface PaperService {
     ResultData markChoice(long testNo);
 
     ResultData pageQueryPaperStatus(int pageNum, int pageSize);
+
+    ResultData pageQueryStudentScore(ScoreQueryTerm scoreQueryTerm);
 }
