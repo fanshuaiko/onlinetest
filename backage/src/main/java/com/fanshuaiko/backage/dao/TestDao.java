@@ -52,4 +52,5 @@ public interface TestDao {
 
     List<TestQuestion> selectByQuestionNo(Long testNo);//根据试题编号查询
 
+    int sumStudentCount(Long testNo);//计算参加考试人数
 }
