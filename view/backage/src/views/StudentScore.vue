@@ -133,6 +133,7 @@
           if (res.status == 200 && res.data['code'] == '0') {
             this.majorNameList = res.data['data']
             console.log('this.majorNameList++' + this.majorNameList)
+            //将后端返回的专业名称组装成符合联想组件规则的数据
             this.list = this.majorNameList.map(item => {
               return {value: item, label: item}
             })
