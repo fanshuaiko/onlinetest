@@ -151,7 +151,7 @@
             and m.name = #{majorName}
         </if>
         <if test="classCo !=null and classCo !=0">
-            and c.classCo = #{classCo}
+            and c.class_co = #{classCo}
         </if>
         <if test="studentName !=null and studentName !=''">
             and st.name = #{studentName}
