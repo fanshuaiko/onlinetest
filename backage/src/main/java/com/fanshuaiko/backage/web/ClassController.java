@@ -79,4 +79,21 @@ public class ClassController {
             return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }
     }
+
+    /**
+     * 模糊查询专业
+     * @param name
+     * @return
+     */
+    @GetMapping("/major/name")
+    public ResultData likeQueryMajorName(String name){
+        try {
+            ResultData resultData = classService.likeQueryMajorName(name);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------class/likeQueryMajor:--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
+        }
+    }
 }

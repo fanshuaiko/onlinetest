@@ -48,4 +48,10 @@ public class ClassServiceImpl implements ClassService {
         List<Class> classList = classDao.queryClassByMajorNo(majorNo);
         return ResultData.newSuccessResultData(classList);
     }
+
+    @Override
+    public ResultData likeQueryMajorName(String name) {
+        List<String> list = majorDao.likeQueryMajorName(name);
+        return ResultData.newSuccessResultData(list);
+    }
 }

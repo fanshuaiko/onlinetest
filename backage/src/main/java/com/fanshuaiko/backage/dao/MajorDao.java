@@ -22,4 +22,6 @@ public interface MajorDao {
     int updateByPrimaryKey(Major record);
 
     List<Major> queryMajorByInstituteNo(String instituteNo); //根据学院编号查询专业
+
+    List<String> likeQueryMajorName(String name); //模糊查询专业名称
 }

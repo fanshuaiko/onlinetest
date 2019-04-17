@@ -97,4 +97,9 @@
     from major
     where institute_no = #{instituteNo}
   </select>
+
+  <select id="likeQueryMajorName" parameterType="java.lang.String" resultType="java.lang.String">
+    select name from major
+    where name like concat('%',#{name},'%')
+  </select>
 </mapper>

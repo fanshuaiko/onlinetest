@@ -33,4 +33,12 @@ public interface ClassService {
      * @return
      */
     ResultData queryClassByMajorNo(String majorNo);
+
+    /**
+     * 模糊查询专业
+     *
+     * @param name
+     * @return
+     */
+    ResultData likeQueryMajorName(String name);
 }
