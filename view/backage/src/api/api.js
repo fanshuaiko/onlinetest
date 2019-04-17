@@ -66,3 +66,9 @@ export const queryScoreDetail = params =>{
 export const saveStudentScoreDetail = params =>{
   return axios.post(`backage-api/paper/scoreDetail/`+params.id+'/'+params.score)
 }
+
+//模糊查询专业名称
+export const likeQueryMajorName = params =>{
+  return axios.get(`backage-api/class/major/name/`+params)
+}
+
