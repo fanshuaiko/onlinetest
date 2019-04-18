@@ -86,3 +86,8 @@ export const exportScoreExcel = params => {
 export const getTestAnalyzeData = params => {
   return axios.get(`backage-api/test/analyze/` + params)
 }
+
+//发送成绩单邮件
+export const sendTestScoreMail = params => {
+  return axios.post(`backage-api/test/mail/` + params)
+}
