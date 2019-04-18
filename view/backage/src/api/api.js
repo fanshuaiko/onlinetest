@@ -37,7 +37,7 @@ export  const  subjectivePageQuery = params =>{
   return axios.get(`backage-api/question/subjective`,{params:params})
 }
 
-//多条件分页查询主观题
+//修改选择题
 export  const  updateChoice = params =>{
   return axios.put(`backage-api/question/choice`,params)
 }
@@ -75,4 +75,9 @@ export const likeQueryMajorName = params =>{
 //多条件分页查询分数
 export const pageQueryStudentScore = params =>{
   return axios.get(`backage-api/paper/score`,{params:params})
+}
+
+//根据多条件导出分数
+export const exportScoreExcel = params =>{
+  return axios.get(`backage-api/file/score`,{params:params})
 }
