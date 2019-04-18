@@ -1,16 +1,21 @@
 package com.fanshuaiko.backage.web;
 
+import com.fanshuaiko.backage.dao.ScoreDao;
+import com.fanshuaiko.backage.entity.VO.ScoreQueryTerm;
+import com.fanshuaiko.backage.entity.VO.ScoreReturnVo;
 import com.fanshuaiko.backage.utils.ErrorCode;
 import com.fanshuaiko.backage.utils.ExportUtil;
 import com.fanshuaiko.backage.utils.ResultData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @ClassName downloadTemplateController
@@ -23,6 +28,9 @@ import java.io.InputStream;
 @RequestMapping("/file")
 public class DownloadFileController {
     private static Logger log = LoggerFactory.getLogger(ClassController.class);
+
+    @Autowired
+    ScoreDao scoreDao;
 
     @GetMapping("/single")
     public ResultData downloadSingleChoiceTemplate(HttpServletResponse response) {
@@ -75,6 +83,29 @@ public class DownloadFileController {
             log.info("--------file/downloadSubjectiveTemplate:--------");
             e.printStackTrace();
             return ResultData.newResultData(ErrorCode.FAILOR, "下载主观题上传模板失败！");
+        }
+    }
+
+    /**
+     * 根据多条件导出分数
+     * @param scoreQueryTerm
+     * @param response
+     * @return
+     */
+    @GetMapping("/score")
+    public ResultData exportScoreExcel(ScoreQueryTerm scoreQueryTerm, HttpServletResponse response) {
+        try {
+            List<ScoreReturnVo> scoreReturnVoList = scoreDao.queryByConditions(scoreQueryTerm);
+            if(scoreReturnVoList.size()==0){
+                return  ResultData.newResultData(ErrorCode.FAILOR,"导出数据为空");
+            }else{
+                ExportUtil.exportScoreExcel(response,scoreReturnVoList);
+                return ResultData.newSuccessResultData();
+            }
+        } catch (Exception e) {
+            log.info("--------file/exportScoreExcel:--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.FAILOR, "导出失败！");
         }
     }
 }
