@@ -205,7 +205,7 @@ where
         where question_no = #{testNo}
     </select>
 
-    <select id="sumStudentCount" parameterType="java.lang.Long" >
+    <select id="sumStudentCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
         select count(*)
         from test t
         left join test_class tc on tc.test_no =t.id
