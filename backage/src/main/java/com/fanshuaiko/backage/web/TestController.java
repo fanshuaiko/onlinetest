@@ -158,4 +158,22 @@ public class TestController {
             return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
         }
     }
+
+    /**
+     * 发送考试成绩给所有考生
+     * @param testNo
+     * @return
+     */
+    @PostMapping("/mail/{testNo}")
+    public ResultData sendTestScoreMail(@PathVariable("testNo") Long testNo){
+        try {
+            ResultData resultData = testService.sendTestScoreMail(testNo);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------question:sendTestMail--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.FAILOR, "邮件发送失败");
+        }
+    }
+
 }

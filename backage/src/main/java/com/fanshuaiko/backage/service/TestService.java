@@ -74,4 +74,12 @@ public interface TestService {
      * @return
      */
     ResultData getTestAnalyzeData(Long testNo);
+
+    /**
+     * 发送考试成绩给所有考生
+     *
+     * @param testNo
+     * @return
+     */
+    ResultData sendTestScoreMail(Long testNo);
 }
