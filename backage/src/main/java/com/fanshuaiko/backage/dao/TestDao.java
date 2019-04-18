@@ -2,6 +2,7 @@ package com.fanshuaiko.backage.dao;
 
 import com.fanshuaiko.backage.entity.Test;
 import com.fanshuaiko.backage.entity.TestQuestion;
+import com.fanshuaiko.backage.entity.VO.TestAnalyze;
 import com.fanshuaiko.backage.entity.VO.TestReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -52,5 +53,5 @@ public interface TestDao {
 
     List<TestQuestion> selectByQuestionNo(Long testNo);//根据试题编号查询
 
-    int sumStudentCount(Long testNo);//计算参加考试人数
+    TestAnalyze sumStudentCount(Long testNo);//计算参加考试人数
 }

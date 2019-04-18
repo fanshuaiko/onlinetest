@@ -13,6 +13,7 @@ public class TestAnalyze {
     private Long testNo;//考试编号
     private String testName;//考试名称
     private int studentCount;//参考人数
+    private int totalScore;//总分
     private int maxScore;//最高分
     private int minScore;//最低分
     private int passCount;//及格人数
@@ -101,12 +102,21 @@ public class TestAnalyze {
         this.unPassCount = unPassCount;
     }
 
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
+    }
+
     @Override
     public String toString() {
         return "TestAnalyze{" +
                 "testNo=" + testNo +
                 ", testName='" + testName + '\'' +
                 ", studentCount=" + studentCount +
+                ", totalScore=" + totalScore +
                 ", maxScore=" + maxScore +
                 ", minScore=" + minScore +
                 ", passCount=" + passCount +

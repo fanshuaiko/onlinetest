@@ -205,8 +205,10 @@ where
         where question_no = #{testNo}
     </select>
 
-    <select id="sumStudentCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(*)
+    <select id="sumStudentCount" parameterType="java.lang.Long" resultType="com.fanshuaiko.backage.entity.VO.TestAnalyze">
+        select
+        count(*) as studentCount,
+        t.total_score as totalScore
         from test t
         left join test_class tc on tc.test_no =t.id
         left join student s on s.class_no = tc.class_no

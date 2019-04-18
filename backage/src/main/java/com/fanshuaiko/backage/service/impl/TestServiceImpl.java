@@ -305,8 +305,10 @@ public class TestServiceImpl implements TestService {
     public ResultData getTestAnalyzeData(Long testNo) {
         TestAnalyze testAnalyze = new TestAnalyze();
         testAnalyze.setTestNo(testNo);
-        //计算参考人数
-        int studentCount = testDao.sumStudentCount(testNo);
+        //计算参考人数和考试总分
+        TestAnalyze testAnalyze2 = testDao.sumStudentCount(testNo);
+        int studentCount = testAnalyze2.getStudentCount();
+        testAnalyze.setTotalScore(testAnalyze2.getTotalScore());
         testAnalyze.setStudentCount(studentCount);
         //计算最高分、最低分、平均分
         TestAnalyze testAnalyze1 = scoreDao.selectMaxAndMinAndAvgScore(testNo);
