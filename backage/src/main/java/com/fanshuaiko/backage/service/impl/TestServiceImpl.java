@@ -319,7 +319,7 @@ public class TestServiceImpl implements TestService {
         //不及格人数
         testAnalyze.setUnPassCount(studentCount-passCount);
         //及格率
-        testAnalyze.setPassRate(passCount/studentCount);
+        testAnalyze.setPassRate((double)passCount/studentCount);
 
         return ResultData.newSuccessResultData(testAnalyze);
     }
