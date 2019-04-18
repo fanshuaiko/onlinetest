@@ -199,13 +199,15 @@ where
         </foreach>
     </delete>
 
-    <select id="selectByQuestionNo" parameterType="java.lang.Long" resultType="com.fanshuaiko.backage.entity.TestQuestion">
+    <select id="selectByQuestionNo" parameterType="java.lang.Long"
+            resultType="com.fanshuaiko.backage.entity.TestQuestion">
         select id,test_no,question_no,score,question_type
         from test_question
         where question_no = #{testNo}
     </select>
 
-    <select id="sumStudentCount" parameterType="java.lang.Long" resultType="com.fanshuaiko.backage.entity.VO.TestAnalyze">
+    <select id="sumStudentCount" parameterType="java.lang.Long"
+            resultType="com.fanshuaiko.backage.entity.VO.TestAnalyze">
         select
         count(*) as studentCount,
         t.total_score as totalScore
@@ -213,5 +215,25 @@ where
         left join test_class tc on tc.test_no =t.id
         left join student s on s.class_no = tc.class_no
         where t.id = #{testNo}
+    </select>
+
+    <select id="queryParamsForMail" parameterType="java.lang.Long"
+            resultType="com.fanshuaiko.backage.entity.mail.ScoreParams">
+        select
+	s.student_no as studentNo,
+	s.name as name,
+	s.email as toMailAddress,
+	t.name as testName,
+	sc.total as totalScore
+from
+	test t
+left join test_class tc on
+	tc.test_no = t.id
+left join student s on
+	s.class_no = tc.class_no
+left join score sc on
+	sc.student_no = s.student_no
+where
+	t.id = #{testNo}
     </select>
 </mapper>

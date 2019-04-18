@@ -5,6 +5,7 @@ import com.fanshuaiko.backage.entity.TestQuestion;
 import com.fanshuaiko.backage.entity.VO.TestAnalyze;
 import com.fanshuaiko.backage.entity.VO.TestReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestVO;
+import com.fanshuaiko.backage.entity.mail.ScoreParams;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -54,4 +55,6 @@ public interface TestDao {
     List<TestQuestion> selectByQuestionNo(Long testNo);//根据试题编号查询
 
     TestAnalyze sumStudentCount(Long testNo);//计算参加考试人数
+
+    List<ScoreParams> queryParamsForMail(Long testNo);//根据考试编码查询多个发成绩单需要的参数的值
 }
