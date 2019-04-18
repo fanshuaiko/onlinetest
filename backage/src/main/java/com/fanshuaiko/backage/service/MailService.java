@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 /**
  * @ClassName MailService
  * @Description 邮件服务接口类
@@ -20,5 +22,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MailService {
 
     @PostMapping(value = "/mail/score",consumes = "application/json")
-    String sendHTMLMail(@RequestBody ScoreParams scoreParams);
+    String sendHTMLMail(List<ScoreParams> paramsList);
 }

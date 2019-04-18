@@ -14,6 +14,8 @@ import com.fanshuaiko.backage.entity.VO.QuestionReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestAnalyze;
 import com.fanshuaiko.backage.entity.VO.TestReturnVo;
 import com.fanshuaiko.backage.entity.VO.TestVO;
+import com.fanshuaiko.backage.entity.mail.ScoreParams;
+import com.fanshuaiko.backage.service.MailService;
 import com.fanshuaiko.backage.service.TestService;
 import com.fanshuaiko.backage.utils.*;
 
@@ -28,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
@@ -66,6 +69,9 @@ public class TestServiceImpl implements TestService {
 
     @Autowired
     private ScoreDao scoreDao;
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     public ResultData createTest(TestVO testVO) {
@@ -319,11 +325,32 @@ public class TestServiceImpl implements TestService {
         int passCount = scoreDao.countPassStudent(testNo);
         testAnalyze.setPassCount(passCount);
         //不及格人数
-        testAnalyze.setUnPassCount(studentCount-passCount);
+        testAnalyze.setUnPassCount(studentCount - passCount);
         //及格率
-        testAnalyze.setPassRate((double)passCount/studentCount);
+        testAnalyze.setPassRate((double) passCount / studentCount);
 
         return ResultData.newSuccessResultData(testAnalyze);
+    }
+
+    @Override
+    public ResultData sendTestScoreMail(Long testNo) {
+        try {
+
+            TestAnalyze testAnalyze = (TestAnalyze) getTestAnalyzeData(testNo).getData();
+            List<ScoreParams> paramsList = testDao.queryParamsForMail(testNo);
+            for (ScoreParams scoreParams : paramsList) {
+                scoreParams.setStudentCount(testAnalyze.getStudentCount());
+                scoreParams.setAverageScore(testAnalyze.getAverageScore());
+                scoreParams.setMaxScore(testAnalyze.getMaxScore());
+                scoreParams.setPassRate(testAnalyze.getPassRate());
+            }
+                String s = mailService.sendHTMLMail(paramsList);
+            return ResultData.newSuccessResultData(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.FAILOR, "邮件发送失败");
+        }
+
     }
 
 
