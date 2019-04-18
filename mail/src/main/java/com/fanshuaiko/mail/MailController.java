@@ -16,6 +16,7 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 
 /**
  * @ClassName MailController
@@ -42,36 +43,41 @@ public class MailController {
 
     /**
      * 发送分数邮件
-     * @param scoreParams
+     *
+     * @param scoreParamsList
      */
     @PostMapping("/score")
-    public String sendHTMLMail(@RequestBody ScoreParams scoreParams) {
-        Context context = new Context();
-        //设置模板页面中的参数
-        context.setVariable("name",scoreParams.getName());
-        context.setVariable("studentNo",scoreParams.getStudentNo());
-        context.setVariable("totalScore",scoreParams.getTotalScore());
-        context.setVariable("averageScore",scoreParams.getAverageScore());
-        context.setVariable("maxScore",scoreParams.getMaxScore());
-        context.setVariable("sort",scoreParams.getSort());
-        context.setVariable("studentCount",scoreParams.getStudentNo());
-        context.setVariable("passRate",scoreParams.getPassRate());
-        //设置模板邮件的内容
-        String emailContent = templateEngine.process("ScoreTemplate",context);
-
-        log.info("开始发送HTML邮件：{}，{}，{}，{}",from,scoreParams.getToMailAddress(),scoreParams.getTestName(),emailContent);
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper;
+    public String sendHTMLMail(@RequestBody List<ScoreParams> scoreParamsList) {
         try {
-            mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);//true表示需要创建一个multipart message
-            mimeMessageHelper.setFrom(from);
-            mimeMessageHelper.setTo(scoreParams.getToMailAddress());
-            mimeMessageHelper.setSubject(scoreParams.getTestName()+"成绩单");
-            mimeMessageHelper.setText(emailContent,true);//true代表有附件
-            javaMailSender.send(mimeMessage);
-            log.info("邮件发送成功！");
+//            给每个同学发送各自的成绩单
+            for (ScoreParams scoreParams : scoreParamsList) {
+                Context context = new Context();
+                //设置模板页面中的参数
+                context.setVariable("name", scoreParams.getName());
+                context.setVariable("studentNo", scoreParams.getStudentNo());
+                context.setVariable("totalScore", scoreParams.getTotalScore());
+                context.setVariable("averageScore", scoreParams.getAverageScore());
+                context.setVariable("maxScore", scoreParams.getMaxScore());
+                context.setVariable("sort", scoreParams.getSort());
+                context.setVariable("studentCount", scoreParams.getStudentNo());
+                context.setVariable("passRate", scoreParams.getPassRate());
+                //设置模板邮件的内容
+                String emailContent = templateEngine.process("ScoreTemplate", context);
+
+                log.info("开始发送HTML邮件：{}，{}，{}，{}", from, scoreParams.getToMailAddress(), scoreParams.getTestName(), emailContent);
+                MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+                MimeMessageHelper mimeMessageHelper;
+
+                mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);//true表示需要创建一个multipart message
+                mimeMessageHelper.setFrom(from);
+                mimeMessageHelper.setTo(scoreParams.getToMailAddress());
+                mimeMessageHelper.setSubject(scoreParams.getTestName() + "成绩单");
+                mimeMessageHelper.setText(emailContent, true);//true代表有附件
+                javaMailSender.send(mimeMessage);
+                log.info("邮件发送成功！");
+            }
             return "邮件发送成功！";
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             log.error("邮件发送失败！", e);
             return "邮件发送失败！";
 
