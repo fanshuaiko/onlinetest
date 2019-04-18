@@ -3,7 +3,8 @@
     <!--  查询条件-->
     <el-form :inline="true" :model="ScoreQueryTerm" class="demo-form-inline">
       <el-form-item>
-        <label style="text-align: right;font-size: 14px;color: #606266;line-height: 40px;padding: 0 12px 0 0;">专业</label>
+        <label
+          style="text-align: right;font-size: 14px;color: #606266;line-height: 40px;padding: 0 12px 0 0;">专业</label>
         <el-autocomplete
           v-model="ScoreQueryTerm.majorName"
           :fetch-suggestions="likeQueryMajorName"
@@ -22,7 +23,11 @@
       <el-form-item>
         <el-button type="primary" @click="pageQueryStudentScore">查询</el-button>
       </el-form-item>
+      <el-button type="primary" style="float: right" @click="exportScoreExcel">
+        导出
+      </el-button>
     </el-form>
+
 
     <!--  数据列表-->
     <el-table
@@ -148,6 +153,25 @@
         this.ScoreQueryTerm.pageNum = val
         this.pageQueryStudentScore()
       },
+
+      //导出分数
+      exportScoreExcel() {
+        //int类型的数据如果为空，设置为0传到后台，否则会报类型不匹配的错误
+        var classCo = this.ScoreQueryTerm.classCo
+        var studentNo = this.ScoreQueryTerm.studentNo
+        if (classCo == null) {
+          classCo = 0
+        }
+        if (studentNo == null) {
+          studentNo = 0
+        }
+        window.location.href = 'backage-api/file/score?'
+          + 'majorName=' + this.ScoreQueryTerm.majorName
+          + '&classCo=' + classCo
+          + '&studentName=' + this.ScoreQueryTerm.studentName
+          + '&studentNo=' + studentNo
+
+      }
 
     }
   }
