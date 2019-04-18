@@ -40,7 +40,7 @@
         label="考试分析">
         <template scope="scope">
           <label v-if="scope.row.choiceStatus=='1' && scope.row.subjectiveStatus=='1'">
-            <el-button type="success">点击查看考试分析</el-button>
+            <el-button type="primary" @click="getTestAnalyzeData(scope.row.testNo)">点击查看考试分析</el-button>
           </label>
           <label v-else>
             <el-button type="info" plain disabled>点击查看考试分析</el-button>
@@ -95,11 +95,35 @@
         <el-button type="primary" @click="nextQuestion(ScoreDetail.id)">下一题</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="考试分析" :visible.sync="dialogTestAnalyzeVisible">
+
+      <!--      饼状图-->
+      <el-card class="box-card" style="width: 45%;height: 50%;float: left;margin-right: 4%;margin-left: 3%">
+        <div slot="header" class="clearfix">
+          <span>及格与未及格人数对比图&nbsp;&nbsp;[总人数:{{testAnalyze.studentCount}}]</span>
+        </div>
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div ref="pieChart" style="width: 300px;height: 200px">及格率:{{testAnalyze.passRate}}</div>
+      </el-card>
+
+      <!--      柱状图-->
+      <el-card class="box-card" style="width: 45%;height: 50%;">
+        <div slot="header" class="clearfix">
+          <span>各分数数据柱状图</span>
+        </div>
+        <div ref="columnChart" style="width: 300px;height: 200px"></div>
+      </el-card>
+    </el-dialog>
   </section>
 </template>
 
 <script>
+  //  自定义api接口
   import * as api from '../api/api';
+  //echarts图表组件
+  import echarts from 'echarts';
+
 
   export default {
     name: "MarkPaper",
@@ -124,7 +148,13 @@
         //当前题目学生得分
         score: 0,
         //正在批改的题目所属的考试编号
-        currentTestNo: 0
+        currentTestNo: 0,
+
+        //考试分析数据实体
+        testAnalyze: '',
+        //考试分析界面是否显示
+        dialogTestAnalyzeVisible: false,
+
       }
     },
     mounted() {
@@ -226,7 +256,62 @@
             this.$alert(res.data['message'])
           }
         })
-      }
+      },
+
+      //获取考试分析数据
+      getTestAnalyzeData(testNo) {
+        api.getTestAnalyzeData(testNo).then(res => {
+          console.log('MarkPaper:getTestAnalyzeData:res::' + JSON.stringify(res))
+          if (res.status == 200 && res.data['code'] == '0') {
+            this.testAnalyze = res.data['data']
+            this.dialogTestAnalyzeVisible = true
+            this.drawPieChart()
+            this.drawColumnChart()
+          } else if (res.data['code'] != '0') {
+            this.$alert(res.data['message'])
+          }
+        })
+      },
+
+      //圆饼图
+      drawPieChart() {
+        console.log('++' + JSON.stringify(this.testAnalyze))
+        // 基于准备好的dom，初始化echarts实例
+        var myPieChart = echarts.init(this.$refs.pieChart);
+        //绘制图表
+        myPieChart.setOption({
+          tooltip: {},
+          series: [
+            {
+              name: '及格与不及格分布图',
+              type: 'pie',
+              radius: '40%',
+              data: [
+                {value: this.testAnalyze.passCount, name: '及格人数'},
+                {value: this.testAnalyze.unPassCount, name: '不及格人数'},
+              ]
+            }
+          ]
+        })
+      },
+
+      //柱状图
+      drawColumnChart() {
+        var columnChart = echarts.init(this.$refs.columnChart);
+        columnChart.setOption({
+          tooltip: {},
+          xAxis: {
+            data: ["总分", "最高分", "平均分", "最低分"]
+          },
+          yAxis: {},
+          series: [{
+            name: '分数',
+            type: 'bar',
+            data: [this.testAnalyze.totalScore, this.testAnalyze.maxScore,
+              this.testAnalyze.averageScore, this.testAnalyze.minScore]
+          }]
+        });
+      },
     }
   }
 </script>
