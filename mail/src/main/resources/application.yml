@@ -3,12 +3,16 @@ spring:
   mail:
     #QQ邮件服务地址
     host: smtp.qq.com
-    #发件邮箱
+    #用户名
     username:
     #密码（授权码）
     password:
     #默认编码utf-8
     default-encoding: UTF-8
+
+    #本应用的名称
+  application:
+    name: mail
 
 server:
   port: 8085
@@ -17,7 +21,3 @@ server:
 eureka:
   client:
     eureka-server-u-r-l-context: http://localhost:8761/eureka/
-
-    #本应用的名称
-  application:
-    name: mail
