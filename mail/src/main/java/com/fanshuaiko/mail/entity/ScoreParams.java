@@ -8,6 +8,8 @@ package com.fanshuaiko.mail.entity;
  * @Version 1.0
  **/
 public class ScoreParams {
+    private Long studentNo;//学号
+    private String name;//姓名
     private String toMailAddress;//收件人
     private String testName;//考试名称
     private int studentCount;//参考人数
@@ -81,10 +83,28 @@ public class ScoreParams {
         this.sort = sort;
     }
 
+    public Long getStudentNo() {
+        return studentNo;
+    }
+
+    public void setStudentNo(Long studentNo) {
+        this.studentNo = studentNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public String toString() {
         return "ScoreParams{" +
-                "toMailAddress='" + toMailAddress + '\'' +
+                "studentNo=" + studentNo +
+                ", name='" + name + '\'' +
+                ", toMailAddress='" + toMailAddress + '\'' +
                 ", testName='" + testName + '\'' +
                 ", studentCount=" + studentCount +
                 ", totalScore=" + totalScore +
