@@ -104,7 +104,8 @@
           <span>及格与未及格人数对比图&nbsp;&nbsp;[总人数:{{testAnalyze.studentCount}}]</span>
         </div>
         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-        <div ref="pieChart" style="width: 300px;height: 200px">及格率:{{testAnalyze.passRate}}</div>
+        <div ref="pieChart" style="width: 300px;height: 200px"></div>
+          <span>及格率:{{testAnalyze.passRate}}</span>
       </el-card>
 
       <!--      柱状图-->
@@ -113,6 +114,7 @@
           <span>各分数数据柱状图</span>
         </div>
         <div ref="columnChart" style="width: 300px;height: 200px"></div>
+        <span>满分:{{testAnalyze.totalScore}}</span>
       </el-card>
     </el-dialog>
   </section>
