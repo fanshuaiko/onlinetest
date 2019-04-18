@@ -44,7 +44,7 @@ public class MailController {
      * @param scoreParams
      */
     @PostMapping("/score")
-    public void sendHTMLMail(ScoreParams scoreParams) {
+    public String sendHTMLMail(ScoreParams scoreParams) {
         Context context = new Context();
         //设置模板页面中的参数
         context.setVariable("name",scoreParams.getName());
@@ -69,8 +69,10 @@ public class MailController {
             mimeMessageHelper.setText(emailContent,true);//true代表有附件
             javaMailSender.send(mimeMessage);
             log.info("邮件发送成功！");
+            return "邮件发送成功！";
         } catch (MessagingException e) {
             log.error("邮件发送失败！", e);
+            return "邮件发送失败！";
 
         }
     }
