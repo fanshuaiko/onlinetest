@@ -47,6 +47,17 @@
           </label>
         </template>
       </el-table-column>
+      <el-table-column
+        label="发送邮件">
+        <template scope="scope">
+          <label v-if="scope.row.choiceStatus=='1' && scope.row.subjectiveStatus=='1'">
+            <el-button type="primary" @click="sendTestScoreMail(scope.row.testNo)">点击发送成绩单</el-button>
+          </label>
+          <label v-else>
+            <el-button type="info" plain disabled>点击发送成绩单</el-button>
+          </label>
+        </template>
+      </el-table-column>
     </el-table>
 
     <!--    分页-->
@@ -105,7 +116,7 @@
         </div>
         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
         <div ref="pieChart" style="width: 300px;height: 200px"></div>
-          <span>及格率:{{testAnalyze.passRate}}</span>
+        <span>及格率:{{testAnalyze.passRate}}</span>
       </el-card>
 
       <!--      柱状图-->
@@ -271,6 +282,17 @@
             this.drawColumnChart()
           } else if (res.data['code'] != '0') {
             this.$alert(res.data['message'])
+          }
+        })
+      },
+
+      //发送成绩单给学生
+      sendTestScoreMail(testNO) {
+        api.sendTestScoreMail(testNO).then(res => {
+          if (res.status == 200 && res.data['code'] == '0') {
+            this.$alert(res.data['message'])
+          }else {
+            this.$alert("邮件发送失败")
           }
         })
       },
