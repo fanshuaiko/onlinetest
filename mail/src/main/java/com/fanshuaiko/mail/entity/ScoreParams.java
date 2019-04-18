@@ -15,6 +15,7 @@ public class ScoreParams {
     private int maxScore;//最高分
     private double averageScore;//平均分
     private double passRate;//及格率
+    private int sort;//排名
 
     public String getToMailAddress() {
         return toMailAddress;
@@ -72,6 +73,14 @@ public class ScoreParams {
         this.passRate = passRate;
     }
 
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
     @Override
     public String toString() {
         return "ScoreParams{" +
@@ -82,6 +91,7 @@ public class ScoreParams {
                 ", maxScore=" + maxScore +
                 ", averageScore=" + averageScore +
                 ", passRate=" + passRate +
+                ", sort=" + sort +
                 '}';
     }
 }
