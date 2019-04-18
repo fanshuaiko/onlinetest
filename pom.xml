@@ -19,6 +19,7 @@
         <module>eureka</module>
         <module>config</module>
         <module>auth</module>
+        <module>mail</module>
     </modules>
 
     <properties>
