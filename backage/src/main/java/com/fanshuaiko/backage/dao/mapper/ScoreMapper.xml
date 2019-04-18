@@ -172,7 +172,7 @@
         where test_no = #{testNo}
     </select>
 
-    <select id="countPassStudent" parameterType="java.lang.Long">
+    <select id="countPassStudent" parameterType="java.lang.Long" resultType="java.lang.Integer">
         SELECT
 	    COUNT(*)
         FROM score s
