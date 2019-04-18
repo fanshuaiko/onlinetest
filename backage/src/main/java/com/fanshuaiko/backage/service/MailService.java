@@ -1,9 +1,11 @@
 package com.fanshuaiko.backage.service;
 
 import com.fanshuaiko.backage.entity.mail.ScoreParams;
+import com.fanshuaiko.backage.service.impl.MailServiceFail;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @ClassName MailService
@@ -14,9 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
  **/
 @Service
 //要调用的服务名
-@FeignClient(value = "mail")
+@FeignClient(value = "mail",fallback = MailServiceFail.class)
 public interface MailService {
 
-    @PostMapping("/score")
-    String sendHTMLMail(ScoreParams scoreParams);
+    @PostMapping(value = "/mail/score",consumes = "application/json")
+    String sendHTMLMail(@RequestBody ScoreParams scoreParams);
 }
