@@ -771,7 +771,7 @@
               path: '/paper',
               query: {
                 questions: questions,
-                testName: this.testVoList[0].name
+                testName: row.name
               }
             })
           } else {
