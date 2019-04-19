@@ -1,5 +1,6 @@
 <template>
-  <div class="app" style="position: absolute;width:100%;height: 100%;" @mouseleave="catchMouseOut">
+  <!--  @mouseleave="catchMouseOut"-->
+  <div class="app" style="position: absolute;width:100%;height: 100%;">
     <div class="question-main">
       <div class="top">
         <div class="process">
@@ -23,58 +24,88 @@
         <div class="question-content" v-if="question.type == '1'">
           <div class="question-name">{{question.question}}</div>
           <div class="choiceA">
-            <input type="radio" name="SingleOptionsRadios" value="A" v-model="checkedValue">
-            A.&nbsp&nbsp{{question.choiceA}}
+            <el-button round>
+              <el-radio v-model="checkedValue" label="A">
+                A.&nbsp&nbsp{{question.choiceA}}
+              </el-radio>
+            </el-button>
           </div>
           <div class="choiceB">
-            <input type="radio" name="SingleOptionsRadios" value="B" v-model="checkedValue">
-            B.&nbsp&nbsp{{question.choiceB}}
+            <el-button round>
+              <el-radio v-model="checkedValue" label="B">
+                B.&nbsp&nbsp{{question.choiceB}}
+              </el-radio>
+            </el-button>
           </div>
           <div class="choiceC">
-            <input type="radio" name="SingleOptionsRadios" value="C" v-model="checkedValue">
-            C.&nbsp&nbsp{{question.choiceC}}
+            <el-button round>
+              <el-radio v-model="checkedValue" label="C">
+                C.&nbsp&nbsp{{question.choiceC}}
+              </el-radio>
+            </el-button>
           </div>
           <div class="choiceD">
-            <input type="radio" name="SingleOptionsRadios" value="D" v-model="checkedValue">
-            D.&nbsp&nbsp{{question.choiceD}}
+            <el-button round>
+              <el-radio v-model="checkedValue" label="D">
+                D.&nbsp&nbsp{{question.choiceD}}
+              </el-radio>
+            </el-button>
           </div>
         </div>
         <div class="question-content" v-if="question.type == '2'">
           <div class="question-name">{{question.question}}</div>
           <div class="choiceA">
-            <input type="radio" name="JudgeOptionsRadios" value="A" v-model="checkedValue">
-            A.&nbsp&nbsp{{question.choiceA}}
+            <el-button round>
+              <el-radio v-model="checkedValue" label="A">
+                A.&nbsp&nbsp{{question.choiceA}}
+              </el-radio>
+            </el-button>
           </div>
           <div class="choiceB">
-            <input type="radio" name="JudgeOptionsRadios" value="B" v-model="checkedValue">
-            B.&nbsp&nbsp{{question.choiceB}}
+            <el-button round>
+              <el-radio v-model="checkedValue" label="B">
+                B.&nbsp&nbsp{{question.choiceB}}
+              </el-radio>
+            </el-button>
           </div>
 
         </div>
         <div class="question-content" v-if="question.type == '3'">
           <div class="question-name">{{question.question}}</div>
           <div class="choiceA">
-            <input type="checkbox" name="MultipleOptionsRadios" value="A" v-model="multipleValue">
-            A.&nbsp&nbsp{{question.choiceA}}
+            <el-button round>
+              <el-checkbox v-model="multipleValue" label="A">
+                A.&nbsp&nbsp{{question.choiceA}}
+              </el-checkbox>
+            </el-button>
           </div>
           <div class="choiceB">
-            <input type="checkbox" name="MultipleOptionsRadios" value="B" v-model="multipleValue">
-            B.&nbsp&nbsp{{question.choiceB}}
+            <el-button round>
+              <el-checkbox v-model="multipleValue" label="B">
+                B.&nbsp&nbsp{{question.choiceB}}
+              </el-checkbox>
+            </el-button>
           </div>
           <div class="choiceC">
-            <input type="checkbox" name="MultipleOptionsRadios" value="C" v-model="multipleValue">
-            C.&nbsp&nbsp{{question.choiceC}}
+            <el-button round>
+              <el-checkbox v-model="multipleValue" label="C">
+                C.&nbsp&nbsp{{question.choiceC}}
+              </el-checkbox>
+            </el-button>
           </div>
           <div class="choiceD">
-            <input type="checkbox" name="MultipleOptionsRadios" value="D" v-model="multipleValue">
-            D.&nbsp&nbsp{{question.choiceD}}
+            <el-button round>
+              <el-checkbox v-model="multipleValue" label="D">
+                D.&nbsp&nbsp{{question.choiceD}}
+              </el-checkbox>
+            </el-button>
           </div>
         </div>
         <div class="question-content" v-if="question.type == '4'">
           <div class="question-name">{{question.question}}</div>
           <div class="subjective">
-            <textarea v-model="subjectiveValue" class="form-control" rows="8" placeholder="请输入答案"
-                      id="subjective-answer"></textarea>
+            <el-input type="textarea" v-model="subjectiveValue" placeholder="请输入答案" rows="17"
+            style="width: 80%;margin-left: 10%;margin-bottom: 5%"></el-input>
           </div>
         </div>
       </div>
@@ -97,9 +128,9 @@
     </el-dialog>
 
     <!--    显示摄像头-->
-<!--    <div class="camera">-->
-      <video id="v" ref="camera" class="camera"></video>
-<!--    </div>-->
+    <!--    <div class="camera">-->
+    <video id="v" ref="camera" class="camera"></video>
+    <!--    </div>-->
   </div>
 </template>
 
@@ -354,11 +385,11 @@
     top: 35%;
     transform: translate(-50%, -50%);
     width: 70%;
-    height: 60%;
-    border: 1px solid darkgrey;
+    height: 70%;
+    /*border: 1px solid darkgrey;*/
   }
 
-  .camera{
+  .camera {
     /*position: absolute;*/
     width: 10%;
     height: 20%;
@@ -421,7 +452,9 @@
   .question {
     width: 100%;
     height: 610px;
-    border: 1px solid darkgrey;
+    border-top: 1px solid darkgrey;
+    border-left: 1px solid darkgrey;
+    border-right: 1px solid darkgrey;
   }
 
   .question-type {
@@ -429,7 +462,7 @@
     width: 100%;
     top: 110px;
     /*background-color: darkgrey;*/
-    border: 1px solid darkgrey;
+    border-bottom: 1px solid darkgrey;
     line-height: 60px;
   }
 
@@ -453,7 +486,7 @@
     width: 100%;
     /*top: 700px;*/
     /*background-color: blueviolet;*/
-    border: 1px solid darkgrey;
+    /*border: 1px solid darkgrey;*/
     line-height: 110px;
   }
 
@@ -462,7 +495,7 @@
     width: 100%;
     /*top: 700px;*/
     /*background-color: red;*/
-    border: 1px solid darkgrey;
+    /*border: 1px solid darkgrey;*/
     line-height: 110px;
 
   }
@@ -472,7 +505,7 @@
     width: 100%;
     /*top: 700px;*/
     /*background-color: blueviolet;*/
-    border: 1px solid darkgrey;
+    /*border: 1px solid darkgrey;*/
     line-height: 110px;
 
   }
@@ -482,7 +515,7 @@
     width: 100%;
     /*top: 700px;*/
     /*background-color: red;*/
-    border: 1px solid darkgrey;
+    /*border: 1px solid darkgrey;*/
     line-height: 110px;
 
   }
@@ -499,7 +532,9 @@
     width: 100%;
     height: 60px;
     /*background-color: black;*/
-    border: 1px solid darkgrey;
+    border-left: 1px solid darkgrey;
+    border-right: 1px solid darkgrey;
+    border-bottom: 1px solid darkgrey;
   }
 
   .next-question {
@@ -524,5 +559,16 @@
     line-height: 100%;
   }
 
+  .el-button {
+    width: 90%;
+  }
+
+  .el-radio {
+    float: left;
+  }
+
+  .el-checkbox {
+    float: left;
+  }
 
 </style>
