@@ -1,5 +1,5 @@
 <template>
-  <el-container style=" border: 1px solid #eee;height: 100%">
+  <el-container style=" border: 1px solid #eee;">
     <el-aside width="200px">
 
       <el-header style="text-align: center; font-size: 20px;">
@@ -47,14 +47,14 @@
 
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-        <el-dropdown>
-          <i class="el-icon-setting" style="margin-right: 15px"></i>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+<!--        <el-dropdown>-->
+<!--          <i class="el-icon-setting" style="margin-right: 15px"></i>-->
+<!--          <el-dropdown-menu slot="dropdown">-->
+<!--            <el-dropdown-item>查看</el-dropdown-item>-->
+<!--            <el-dropdown-item>新增</el-dropdown-item>-->
+<!--            <el-dropdown-item>删除</el-dropdown-item>-->
+<!--          </el-dropdown-menu>-->
+<!--        </el-dropdown>-->
         <span>{{username}}</span>
       </el-header>
 
@@ -116,6 +116,9 @@
 </script>
 
 <style>
+  .el-container{
+    height: 800px;
+  }
   .el-header {
     background-color: #20a0ff;
     color: white;
