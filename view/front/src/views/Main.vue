@@ -105,7 +105,7 @@
           <div class="question-name">{{question.question}}</div>
           <div class="subjective">
             <el-input type="textarea" v-model="subjectiveValue" placeholder="请输入答案" rows="17"
-            style="width: 80%;margin-left: 10%;margin-bottom: 5%"></el-input>
+                      style="width: 80%;margin-left: 10%;margin-bottom: 5%"></el-input>
           </div>
         </div>
       </div>
@@ -228,21 +228,47 @@
           that.countdown()
         }, 1000)
       },
+      //点击下一题
       nextQuestion() {
+        var tf = this.judgeCurrentValue()
+        //当前题目作答了才能到下一题
+        if (tf == true) {
+          this.saveAnswer(this.question)//保存上一道题的值
 
-        this.saveAnswer(this.question)//保存上一道题的值
-
-        var randomNum = this.getRandom(this.arr);
-        if (randomNum != -1) {
-          this.question = ''
-          this.question = this.questionList[randomNum]
-          this.currentQuestionNo++
-          this.progressWidth += 100 / this.questionCount
-          console.log('进度条每次增加：' + this.progressWidth)
-          console.log('预期题目：：' + JSON.stringify(this.questionList[randomNum]))
-          console.log('当前的题目：：' + JSON.stringify(this.question))
-        } else if (randomNum == -1) {
-          this.disableFlag = 'disabled'
+          var randomNum = this.getRandom(this.arr);
+          if (randomNum != -1) {
+            this.question = ''
+            this.question = this.questionList[randomNum]
+            this.currentQuestionNo++
+            this.progressWidth += 100 / this.questionCount
+            console.log('进度条每次增加：' + this.progressWidth)
+            console.log('预期题目：：' + JSON.stringify(this.questionList[randomNum]))
+            console.log('当前的题目：：' + JSON.stringify(this.question))
+          } else if (randomNum == -1) {
+            this.disableFlag = 'disabled'
+          }
+        }
+      },
+      //当前题目是否已作答
+      judgeCurrentValue() {
+        if(this.question==null||this.question==''){
+          return true
+        }else{
+          if (this.question.type == '4') {
+            if (this.subjectiveValue == null || this.subjectiveValue == '') {
+              this.$message.warning('请在答题区域填入答案')
+              return false
+            } else {
+              return true
+            }
+          } else {
+            if (this.checkedValue == null || this.checkedValue == '') {
+              this.$message.warning('请选择您的答案')
+              return false
+            } else {
+              return true
+            }
+          }
         }
       },
       //获取json中对象的个数
