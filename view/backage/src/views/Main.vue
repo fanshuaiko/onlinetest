@@ -25,22 +25,13 @@
           <template slot="title"><i class="el-icon-message"></i>阅卷</template>
           <el-menu-item-group>
             <el-menu-item index="3-1">批改试卷</el-menu-item>
-            <el-menu-item index="3-1">选项</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title"><i class="el-icon-setting"></i>考试分析</template>
           <el-menu-item-group>
             <el-menu-item index="4-1">分数查询</el-menu-item>
-            <el-menu-item index="4-2">选项2</el-menu-item>
           </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="4-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="4-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="4-4-1">选项4-1</el-menu-item>
-          </el-submenu>
         </el-submenu>
       </el-menu>
     </el-aside>
