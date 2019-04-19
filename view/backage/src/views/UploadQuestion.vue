@@ -123,7 +123,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .upload-demo1 {
     float: left;
     height: 20%;
