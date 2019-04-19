@@ -722,7 +722,7 @@
         console.log('submitAddForm:表单数据：：' + JSON.stringify(this.addForm))
         api.createTest(this.addForm).then(res => {
           console.log('submitAddForm:res::' + JSON.stringify(res))
-          if (res.status == 200 && res['code'] == '0') {
+          if (res.status == 200 && res.data['code'] == '0') {
             //关闭等待效果
             this.addLoading = false
             //成功后关闭新建页面
@@ -736,6 +736,7 @@
             this.getUsers()
           } else {
             this.$alert('新建考试失败')
+            this.addLoading = false
           }
         }).catch(err => {
           this.$alert(err.toString())
