@@ -1,37 +1,50 @@
 <template>
   <div class="content">
-    <table class="am-table am-table-striped am-table-hover">
-      <tr>
-        <th>考试id</th>
-        <th>考试</th>
-        <th>所属课程</th>
-        <th>任课教师</th>
-        <th>总分</th>
-        <th>开考时间</th>
-        <th>考试时长</th>
-        <th>考试状态</th>
-      </tr>
-      <tr v-for="item in dataList">
-        <td>{{item.id}}</td>
-        <td>{{item.name}}</td>
-        <td>{{item.courseName}}</td>
-        <td>{{item.teacherName}}</td>
-        <td>{{item.totalScore}}</td>
-        <td>{{item.startTime}}</td>
-        <td>{{item.testTime}}</td>
-        <td v-if="item.status === '0'">
-          <button type="button" class="am-btn am-btn-default am-round" disabled="disabled">未开始</button>
-        </td>
-        <td v-else-if="item.status === '1'">
-          <button type="button" class="am-btn am-btn-success am-round"
-                  v-on:click="getQuestion(item)">进行中
-          </button>
-        </td>
-        <td v-else-if="item.status === '2'">
-          <button type="button" class="am-btn am-btn-warning am-round" disabled="disabled">已结束</button>
-        </td>
-      </tr>
-    </table>
+    <el-table
+      :data="dataList"
+      stripe
+      style="width: 100%">
+      <el-table-column
+        prop="name"
+        label="考试名称"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="courseName"
+        label="所属课程"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="teacherName"
+        label="任课教师">
+      </el-table-column>
+      <el-table-column
+        prop="totalScore"
+        label="总分">
+      </el-table-column>
+      <el-table-column
+        prop="startTime"
+        label="开考时间">
+      </el-table-column>
+      <el-table-column
+        prop="testTime"
+        label="考试时长">
+      </el-table-column>
+      <el-table-column
+        label="考试状态">
+        <template scope="scope">
+          <el-button type="primary" disabled="disabled" v-if="scope.row.status === '0'">
+            未开始
+          </el-button>
+          <el-button type="primary"
+                     v-on:click="getQuestion(scope.row)" v-else-if="scope.row.status === '1'">进行中
+          </el-button>
+          <el-button type="primary" disabled="disabled"
+                     v-else-if="scope.row.status === '2'">已结束
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -41,8 +54,8 @@
 
     data() {
       return {
-        dataList: '',
-        username:''
+        dataList: [],
+        username: ''
       }
     },
 
@@ -56,8 +69,8 @@
         var testVoList = this.$route.query.testVoList
         var username = this.$route.query.username
         this.username = username
-        this.dataList = testVoList
-        console.log('here is Tests:' + testVoList)
+        this.dataList = JSON.parse(JSON.stringify(testVoList))
+        console.log('here is Tests:' + this.dataList)
       },
 
       getQuestion(test) {
@@ -97,14 +110,9 @@
 </script>
 
 <style scoped>
-  @import "http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css";
 
-  body {
-    /*background-color: seagreen;*/
-  }
 
   .content {
-    /*background: seagreen;*/
     position: fixed;
     width: 60%;
     height: 40%;
@@ -112,7 +120,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 20px;
-    box-shadow: #42b983 0px 0px 30px 5px;
+    box-shadow: darkgrey 0px 0px 30px 5px;
     text-align: center;
   }
 </style>
