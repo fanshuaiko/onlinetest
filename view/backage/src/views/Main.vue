@@ -1,6 +1,6 @@
 <template>
   <el-container style=" border: 1px solid #eee;height: 100%">
-    <el-aside width="200px" style="background-color: white">
+    <el-aside width="200px">
 
       <el-header style="text-align: center; font-size: 20px;">
         ONLINETEST
@@ -123,10 +123,11 @@
   }
 
   .el-aside {
-    color: #333;
+    color: #eef1f6;
+    background-color: #eef1f6;
   }
 
   .el-menu-item-group {
-    background-color: #E8E8E8;
+    background-color: #eef1f6;
   }
 </style>
