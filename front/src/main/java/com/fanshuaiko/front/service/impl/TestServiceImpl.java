@@ -64,6 +64,9 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public ResultData commitTest(List<ScoreDetail> scoreDetailList) {
+        if(scoreDetailList.size()==0){
+            return ResultData.newSuccessResultData(0);
+        }
         int i = scoreDetailDao.batchAdd(scoreDetailList);
         return ResultData.newSuccessResultData(i);
     }
