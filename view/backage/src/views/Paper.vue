@@ -56,11 +56,8 @@
   }
 </script>
 
-<style>
+<style scoped>
 
   @import "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css";
 
-  body {
-    background-color: white;
-  }
 </style>
