@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="page-header" style="text-align: center;color: white">
+    <div class="page-header" style="text-align: center;color: darkgrey">
       <h1>{{testName}}考试试题</h1>
     </div>
     <div class="content" style="width: 70%;margin:0 auto;background-color: white;border-radius: 20px;
@@ -61,6 +61,6 @@
   @import "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css";
 
   body {
-    background-color: darkturquoise;
+    background-color: white;
   }
 </style>
