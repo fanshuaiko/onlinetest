@@ -734,8 +734,9 @@
             })
             //更新列表
             this.getUsers()
+          } else {
+            this.$alert('新建考试失败')
           }
-          this.$alert('新建考试失败')
         }).catch(err => {
           this.$alert(err.toString())
         })
