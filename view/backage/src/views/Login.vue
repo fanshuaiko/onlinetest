@@ -2,7 +2,7 @@
   <div class="app">
     <div class="form">
       <div class="authorization">
-        <h1>Authorization</h1>
+        <h1>Management-Authorization</h1>
       </div>
       <form class="form-content">
         <div class="form-group username">
@@ -13,7 +13,7 @@
           <input type="password" v-model="password" class="form-control" id="exampleInputPassword1"
                  placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-success" v-on:click="submit()">SUBMIT</button>
+        <button type="submit" class="btn btn-info" v-on:click="submit()">SUBMIT</button>
       </form>
     </div>
   </div>
@@ -74,7 +74,7 @@
 
 </script>
 
-<style>
+<style scoped>
   @import "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css";
 
   body {
@@ -82,15 +82,15 @@
   }
 
   .form {
-    background: seagreen;
+    background: white;
     position: absolute;
-    width: 30%;
-    height: 40%;
+    width: 40%;
+    height: 30%;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 20px;
-    box-shadow: #42b983 0px 0px 30px 5px;
+    box-shadow: darkgrey 0px 0px 30px 5px;
   }
 
   .authorization {
@@ -99,13 +99,14 @@
     font-weight: bold;
     margin: 15px 0 20px 0;
     letter-spacing: 0.05em;
-    color: white;
-    left: 20%;
+    color: #5bc0de;
+    left: 10%;
     font-weight: 700;
   }
 
-  .btn-success {
+  .btn-info {
     position: relative;
+    margin-top: 10%;
     width: 50%;
     left: 25%;
   }
