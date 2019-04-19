@@ -7,7 +7,7 @@
 
     <!--    数据列表-->
     <el-table
-      v-loading="loading"
+      v-loading="listLoading"
       :data="testVoList"
       height="500"
       style="width: 100%"
@@ -313,9 +313,9 @@
         courseName: '', //所属课程名称
 
         //页面等待效果
-        loading: true,
+        // loading: true,
         //列表等待效果
-        listLoading: false,
+        listLoading: true,
 
         sels: [],//列表选中列
 
@@ -497,7 +497,7 @@
             this.pageNum = res.data.data['pageNum']
             this.pageSize = res.data.data['pageSize']
             console.log('Tests:pageQueryTest:testVoList:' + JSON.stringify(this.testVoList))
-            this.loading = false
+            this.listLoading = false
           })
       },
       //批量删除选中的列
