@@ -48,7 +48,7 @@
       <el-table-column label="操作" width="250">
         <template scope="scope">
           <el-button size="small" @click="getQuestions(scope.row)">预览试卷</el-button>
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)" disabled>编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -67,7 +67,7 @@
 
 
     <!--新增页面-->
-    <el-dialog title="新增" :visible.sync="dialogAddFormVisible">
+    <el-dialog title="新增" :visible.sync="dialogAddFormVisible" width="80%">
 
       <!--    折叠面板  -->
       <el-collapse v-model="activeName" accordion>
@@ -147,13 +147,15 @@
                 <i class="el-icon-circle-check el-icon--right" style="color: deepskyblue"></i>
                 已上传{{completeUploadCount.single}}道题目
               </div>
-              选择题库随机出题数量
+              选择题库随机出题数量<br>
               <!--              <el-form-item label="题库随机出题" prop="">-->
               <el-input-number v-model="addForm.singleRandomCount" :min="0" :max="50"
                                @change="countCurrentTotalScore"></el-input-number>
-              设置题目分值
+              <br>
+              设置题目分值<br>
               <el-input-number v-model="addForm.singleScore" :min="0" :max="50"
                                @change="countCurrentTotalScore"></el-input-number>
+              <br>
               <!--              </el-form-item>-->
               <el-button type="primary">
                 <a href="/backage-api/file/single" style="color: white;text-decoration: none">
@@ -187,7 +189,8 @@
               <!--              <el-form-item label="题库随机出题" prop="">-->
               <el-input-number v-model="addForm.judgeRandomCount" :min="0" :max="50"
                                @change="countCurrentTotalScore"></el-input-number>
-              设置题目分值
+              <br>
+              设置题目分值<br>
               <el-input-number v-model="addForm.judgeScore" :min="0" :max="50"
                                @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
@@ -223,7 +226,8 @@
               <!--              <el-form-item label="题库随机出题" prop="">-->
               <el-input-number v-model="addForm.multipleRandomCount" :min="0" :max="50"
                                @change="countCurrentTotalScore"></el-input-number>
-              设置题目分值
+              <br>
+              设置题目分值<br>
               <el-input-number v-model="addForm.multipleScore" :min="0" :max="50"
                                @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
@@ -259,7 +263,8 @@
               <!--              <el-form-item label="题库随机出题" prop="">-->
               <el-input-number v-model="addForm.subjectiveRandomCount" :min="0" :max="50"
                                @change="countCurrentTotalScore"></el-input-number>
-              设置题目分值
+              <br>
+              设置题目分值<br>
               <el-input-number v-model="addForm.subjectiveScore" :min="0" :max="50"
                                @change="countCurrentTotalScore"></el-input-number>
               <!--              </el-form-item>-->
@@ -301,7 +306,7 @@
         testVoList: [],
         total: 0,
         pageNum: 1,
-        pageSize: 5,
+        pageSize: 10,
 
         username: sessionStorage.getItem('username'),
 
@@ -764,12 +769,12 @@
             var questions = res.data['data']
             this.$router.push({
               path: '/paper',
-              query:{
-                questions:questions,
-                testName:this.testVoList[0].name
+              query: {
+                questions: questions,
+                testName: this.testVoList[0].name
               }
             })
-          }else{
+          } else {
             this.$alert(res.data['message'])
           }
         })
