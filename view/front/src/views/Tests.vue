@@ -2,6 +2,7 @@
   <div class="content">
     <el-table
       :data="dataList"
+      height="350"
       stripe
       style="width: 100%">
       <el-table-column
@@ -114,7 +115,7 @@
 
   .content {
     position: fixed;
-    width: 60%;
+    width: 70%;
     height: 40%;
     left: 50%;
     top: 50%;
