@@ -1,6 +1,5 @@
 <template>
-  <!--  @mouseleave="catchMouseOut"-->
-  <div class="app" style="position: absolute;width:100%;height: 100%;">
+  <div class="app" style="position: absolute;width:100%;height: 100%;" @mouseleave="catchMouseOut">
     <div class="question-main">
       <div class="top">
         <div class="process">
