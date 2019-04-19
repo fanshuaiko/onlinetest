@@ -40,10 +40,10 @@
         label="考试分析">
         <template scope="scope">
           <label v-if="scope.row.choiceStatus=='1' && scope.row.subjectiveStatus=='1'">
-            <el-button type="primary" @click="getTestAnalyzeData(scope.row.testNo)">点击查看考试分析</el-button>
+            <el-button type="primary" @click="getTestAnalyzeData(scope.row.testNo)">查看考试分析</el-button>
           </label>
           <label v-else>
-            <el-button type="info" plain disabled>点击查看考试分析</el-button>
+            <el-button type="info" plain disabled>查看考试分析</el-button>
           </label>
         </template>
       </el-table-column>
@@ -51,10 +51,10 @@
         label="发送邮件">
         <template scope="scope">
           <label v-if="scope.row.choiceStatus=='1' && scope.row.subjectiveStatus=='1'">
-            <el-button type="primary" @click="sendTestScoreMail(scope.row.testNo)">点击发送成绩单</el-button>
+            <el-button type="primary" @click="sendTestScoreMail(scope.row.testNo)">发送成绩单</el-button>
           </label>
           <label v-else>
-            <el-button type="info" plain disabled>点击发送成绩单</el-button>
+            <el-button type="info" plain disabled>发送成绩单</el-button>
           </label>
         </template>
       </el-table-column>
