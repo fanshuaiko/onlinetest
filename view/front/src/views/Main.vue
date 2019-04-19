@@ -345,6 +345,7 @@
         //离开次数达到2次自动提交试卷
         if (this.mouseleaveCount == 2) {
           this.submitPaper()
+          this.$alert('系统检测到你离开页面两次，已自动提交考试')
           this.$router.push({
             path: '/submit'
           })
