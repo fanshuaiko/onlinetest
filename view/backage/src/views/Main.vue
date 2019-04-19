@@ -115,7 +115,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .el-container{
     height: 800px;
   }
