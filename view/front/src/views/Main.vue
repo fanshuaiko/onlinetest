@@ -233,7 +233,6 @@
         //当前题目作答了才能到下一题
         if (tf == true) {
           this.saveAnswer(this.question)//保存上一道题的值
-
           var randomNum = this.getRandom(this.arr);
           if (randomNum != -1) {
             this.question = ''
@@ -246,6 +245,20 @@
           } else if (randomNum == -1) {
             this.disableFlag = 'disabled'
           }
+        }
+        this.clearCurrentAnswer(this.question)//清空答案
+      },
+
+      //清空当前答案，避免下一题默认选中上一题选择的答案
+      clearCurrentAnswer(question){
+        if(question.type=='1'||question.type=='2'){
+          this.checkedValue = ''
+        }
+        if(question.type=='3'){
+          this.multipleValue = []
+        }
+        if(question.type=='4'){
+          this.subjectiveValue = ''
         }
       },
       //当前题目是否已作答
