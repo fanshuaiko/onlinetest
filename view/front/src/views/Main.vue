@@ -223,6 +223,11 @@
         this.min = min > 9 ? min : '0' + min
         this.sec = sec > 9 ? sec : '0' + sec
         const that = this
+        //计时结束自动提交试卷
+        if(this.hr =='00'&&this.min=='00'&&this.sec=='00'){
+          this.submitPaper()
+          this.$alert('考试时间到，已提交试卷')
+        }
         setTimeout(function () {
           that.countdown()
         }, 1000)
@@ -407,7 +412,7 @@
         }).catch(err => {
           console.error(err.name + ": " + err.message);
         })
-      }
+      },
     }
 
   }
