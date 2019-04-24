@@ -59,7 +59,7 @@ public class MailController {
                 context.setVariable("averageScore", scoreParams.getAverageScore());
                 context.setVariable("maxScore", scoreParams.getMaxScore());
                 context.setVariable("sort", scoreParams.getSort());
-                context.setVariable("studentCount", scoreParams.getStudentNo());
+                context.setVariable("studentCount", scoreParams.getStudentCount());
                 context.setVariable("passRate", scoreParams.getPassRate());
                 //设置模板邮件的内容
                 String emailContent = templateEngine.process("ScoreTemplate", context);
