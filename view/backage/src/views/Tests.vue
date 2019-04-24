@@ -49,7 +49,7 @@
         <template scope="scope">
           <el-button size="small" @click="getQuestions(scope.row)">预览试卷</el-button>
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)" disabled>编辑</el-button>
-          <el-button type="danger" size="small" v-if="scope.row.status=='2'" disabled>删除</el-button>
+          <el-button type="danger" size="small" v-if="scope.row.status=='1'" disabled>删除</el-button>
           <el-button type="danger" size="small" v-else @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
