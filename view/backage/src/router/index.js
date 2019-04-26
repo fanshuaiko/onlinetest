@@ -9,6 +9,7 @@ import SubjectiveManager from "../views/SubjectiveManager";
 import UploadQuestion from "../views/UploadQuestion";
 import MarkPaper from "../views/MarkPaper";
 import StudentScore from "../views/StudentScore";
+import Authority from "../views/Authority";
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ export default new Router({
       path: '/paper',
       name: 'paper',
       component: Paper
+    },
+    {
+      path: '/authority',
+      name: '权限管理',
+      component: Authority
     },
   ]
 })
