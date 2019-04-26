@@ -21,4 +21,6 @@ public interface TeacherCourseDao {
     int updateByPrimaryKey(TeacherCourse record);
 
     int insertTeacherCourseVo(TeacherCourseVo teacherCourseVo);//添加教师对应的课程
+
+    int deleteByTeacherNo(String teacherNo); //根据教师编号删除记录
 }

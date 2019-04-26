@@ -76,4 +76,9 @@
       (#{teachNo},#{item})
     </foreach>
   </insert>
+
+  <delete id="deleteByTeacherNo" parameterType="java.lang.String">
+    delete from teacher_course
+    where teacher_no = #{teacherNo}
+  </delete>
 </mapper>

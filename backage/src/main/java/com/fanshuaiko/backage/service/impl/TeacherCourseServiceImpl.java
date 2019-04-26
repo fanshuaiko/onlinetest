@@ -28,7 +28,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
 
     @Override
     public ResultData deleteCourseAuthority(TeacherCourseVo teacherCourseVo) {
-        return null;
+        int i = teacherCourseDao.deleteByTeacherNo(teacherCourseVo.getTeacherNo());
+        return ResultData.newSuccessResultData(i);
     }
 
     @Override
