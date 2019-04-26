@@ -93,7 +93,7 @@
         </collection>
     </resultMap>
 
-    <select id="selectAll" resultMap="TeacherCourseVo">
+    <select id="selectByCondition" resultMap="TeacherCourseVo" parameterType="com.fanshuaiko.backage.entity.VO.TeacherCourseVo">
         select
         t.teacher_no as teacher_no,
         t.name as teacher_name,
@@ -102,5 +102,12 @@
         from teacher t
         left join teacher_course tc on tc.teacher_no = t.teacher_no
         left join course c on c.id = tc.course_no
+        where 1=1
+        <if test="teacherNo != null and teacherNo != ''">
+            and t.teacher_no = #{teacherNo}
+        </if>
+        <if test="teacherName != null and teacherName != ''">
+            and t.name like concat('%',#{teacherName},'%')
+        </if>
     </select>
 </mapper>

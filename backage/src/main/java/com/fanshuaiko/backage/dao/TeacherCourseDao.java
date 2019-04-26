@@ -26,5 +26,5 @@ public interface TeacherCourseDao {
 
     int deleteByTeacherNo(String teacherNo); //根据教师编号删除记录
 
-    List<TeacherCourseVo> selectAll(); //查询所有TeacherCourseVo
+    List<TeacherCourseVo> selectByCondition(TeacherCourseVo teacherCourseVo); //根据条件查询所有TeacherCourseVo
 }
