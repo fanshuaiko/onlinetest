@@ -1,6 +1,7 @@
 package com.fanshuaiko.backage.dao;
 
 import com.fanshuaiko.backage.entity.TeacherCourse;
+import com.fanshuaiko.backage.entity.VO.TeacherCourseVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +19,6 @@ public interface TeacherCourseDao {
     int updateByPrimaryKeySelective(TeacherCourse record);
 
     int updateByPrimaryKey(TeacherCourse record);
+
+    int insertTeacherCourseVo(TeacherCourseVo teacherCourseVo);//添加教师对应的课程
 }

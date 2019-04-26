@@ -68,4 +68,12 @@
       course_no = #{courseNo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <insert id="insertTeacherCourseVo" parameterType="com.fanshuaiko.backage.entity.VO.TeacherCourseVo">
+    insert into teacher_course (teacher_no,course_no)
+    values
+    <foreach collection="courseIds" item="item" index="index" separator=",">
+      (#{teachNo},#{item})
+    </foreach>
+  </insert>
 </mapper>
