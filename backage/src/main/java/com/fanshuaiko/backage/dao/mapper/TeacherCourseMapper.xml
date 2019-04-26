@@ -1,84 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fanshuaiko.backage.dao.TeacherCourseDao">
-  <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.TeacherCourse">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="teacher_no" jdbcType="VARCHAR" property="teacherNo" />
-    <result column="course_no" jdbcType="VARCHAR" property="courseNo" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.TeacherCourse">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="teacher_no" jdbcType="VARCHAR" property="teacherNo"/>
+        <result column="course_no" jdbcType="Integer" property="courseNo"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, teacher_no, course_no
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from teacher_course
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from teacher_course
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from teacher_course
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
+    <insert id="insert" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
     insert into teacher_course (id, teacher_no, course_no
       )
-    values (#{id,jdbcType=INTEGER}, #{teacherNo,jdbcType=VARCHAR}, #{courseNo,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{teacherNo,jdbcType=VARCHAR}, #{courseNo,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
-    insert into teacher_course
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="teacherNo != null">
-        teacher_no,
-      </if>
-      <if test="courseNo != null">
-        course_no,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="teacherNo != null">
-        #{teacherNo,jdbcType=VARCHAR},
-      </if>
-      <if test="courseNo != null">
-        #{courseNo,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
-    update teacher_course
-    <set>
-      <if test="teacherNo != null">
-        teacher_no = #{teacherNo,jdbcType=VARCHAR},
-      </if>
-      <if test="courseNo != null">
-        course_no = #{courseNo,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
+    <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
+        insert into teacher_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="teacherNo != null">
+                teacher_no,
+            </if>
+            <if test="courseNo != null">
+                course_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="teacherNo != null">
+                #{teacherNo,jdbcType=VARCHAR},
+            </if>
+            <if test="courseNo != null">
+                #{courseNo,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
+        update teacher_course
+        <set>
+            <if test="teacherNo != null">
+                teacher_no = #{teacherNo,jdbcType=VARCHAR},
+            </if>
+            <if test="courseNo != null">
+                course_no = #{courseNo,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
     update teacher_course
     set teacher_no = #{teacherNo,jdbcType=VARCHAR},
-      course_no = #{courseNo,jdbcType=VARCHAR}
+      course_no = #{courseNo,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <insert id="insertTeacherCourseVo" parameterType="com.fanshuaiko.backage.entity.VO.TeacherCourseVo">
-    insert into teacher_course (teacher_no,course_no)
-    values
-    <foreach collection="courseIds" item="item" index="index" separator=",">
-      (#{teachNo},#{item})
-    </foreach>
-  </insert>
+    <insert id="insertTeacherCourseVo" parameterType="com.fanshuaiko.backage.entity.VO.TeacherCourseVo">
+        insert into teacher_course (teacher_no,course_no)
+        values
+        <foreach collection="courseIds" item="item" index="index" separator=",">
+            (#{teachNo},#{item})
+        </foreach>
+    </insert>
 
-  <delete id="deleteByTeacherNo" parameterType="java.lang.String">
+    <delete id="deleteByTeacherNo" parameterType="java.lang.String">
     delete from teacher_course
     where teacher_no = #{teacherNo}
   </delete>
+
+    <resultMap id="TeacherCourseVo" type="com.fanshuaiko.backage.entity.VO.TeacherCourseVo">
+        <result column="teacher_no" jdbcType="VARCHAR" property="teacherNo"/>
+        <result column="course_no" jdbcType="INTEGER" property="courseNo"/>
+        <collection property="courseIds" ofType="java.lang.String" javaType="java.util.List">
+            <result column="id"/>
+        </collection>
+        <collection property="courseNames" ofType="java.lang.Integer" javaType="java.util.List">
+            <result column="name"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAll" resultMap="TeacherCourseVo">
+        select
+        t.teacher_no as teacherNo,
+        t.name as teacherName,
+        c.id as courseIds,
+        c.name as courseNames
+        from teacher t
+        left join teacher_course tc on tc.teacher_no = t.teacher_no
+        left join course c on c.id = tc.course_no
+    </select>
 </mapper>
