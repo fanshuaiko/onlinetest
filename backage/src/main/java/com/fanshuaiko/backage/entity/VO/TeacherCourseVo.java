@@ -16,7 +16,7 @@ public class TeacherCourseVo {
 
     private List<String> courseNames;//课程
 
-    private List<String> courseIds; //课程id
+    private List<Integer> courseIds; //课程id
 
     private int pageSize;//
 
@@ -46,11 +46,11 @@ public class TeacherCourseVo {
         this.courseNames = courseNames;
     }
 
-    public List<String> getCourseIds() {
+    public List<Integer> getCourseIds() {
         return courseIds;
     }
 
-    public void setCourseIds(List<String> courseIds) {
+    public void setCourseIds(List<Integer> courseIds) {
         this.courseIds = courseIds;
     }
 
