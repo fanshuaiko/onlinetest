@@ -1,7 +1,11 @@
 package com.fanshuaiko.backage.dao;
 
 import com.fanshuaiko.backage.entity.TeacherCourse;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+@Mapper
+@Repository
 public interface TeacherCourseDao {
     int deleteByPrimaryKey(Integer id);
 
