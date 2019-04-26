@@ -82,7 +82,7 @@ public class CourseAuthorityController {
      * @return
      */
     @GetMapping("/course")
-    public ResultData pageQueryCourseAuthority(@RequestBody TeacherCourseVo teacherCourseVo) {
+    public ResultData pageQueryCourseAuthority(TeacherCourseVo teacherCourseVo) {
         try {
             ResultData resultData = teacherCourseService.pageQueryCourseAuthority(teacherCourseVo);
             return resultData;
