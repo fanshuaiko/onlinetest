@@ -46,7 +46,7 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
     @Override
     public ResultData pageQueryCourseAuthority(TeacherCourseVo teacherCourseVo) {
         PageHelper.startPage(teacherCourseVo.getPageNum(),teacherCourseVo.getPageSize());
-        List<TeacherCourseVo> teacherCourseVos = teacherCourseDao.selectAll();
+        List<TeacherCourseVo> teacherCourseVos = teacherCourseDao.selectByCondition(teacherCourseVo);
         PageInfo pageInfo = new PageInfo(teacherCourseVos);
         return ResultData.newSuccessResultData(pageInfo);
     }
