@@ -4,8 +4,12 @@ import com.fanshuaiko.backage.dao.TeacherCourseDao;
 import com.fanshuaiko.backage.entity.VO.TeacherCourseVo;
 import com.fanshuaiko.backage.service.TeacherCourseService;
 import com.fanshuaiko.backage.utils.ResultData;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @ClassName TeacherCourseServiceImpl
@@ -34,11 +38,16 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
 
     @Override
     public ResultData updateCourseAuthority(TeacherCourseVo teacherCourseVo) {
-        return null;
+        deleteCourseAuthority(teacherCourseVo);
+        addCourseAuthority(teacherCourseVo);
+        return ResultData.newSuccessResultData();
     }
 
     @Override
     public ResultData pageQueryCourseAuthority(TeacherCourseVo teacherCourseVo) {
-        return null;
+        PageHelper.startPage(teacherCourseVo.getPageNum(),teacherCourseVo.getPageSize());
+        List<TeacherCourseVo> teacherCourseVos = teacherCourseDao.selectAll();
+        PageInfo pageInfo = new PageInfo(teacherCourseVos);
+        return ResultData.newSuccessResultData(pageInfo);
     }
 }
