@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.TeacherCourse">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="teacher_no" jdbcType="VARCHAR" property="teacherNo"/>
-        <result column="course_no" jdbcType="Integer" property="courseNo"/>
+        <result column="course_no" jdbcType="INTEGER" property="courseNo"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, teacher_no, course_no
@@ -84,21 +84,21 @@
 
     <resultMap id="TeacherCourseVo" type="com.fanshuaiko.backage.entity.VO.TeacherCourseVo">
         <result column="teacher_no" jdbcType="VARCHAR" property="teacherNo"/>
-        <result column="course_no" jdbcType="INTEGER" property="courseNo"/>
-        <collection property="courseIds" ofType="java.lang.String" javaType="java.util.List">
+        <result column="teacher_name" jdbcType="VARCHAR" property="teacherName"/>
+        <collection property="courseIds" ofType="java.lang.Integer" javaType="java.util.List">
             <result column="id"/>
         </collection>
-        <collection property="courseNames" ofType="java.lang.Integer" javaType="java.util.List">
+        <collection property="courseNames" ofType="java.lang.String" javaType="java.util.List">
             <result column="name"/>
         </collection>
     </resultMap>
 
     <select id="selectAll" resultMap="TeacherCourseVo">
         select
-        t.teacher_no as teacherNo,
-        t.name as teacherName,
-        c.id as courseIds,
-        c.name as courseNames
+        t.teacher_no as teacher_no,
+        t.name as teacher_name,
+        c.id as id,
+        c.name as name
         from teacher t
         left join teacher_course tc on tc.teacher_no = t.teacher_no
         left join course c on c.id = tc.course_no
