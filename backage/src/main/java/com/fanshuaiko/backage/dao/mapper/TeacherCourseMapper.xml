@@ -73,7 +73,7 @@
         insert into teacher_course (teacher_no,course_no)
         values
         <foreach collection="courseIds" item="item" index="index" separator=",">
-            (#{teachNo},#{item})
+            (#{teacherNo},#{item})
         </foreach>
     </insert>
 
