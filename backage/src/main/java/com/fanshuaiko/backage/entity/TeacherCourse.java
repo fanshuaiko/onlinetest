@@ -12,7 +12,7 @@ public class TeacherCourse {
 
     private String teacherNo; //教师编号
 
-    private String courseNo;//课程编号
+    private Integer courseNo;//课程编号
 
     public Integer getId() {
         return id;
@@ -30,12 +30,12 @@ public class TeacherCourse {
         this.teacherNo = teacherNo == null ? null : teacherNo.trim();
     }
 
-    public String getCourseNo() {
+    public Integer getCourseNo() {
         return courseNo;
     }
 
-    public void setCourseNo(String courseNo) {
-        this.courseNo = courseNo == null ? null : courseNo.trim();
+    public void setCourseNo(Integer courseNo) {
+        this.courseNo = courseNo;
     }
 
     @Override
