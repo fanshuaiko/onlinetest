@@ -22,8 +22,8 @@ public class TeacherCourseServiceImpl implements TeacherCourseService {
 
     @Override
     public ResultData addCourseAuthority(TeacherCourseVo teacherCourseVo) {
-
-        return null;
+        int i = teacherCourseDao.insertTeacherCourseVo(teacherCourseVo);
+        return ResultData.newSuccessResultData(i);
     }
 
     @Override
