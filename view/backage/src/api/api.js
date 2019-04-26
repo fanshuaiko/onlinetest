@@ -98,16 +98,16 @@ export const pageQueryCourseAuthority = params => {
 }
 
 //添加教师课程权限
-export const sendTestScoreMail = params => {
+export const addCourseAuthority = params => {
   return axios.post(`backage-api/authority/course/` + params)
 }
 
 //删除教师课程权限
-export const sendTestScoreMail = params => {
+export const deleteCourseAuthority = params => {
   return axios.delete(`backage-api/authority/course/` + params)
 }
 
 //修改教师课程权限
-export const sendTestScoreMail = params => {
+export const updateCourseAuthority = params => {
   return axios.put(`backage-api/authority/course/` + params)
 }
