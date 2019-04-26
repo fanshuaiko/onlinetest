@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fanshuaiko.backage.dao.TeacherCourseDao">
+  <resultMap id="BaseResultMap" type="com.fanshuaiko.backage.entity.TeacherCourse">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="teacher_no" jdbcType="VARCHAR" property="teacherNo" />
+    <result column="course_no" jdbcType="VARCHAR" property="courseNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, teacher_no, course_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher_course
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from teacher_course
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
+    insert into teacher_course (id, teacher_no, course_no
+      )
+    values (#{id,jdbcType=INTEGER}, #{teacherNo,jdbcType=VARCHAR}, #{courseNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
+    insert into teacher_course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="teacherNo != null">
+        teacher_no,
+      </if>
+      <if test="courseNo != null">
+        course_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="teacherNo != null">
+        #{teacherNo,jdbcType=VARCHAR},
+      </if>
+      <if test="courseNo != null">
+        #{courseNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
+    update teacher_course
+    <set>
+      <if test="teacherNo != null">
+        teacher_no = #{teacherNo,jdbcType=VARCHAR},
+      </if>
+      <if test="courseNo != null">
+        course_no = #{courseNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fanshuaiko.backage.entity.TeacherCourse">
+    update teacher_course
+    set teacher_no = #{teacherNo,jdbcType=VARCHAR},
+      course_no = #{courseNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
