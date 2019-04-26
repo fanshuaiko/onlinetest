@@ -18,6 +18,10 @@ public class TeacherCourseVo {
 
     private List<String> courseIds; //课程id
 
+    private int pageSize;//
+
+    private int pageNum;//
+
     public String getTeacherNo() {
         return teacherNo;
     }
@@ -50,6 +54,22 @@ public class TeacherCourseVo {
         this.courseIds = courseIds;
     }
 
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
     @Override
     public String toString() {
         return "TeacherCourseVo{" +
@@ -57,6 +77,8 @@ public class TeacherCourseVo {
                 ", teacherName='" + teacherName + '\'' +
                 ", courseNames=" + courseNames +
                 ", courseIds=" + courseIds +
+                ", pageSize=" + pageSize +
+                ", pageNum=" + pageNum +
                 '}';
     }
 }
