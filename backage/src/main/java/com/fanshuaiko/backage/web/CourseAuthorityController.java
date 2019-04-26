@@ -26,57 +26,6 @@ public class CourseAuthorityController {
     private TeacherCourseService teacherCourseService;
 
     /**
-     * 添加教师课程权限
-     * @param teacherCourseVo
-     * @return
-     */
-    @PostMapping("/course")
-    public ResultData addCourseAuthority(@RequestBody TeacherCourseVo teacherCourseVo) {
-        try {
-            ResultData resultData = teacherCourseService.addCourseAuthority(teacherCourseVo);
-            return resultData;
-        } catch (Exception e) {
-            log.info("--------CourseAuthorityController/addCourseAuthority:--------");
-            e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.ADD_FAILOR, ErrorCode.ADD_FAILOR_MSG);
-        }
-    }
-
-    /**
-     * 删除教师课程权限
-     * @param teacherCourseVo
-     * @return
-     */
-    @DeleteMapping("/course")
-    public ResultData deleteCourseAuthority(@RequestBody TeacherCourseVo teacherCourseVo) {
-        try {
-            ResultData resultData = teacherCourseService.deleteCourseAuthority(teacherCourseVo);
-            return resultData;
-        } catch (Exception e) {
-            log.info("--------CourseAuthorityController/deleteCourseAuthority:--------");
-            e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.DEL_FAILOR, ErrorCode.DEL_FAILOR_MSG);
-        }
-    }
-
-    /**
-     * 修改教师课程权限
-     * @param teacherCourseVo
-     * @return
-     */
-    @PutMapping("/course")
-    public ResultData updateCourseAuthority(@RequestBody TeacherCourseVo teacherCourseVo) {
-        try {
-            ResultData resultData = teacherCourseService.updateCourseAuthority(teacherCourseVo);
-            return resultData;
-        } catch (Exception e) {
-            log.info("--------CourseAuthorityController/updateCourseAuthority:--------");
-            e.printStackTrace();
-            return ResultData.newResultData(ErrorCode.UPDATE_FAILOR, ErrorCode.UPDATE_FAILOR_MSG);
-        }
-    }
-
-    /**
      * 多添件分页查询教师及权限
      * @param teacherCourseVo
      * @return
@@ -90,6 +39,23 @@ public class CourseAuthorityController {
             log.info("--------CourseAuthorityController/pageQueryCourseAuthority:--------");
             e.printStackTrace();
             return ResultData.newResultData(ErrorCode.QUERY_FAILOR, ErrorCode.QUERY_FAILOR_MSG);
+        }
+    }
+
+    /**
+     * 修改教师课程权限
+     * @param teacherCourseVo
+     * @return
+     */
+    @PostMapping("/course")
+    public ResultData editCourseAuthority(@RequestBody TeacherCourseVo teacherCourseVo) {
+        try {
+            ResultData resultData = teacherCourseService.editCourseAuthority(teacherCourseVo);
+            return resultData;
+        } catch (Exception e) {
+            log.info("--------CourseAuthorityController/editCourseAuthority:--------");
+            e.printStackTrace();
+            return ResultData.newResultData(ErrorCode.FAILOR, ErrorCode.FAILOR_MSG);
         }
     }
 }
