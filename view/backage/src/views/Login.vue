@@ -55,11 +55,23 @@
               console.log('sessionId:' + res.data['data'])
               sessionStorage.setItem('AUTHORIZATION',res.data['data'])
               sessionStorage.setItem('username',this.username)
-              this.$router.push(
-                {
-                  path: '/tests',
-                }
-              )
+
+              //此处为硬编码，这里只为节省时间才这样写，得空要优化，得空要优化，得空要优化
+              //如果是admin管理员进入管理员界面
+              if(this.username == 'admin'){
+                this.$router.push(
+                  {
+                    path: '/authority',
+                  }
+                )
+              }else{
+                this.$router.push(
+                  {
+                    path: '/tests',
+                  }
+                )
+              }
+
             } else {
               this.$alert(res.data['message'])
             }
