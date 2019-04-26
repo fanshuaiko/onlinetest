@@ -67,7 +67,7 @@
           <el-table-column
             label="操作">
             <template scope="scope">
-              <el-button type="warning" icon="el-icon-check" circle @click="saveOption(scope.row)"></el-button>
+              <el-button type="danger" size="small" @click="saveOption(scope.row)">确认</el-button>
             </template>
           </el-table-column>
         </el-table>
