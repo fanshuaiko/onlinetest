@@ -91,3 +91,8 @@ export const getTestAnalyzeData = params => {
 export const sendTestScoreMail = params => {
   return axios.post(`backage-api/test/mail/` + params)
 }
+
+//条件分页查询教师课程权限
+export const pageQueryCourseAuthority = params => {
+  return axios.get(`backage-api/authority/course` ,params)
+}
