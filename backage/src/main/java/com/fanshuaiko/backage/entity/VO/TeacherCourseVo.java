@@ -16,6 +16,8 @@ public class TeacherCourseVo {
 
     private List<String> courseNames;//课程
 
+    private List<String> courseIds; //课程id
+
     public String getTeacherNo() {
         return teacherNo;
     }
@@ -40,12 +42,21 @@ public class TeacherCourseVo {
         this.courseNames = courseNames;
     }
 
+    public List<String> getCourseIds() {
+        return courseIds;
+    }
+
+    public void setCourseIds(List<String> courseIds) {
+        this.courseIds = courseIds;
+    }
+
     @Override
     public String toString() {
         return "TeacherCourseVo{" +
                 "teacherNo='" + teacherNo + '\'' +
                 ", teacherName='" + teacherName + '\'' +
                 ", courseNames=" + courseNames +
+                ", courseIds=" + courseIds +
                 '}';
     }
 }
