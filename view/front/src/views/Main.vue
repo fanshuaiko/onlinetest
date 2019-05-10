@@ -156,6 +156,8 @@
         disableFlag: '',
         //题目数量
         questionCount: 0,
+        //每完成一题进度条长度增加的值
+        processWidthAdd: 0,
         //当前第几题
         currentQuestionNo: 0,
         //进度条
@@ -204,6 +206,8 @@
 
         this.questionCount = len
 
+        this.processWidthAdd = parseFloat((100 / len).toFixed(1))
+
         console.log('main:AUTHORIZATION:' + JSON.stringify(AUTHORIZATION))
         console.log('main:test:' + JSON.stringify(test))
         console.log('main:dataList:' + JSON.stringify(dataList))
@@ -224,7 +228,7 @@
         this.sec = sec > 9 ? sec : '0' + sec
         const that = this
         //计时结束自动提交试卷
-        if(this.hr =='00'&&this.min=='00'&&this.sec=='00'){
+        if (this.hr == '00' && this.min == '00' && this.sec == '00') {
           this.submitPaper()
           this.$alert('考试时间到，已提交试卷')
         }
@@ -243,8 +247,8 @@
             this.question = ''
             this.question = this.questionList[randomNum]
             this.currentQuestionNo++
-            this.progressWidth += 100 / this.questionCount
-            console.log('进度条每次增加：' + this.progressWidth)
+            this.progressWidth += this.processWidthAdd
+            console.log('进度条每次增加：' + this.processWidthAdd)
             console.log('预期题目：：' + JSON.stringify(this.questionList[randomNum]))
             console.log('当前的题目：：' + JSON.stringify(this.question))
           } else if (randomNum == -1) {
@@ -255,25 +259,32 @@
       },
 
       //清空当前答案，避免下一题默认选中上一题选择的答案
-      clearCurrentAnswer(question){
-        if(question.type=='1'||question.type=='2'){
+      clearCurrentAnswer(question) {
+        if (question.type == '1' || question.type == '2') {
           this.checkedValue = ''
         }
-        if(question.type=='3'){
+        if (question.type == '3') {
           this.multipleValue = []
         }
-        if(question.type=='4'){
+        if (question.type == '4') {
           this.subjectiveValue = ''
         }
       },
       //当前题目是否已作答
       judgeCurrentValue() {
-        if(this.question==null||this.question==''){
+        if (this.question == null || this.question == '') {
           return true
-        }else{
+        } else {
           if (this.question.type == '4') {
             if (this.subjectiveValue == null || this.subjectiveValue == '') {
               this.$message.warning('请在答题区域填入答案')
+              return false
+            } else {
+              return true
+            }
+          } else if (this.question.type == '3') {
+            if (this.multipleValue == null || this.multipleValue == '') {
+              this.$message.warning('请选择您的答案')
               return false
             } else {
               return true
