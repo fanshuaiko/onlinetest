@@ -4,7 +4,7 @@
     <el-upload
       class="upload-demo1"
       drag
-      action="backage-api/choice/file"
+      action="backage-api/question/choice/file"
       :data="uploadQuestionType.single"
       :on-success="uploadSuccess"
       :on-error="uploadFail"
@@ -25,7 +25,7 @@
     <el-upload
       class="upload-demo2"
       drag
-      action="backage-api/choice/file"
+      action="backage-api/question/choice/file"
       :data="uploadQuestionType.judge"
       :on-success="uploadSuccess"
       :on-error="uploadFail"
@@ -46,7 +46,7 @@
     <el-upload
       class="upload-demo3"
       drag
-      action="backage-api/choice/file"
+      action="backage-api/question/choice/file"
       :data="uploadQuestionType.multiple"
       :on-success="uploadSuccess"
       :on-error="uploadFail"
