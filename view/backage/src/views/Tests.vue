@@ -708,7 +708,14 @@
                 message: '题目数量或分值不能为空！',
                 showClose: false
               });
-            } else {
+            }else if(this.currentTotalScore != this.addForm.totalScore){
+              this.$notify.warning({
+                title: 'Info',
+                message: '题目分值设置与题目总分不符！',
+                showClose: false
+              });
+            }
+            else {
               this.submitAddForm()
             }
           }
