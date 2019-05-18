@@ -129,16 +129,17 @@
     height: 20%;
     width: 20%;
     text-align: center;
-    margin-left: 28%;
-    margin-right: 4%;
+    margin-left: 10%;
+    /*margin-right: 20%;*/
     margin-top: 10%;
   }
 
   .upload-demo2 {
-    float: left;
+    float: right;
     height: 20%;
     width: 20%;
     margin-top: 10%;
+    margin-right: 20%;
     text-align: center;
 
   }
@@ -148,16 +149,17 @@
     float: left;
     width: 20%;
     text-align: center;
-    margin-left: 28%;
-    margin-right: 4%;
+    margin-left: 10%;
+    /*margin-right: 20%;*/
     margin-top: 3%;
   }
 
   .upload-demo4 {
-    float: left;
+    float: right;
     height: 20%;
     width: 20%;
     margin-top: 3%;
+    margin-right: 20%;
     text-align: center;
   }
 
