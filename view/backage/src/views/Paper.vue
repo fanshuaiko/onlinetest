@@ -3,6 +3,7 @@
     <div class="page-header" style="text-align: center;color: darkgrey">
       <h1>{{testName}}考试试题</h1>
     </div>
+      <a href="http://localhost:8084/?#/tests" style="color: darkgrey;text-align: left">&nbsp;&nbsp;>>返回上一页</a>
     <div class="content" style="width: 70%;margin:0 auto;background-color: white;border-radius: 20px;
     box-shadow: gainsboro 0px 0px 30px 5px;">
       <div class="questions" style="width: 50%;margin:0 auto; " v-for="item in questionList">
