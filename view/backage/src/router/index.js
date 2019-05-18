@@ -13,7 +13,7 @@ import Authority from "../views/Authority";
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -23,6 +23,9 @@ export default new Router({
     {
       path: '/main',
       name: 'main',
+      meta:{
+        requiresAuth: true
+      },
       component: Main,
       iconCls: 'el-icon-message',//图标样式class
       children: [
@@ -37,6 +40,9 @@ export default new Router({
     {
       path: '/paper',
       name: 'paper',
+      meta:{
+        requiresAuth: true
+      },
       component: Paper
     },
     {
@@ -46,3 +52,19 @@ export default new Router({
     },
   ]
 })
+
+
+// 导航守卫
+// 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
+router.beforeEach((to, from, next) => {
+  let token = sessionStorage.getItem('AUTHORIZATION')
+  if (to.matched.some(record => record.meta.requiresAuth) && (!token || token === null)) {
+    next({
+      path: '/',
+    })
+  } else {
+    next()
+  }
+});
+
+export default router;
