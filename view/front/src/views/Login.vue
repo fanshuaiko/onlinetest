@@ -2,7 +2,7 @@
   <div class="app">
     <div class="form">
       <div class="authorization">
-        <h1>Authorization</h1>
+        <h1>登录</h1>
       </div>
       <form class="form-content">
         <div class="form-group username">
@@ -113,10 +113,11 @@
   }
 
   .authorization {
-    position: relative;
+    /*position: relative;*/
+    text-align: center;
     font-size: 40px;
     font-weight: bold;
-    margin: 15px 0 20px 0;
+    /*margin: 15px 0 20px 0;*/
     letter-spacing: 0.05em;
     color: #5bc0de;
     left: 20%;
