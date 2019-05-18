@@ -38,14 +38,14 @@
 
     <el-container>
       <el-header style="text-align: right; font-size: 12px">
-<!--        <el-dropdown>-->
-<!--          <i class="el-icon-setting" style="margin-right: 15px"></i>-->
-<!--          <el-dropdown-menu slot="dropdown">-->
-<!--            <el-dropdown-item>查看</el-dropdown-item>-->
-<!--            <el-dropdown-item>新增</el-dropdown-item>-->
-<!--            <el-dropdown-item>删除</el-dropdown-item>-->
-<!--          </el-dropdown-menu>-->
-<!--        </el-dropdown>-->
+        <el-dropdown>
+          <i class="el-icon-setting" style="margin-right: 15px"></i>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>
+              <el-button @click="logout">注销</el-button>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
         <span>{{username}}</span>
       </el-header>
 
@@ -101,15 +101,27 @@
             this.$router.push('/studentScore');
             break;
         }
+      },
+      //注销登录
+      logout() {
+        console.log('AUTHORIZATION:::' + sessionStorage.getItem('AUTHORIZATION'))
+        sessionStorage.setItem('AUTHORIZATION', '')
+        this.$router.push(
+          {
+            path: '/'
+          }
+        )
+        console.log('AUTHORIZATION:::' + sessionStorage.getItem('AUTHORIZATION'))
       }
     }
   }
 </script>
 
 <style scoped>
-  .el-container{
+  .el-container {
     height: 800px;
   }
+
   .el-header {
     background-color: #20a0ff;
     color: white;
