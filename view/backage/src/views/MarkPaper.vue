@@ -195,6 +195,9 @@
             console.log('MarkPaper:pageQueryPaperStatus:res::' + JSON.stringify(res))
             if (res.status == 200 && res.data['code'] == '0') {
               this.paperStatusList = res.data['data']['list']
+              this.total = parseInt(res.data.data['total'])
+              this.pageNum = res.data.data['pageNum']
+              this.pageSize = res.data.data['pageSize']
             } else {
               this.$alert(res.data['message'])
             }
