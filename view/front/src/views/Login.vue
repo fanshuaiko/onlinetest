@@ -52,6 +52,7 @@
           .then(res => {
             console.log(res.data)
             if (res.status == 200 && res.data['code'] == '0') {
+              sessionStorage.setItem('AUTHORIZATION',res.data['data'])
               // 登录成功查询该考生的所有考试信息
                 this.$axios.get('/front-api/test' + '/student' + '/' + this.username
                   ,{headers:{'AUTHORIZATION':res.data['data']}})
