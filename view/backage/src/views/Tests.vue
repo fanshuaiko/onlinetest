@@ -708,14 +708,13 @@
                 message: '题目数量或分值不能为空！',
                 showClose: false
               });
-            }else if(this.currentTotalScore != this.addForm.totalScore){
+            } else if (this.currentTotalScore != this.addForm.totalScore) {
               this.$notify.warning({
                 title: 'Info',
                 message: '题目分值设置与题目总分不符！',
                 showClose: false
               });
-            }
-            else {
+            } else {
               this.submitAddForm()
             }
           }
@@ -724,31 +723,37 @@
 
       //提交新建考试表单
       submitAddForm() {
-        this.addLoading = true
-        //格式化日期
-        this.addForm.startTime = moment(this.addForm.startTime).format('YYYY-MM-DD HH:mm:ss')
-        console.log('submitAddForm:表单数据：：' + JSON.stringify(this.addForm))
-        api.createTest(this.addForm).then(res => {
-          console.log('submitAddForm:res::' + JSON.stringify(res))
-          if (res.status == 200 && res.data['code'] == '0') {
-            //关闭等待效果
-            this.addLoading = false
-            //成功后关闭新建页面
-            this.dialogAddFormVisible = false
-            this.$notify({
-              title: 'Info',
-              message: '成功创建一场考试！',
-              type: 'success'
-            })
-            //更新列表
-            this.getUsers()
-          } else {
-            this.$alert('新建考试失败')
-            this.addLoading = false
-          }
-        }).catch(err => {
-          this.$alert(err.toString())
-        })
+        this.$confirm('考试新建成功后不可更改, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.addLoading = true
+          //格式化日期
+          this.addForm.startTime = moment(this.addForm.startTime).format('YYYY-MM-DD HH:mm:ss')
+          console.log('submitAddForm:表单数据：：' + JSON.stringify(this.addForm))
+          api.createTest(this.addForm).then(res => {
+            console.log('submitAddForm:res::' + JSON.stringify(res))
+            if (res.status == 200 && res.data['code'] == '0') {
+              //关闭等待效果
+              this.addLoading = false
+              //成功后关闭新建页面
+              this.dialogAddFormVisible = false
+              this.$notify({
+                title: 'Info',
+                message: '成功创建一场考试！',
+                type: 'success'
+              })
+              //更新列表
+              this.getUsers()
+            } else {
+              this.$alert('新建考试失败')
+              this.addLoading = false
+            }
+          }).catch(err => {
+            this.$alert(err.toString())
+          })
+        });
       },
 
       //设置班级tree选中的classNo到classNoList
