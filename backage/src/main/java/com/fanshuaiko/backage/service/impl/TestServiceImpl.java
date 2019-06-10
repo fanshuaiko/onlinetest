@@ -86,12 +86,7 @@ public class TestServiceImpl implements TestService {
             String endTime2 = sdf.format(endTime);
             testVO.setEndTime(endTime2);
 
-            //保存test相关信息到test表
-            int i = testDao.insertTest(testVO);
-            log.info("插入test成功，记录" + i + "条");
-            //保存class信息到test_class表
-            int i1 = testDao.insertTestClass(testVO);
-            log.info("插入test_class成功，记录" + i1 + "条");
+
             //保存上传的题目保存到题目表
             if (testVO.getSingleRedisId() != 0) {
                 List<Choice> singleList = (List<Choice>) redisTemplate.opsForValue().get(testVO.getSingleRedisId());
@@ -176,6 +171,13 @@ public class TestServiceImpl implements TestService {
                     return ResultData.newResultData(ErrorCode.ADD_FAILOR, "题库中没有该课程的主观题！");
                 }
             }
+
+            //保存test相关信息到test表
+            int i = testDao.insertTest(testVO);
+            log.info("插入test成功，记录" + i + "条");
+            //保存class信息到test_class表
+            int i1 = testDao.insertTestClass(testVO);
+            log.info("插入test_class成功，记录" + i1 + "条");
 
             return ResultData.newSuccessResultData();
         } catch (Exception e) {
