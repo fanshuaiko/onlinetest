@@ -208,7 +208,7 @@
         FROM
 	      `choice` ch left JOIN course co ON co.id = #{courseId}
         WHERE
-	      `type`=#{type}
+	      `type`=#{type} AND ch.course_name = co.name
         ORDER BY
 	      ch.id
         LIMIT #{count};
